@@ -1,9 +1,11 @@
 import React from 'react'
-import SearchBar from './SearchBar'
+import SearchBar from './SearchComponents/SearchBar'
 import Men from './Men'
 import Women from './Women'
+import { TfiSearch } from "react-icons/tfi";
 
 const Navbar = () => {
+
   return (
     <div>
         <SearchBar/>
@@ -15,16 +17,25 @@ const Navbar = () => {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li className="nav-item">
-                            <a className="nav-link active" data-bs-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">MĘŻCZYZNA</a>
+                        <li className="nav-item dropdown">
+                            <a className="nav-link active dropdown-toggle" data-bs-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">MĘŻCZYZNA</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link active" data-bs-toggle="collapse" href="#multiCollapseExample2" role="button" aria-expanded="false" aria-controls="multiCollapseExample2">KOBIETA</a>
+                            <a className="nav-link active dropdown-toggle" data-bs-toggle="collapse" href="#multiCollapseExample2" role="button" aria-expanded="false" aria-controls="multiCollapseExample2">KOBIETA</a>
                         </li>
                     </ul>
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         <li className="nav-item">
-                            <input type='text' data-bs-toggle="collapse" href="#multiCollapseExample3" role="button" aria-expanded="false" aria-controls="multiCollapseExample3"/>
+                        <div className="input-group">
+                            <input 
+                            data-bs-toggle="collapse" href="#multiCollapseExample3" role="button" aria-expanded="false" aria-controls="multiCollapseExample3"
+                            type="text" className="form-control" placeholder="Wyszukaj produkt" aria-label="serach product" aria-describedby="button-addon2"
+                            />
+                            <button
+                            style={{backgroundColor: 'white', bsBtnColor: '#111111'}}
+                            data-bs-toggle="collapse" href="#multiCollapseExample3" role="button" aria-expanded="false" aria-controls="multiCollapseExample3"
+                            className="btn btn-outline-secondary border-0" type="button" id="button-addon2"><TfiSearch /></button>
+                        </div>
                         </li>
                     </ul>
                     <div className='d-flex justify-content-round'>

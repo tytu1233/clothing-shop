@@ -10,7 +10,7 @@ const Slider = () => {
                 <div className="carousel-item">
                 <img src={require('../img/gory.jpg')} className="d-block w-100" alt="..."/>
                 </div>
-                <div classNameName="carousel-item">
+                <div className="carousel-item">
                 <img src={require('../img/gory.jpg')} className="d-block w-100" alt="..."/>
                 </div>
             </div>
