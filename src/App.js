@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Cart from './Components/CartPage/Cart';
 import Main from "./Components/MainPage/Main";
@@ -8,13 +8,16 @@ import Footer from './Components/MainPage/Footer';
 import Products from './Components/ProductsPage/Products';
 import SignIn from './Components/Login/SignIn';
 
+
 const App = () => {
 
+
     useEffect(() => {
-        document.title = "CLOTHING STORE"
+        document.title = "CLOTHING STORE";
     }, []);
 
   return (
+    
     <div>
         <Router>
             <div>

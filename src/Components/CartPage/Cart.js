@@ -1,7 +1,5 @@
 import React from 'react'
 import '../../styles/cart.css'
-import Footer from '../MainPage/Footer'
-import Navbar from '../MainPage/Navbar'
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import { TfiPlus, TfiMinus } from "react-icons/tfi";
 

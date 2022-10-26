@@ -1,11 +1,38 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import SearchBar from '../SearchComponents/SearchBar'
 import Men from './Men'
 import Women from './Women'
 import { TfiSearch } from "react-icons/tfi";
-import { AiOutlineShoppingCart, AiOutlineLogin, AiOutlineUserAdd } from "react-icons/ai";
+import { AiOutlineShoppingCart, AiOutlineLogin, AiOutlineUserAdd, AiOutlineLogout } from "react-icons/ai";
+import AuthenticationService from '../../Services/AuthenticationService';
+
 
 const Navbar = () => {
+
+    const [loggedUser, setLoggedUser] = useState([]);
+    const [isLogged, setIsLogged] = useState(0);
+
+    const logoutUser = async () => {
+        const res = await AuthenticationService.logoutUser(loggedUser);
+        if(res.data === "true") {
+            setIsLogged([]);
+            setIsLogged(0);
+        }
+    }
+    
+    const checkAuthorization = async () => {
+        const res = await AuthenticationService.checkAuthenticationUser(JSON.parse(localStorage.getItem('token')));
+        if(!(res.data.status === "pass")) return;
+        console.log(res.data.user_id)
+        setLoggedUser({"user_id": res.data.user_id, "token": JSON.parse(localStorage.getItem('token'))})
+        setIsLogged(1);
+    }
+    
+    useEffect(() => {
+        checkAuthorization();
+    }, [])
+    
+
 
   return (
     <div>
@@ -42,7 +69,9 @@ const Navbar = () => {
                     <div className='d-flex justify-content-round'>
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         <li className="nav-item">
-                            <a className="nav-link active" href="/signin"><AiOutlineLogin size={25}/></a>
+                            {isLogged === 1 ?
+                            <a className="nav-link active" onClick={() => {logoutUser()}}><AiOutlineLogout size={25}/></a>
+                            : <a className="nav-link active" href="/signin"><AiOutlineLogin size={25}/></a>}
                         </li>
                         <li className="nav-item">
                             <a className="nav-link active"><AiOutlineUserAdd size={25}/></a>

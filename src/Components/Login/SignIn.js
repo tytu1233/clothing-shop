@@ -27,14 +27,11 @@ const SignIn = () => {
 
     const authUser = () => {
         AuthenticationService.authenticateUser(newUser).then((response) => {
-            console.log(response.data);
-            localStorage.setItem("token", JSON.stringify(response.data.token));
-        })
-      }
-
-      const check = () => {
-        AuthenticationService.checkAuthenticationUser(JSON.parse(localStorage.getItem('token'))).then((response) => {
-            console.log(response.data.response);
+            console.log(response.data.user_id);
+            if(response.data.user_id ==! -1) {
+                localStorage.setItem("token", JSON.stringify(response.data.token));
+                
+            }
         })
       }
 
@@ -62,8 +59,7 @@ const SignIn = () => {
                         <label className="form-label" htmlFor="form1Example23">Hasło</label>
                     </div>
 
-                    <button type="button" onClick={() => {authUser()}} className="btn btn-primary btn-lg btn-block">Zaloguj się</button>
-                    <button type="button" onClick={() => {check()}} className="btn btn-primary btn-lg btn-block">Sprwadź</button>
+                    <button type="button" id="liveToastBtn" onClick={() => {authUser();}} className="btn btn-primary btn-lg btn-block">Zaloguj się</button>
                     </form>
                 </div>
                 </div>

@@ -26,7 +26,7 @@ const Categories = () => {
             {categories.map((cat)=>(
                 <div className='col-md-3 col-sm-6 p-2' key={cat.id_category}>
                     <div className="position-relative">
-                        <img src="" className="w-100"/>
+                        <img src={require("../../img/product/product-5.jpg")} className="w-100"/>
                         <div className="position-absolute top-0 left-0 d-flex justify-content-center align-items-center w-100 h-100 text-white fs-5" style={{backgroundColor: 'rgba(0, 0, 0, 0.6)'}}>
                         {cat.category_name}
                         </div>
