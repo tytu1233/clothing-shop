@@ -5,13 +5,13 @@ const Slider = () => {
         <div id="carouselExampleControls" className="carousel slide" data-bs-ride="carousel">
             <div className="carousel-inner">
                 <div className="carousel-item active">
-                <img src={require('../img/gory.jpg')} className="d-block w-100" alt="..."/>
+                <img src={require('../../img/gory.jpg')} className="d-block w-100" alt="..."/>
                 </div>
                 <div className="carousel-item">
-                <img src={require('../img/gory.jpg')} className="d-block w-100" alt="..."/>
+                <img src={require('../../img/gory.jpg')} className="d-block w-100" alt="..."/>
                 </div>
                 <div className="carousel-item">
-                <img src={require('../img/gory.jpg')} className="d-block w-100" alt="..."/>
+                <img src={require('../../img/gory.jpg')} className="d-block w-100" alt="..."/>
                 </div>
             </div>
             <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">

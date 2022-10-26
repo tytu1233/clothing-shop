@@ -1,0 +1,156 @@
+.filter__controls {
+	text-align: center;
+	margin-bottom: 45px;
+}
+
+.filter__controls li {
+	color: #b7b7b7;
+	font-size: 24px;
+	font-weight: 700;
+	list-style: none;
+	display: inline-block;
+	margin-right: 88px;
+	cursor: pointer;
+}
+
+.filter__controls li:last-child {
+	margin-right: 0;
+}
+
+.filter__controls li.active {
+	color: #111111;
+}
+
+.shop__sidebar {
+	padding-right: 20px;
+}
+
+.shop__sidebar__accordion .card {
+	border: none;
+	border-radius: 0;
+	margin-bottom: 25px;
+}
+
+.shop__sidebar__accordion .card:last-child {
+	margin-bottom: 0;
+}
+
+.shop__sidebar__accordion .card:last-child .card-body {
+	padding-bottom: 0;
+	border-bottom: none;
+}
+
+.shop__sidebar__accordion .card-body {
+	padding: 0;
+	padding-top: 10px;
+	padding-bottom: 20px;
+	border-bottom: 1px solid #e5e5e5;
+}
+
+.shop__sidebar__accordion {
+	cursor: pointer;
+}
+
+.shop__sidebar__accordion a {
+	color: #111111;
+	font-size: 16px;
+	font-weight: 700;
+	text-transform: uppercase;
+	display: block;
+}
+
+.shop__sidebar__price ul,
+.shop__sidebar__brand ul {
+	height: 225px;
+}
+
+.shop__sidebar__price ul li,
+.shop__sidebar__brand ul li {
+	list-style: none;
+}
+
+.shop__sidebar__price ul li a,
+.shop__sidebar__brand ul li a {
+	color: #b7b7b7;
+	font-size: 15px;
+	line-height: 32px;
+	-webkit-transition: all, 0.3s;
+	-o-transition: all, 0.3s;
+	transition: all, 0.3s;
+}
+
+.shop__sidebar__price ul li a:hover,
+.shop__sidebar__brand ul li a:hover {
+	color: #111111;
+}
+
+.shop__sidebar__brand ul {
+	height: auto;
+}
+
+.shop__sidebar__price ul {
+	height: auto;
+}
+
+.shop__sidebar__size {
+	padding-top: 15px;
+}
+
+.shop__sidebar__size label {
+	color: #111111;
+	font-size: 15px;
+	font-weight: 700;
+	text-transform: uppercase;
+	display: inline-block;
+	border: 1px solid #e5e5e5;
+	padding: 6px 25px;
+	margin-bottom: 10px;
+	margin-right: 5px;
+	cursor: pointer;
+}
+
+.shop__sidebar__size label.active {
+	background: #111111;
+	color: #ffffff;
+	border-color: #111111;
+}
+
+.shop__sidebar__size label input {
+	position: absolute;
+	visibility: hidden;
+}
+
+.product__pagination {
+	padding-top: 25px;
+	text-align: center;
+}
+
+.product__pagination a {
+	display: inline-block;
+	font-size: 16px;
+	font-weight: 700;
+	color: #111111;
+	height: 30px;
+	width: 30px;
+	border: 1px solid transparent;
+	border-radius: 50%;
+	line-height: 30px;
+	text-align: center;
+}
+
+.product__pagination a.active {
+	border-color: #111111;
+}
+
+.product__pagination a:hover {
+	border-color: #111111;
+}
+
+.product__pagination span {
+	display: inline-block;
+	font-size: 16px;
+	font-weight: 700;
+	color: #111111;
+	padding-left: 10px;
+	padding-right: 15px;
+}
