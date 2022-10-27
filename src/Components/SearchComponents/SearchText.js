@@ -9,7 +9,7 @@ import { useRef } from "react";
 import MoonLoader from "react-spinners/MoonLoader";
 import { useDebounce } from "../../hooks/debounceHook";
 import axios from "axios";
-import { TvShow } from "./SearchShow";
+import { SearchShow } from "./SearchShow";
 
 const SearchBarContainer = styled(motion.div)`
   display: flex;
@@ -153,7 +153,7 @@ export function SearchText(props) {
   }, [isClickedOutside]);
 
   const prepareSearchQuery = (query) => {
-    const url = `http://api.tvmaze.com/search/shows?q=${query}`;
+    const url = `http://localhost:8080/products/${query}`;
 
     return encodeURI(url);
   };
@@ -235,12 +235,11 @@ export function SearchText(props) {
           )}
           {!isLoading && !isEmpty && (
             <>
-              {tvShows.map(({ show }) => (
-                <TvShow
-                  key={show.id}
-                  thumbanilSrc={show.image && show.image.medium}
+              {tvShows.map((show) => (
+                <SearchShow
+                  key={show.id_product}
                   name={show.name}
-                  rating={show.rating && show.rating.average}
+                  rating={show.price}
                 />
               ))}
             </>

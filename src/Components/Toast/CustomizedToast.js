@@ -11,8 +11,8 @@ export default function CustomizedToast({text, open}) {
 
   return (
     <Stack spacing={2} sx={{ width: '100%' }}>
-      <Snackbar open={open} autoHideDuration={6000} onClose={open}>
-        <Alert onClose={open} severity="success" sx={{ width: '100%' }}>
+      <Snackbar open={open} autoHideDuration={6000}>
+        <Alert severity="success" sx={{ width: '100%' }}>
           {text}
         </Alert>
       </Snackbar>

@@ -3,7 +3,7 @@ import SearchBar from '../SearchComponents/SearchBar'
 import Men from './Men'
 import Women from './Women'
 import { TfiSearch } from "react-icons/tfi";
-import { AiOutlineShoppingCart, AiOutlineLogin, AiOutlineUserAdd, AiOutlineLogout } from "react-icons/ai";
+import { AiOutlineShoppingCart, AiOutlineLogin, AiOutlineUserAdd, AiOutlineUser } from "react-icons/ai";
 import AuthenticationService from '../../Services/AuthenticationService';
 import { UserContext } from '../../other/UserContext';
 import CustomizedToast from '../Toast/CustomizedToast';
@@ -13,7 +13,7 @@ const Navbar = () => {
     const [isLogged, setIsLogged] = useState(0);
 
     const { user, setUser } = useContext(UserContext);
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
 
     const logoutUser = async () => {
         const res = await AuthenticationService.logoutUser(user);
@@ -78,7 +78,18 @@ const Navbar = () => {
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         <li className="nav-item">
                             { isLogged === 1 ?
-                            <a className="nav-link active" onClick={() => {logoutUser()}}><AiOutlineLogout size={25}/></a>
+                            <ul class="navbar-nav">
+                                <li class="nav-item dropdown">
+                                <a class="nav-link active dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <AiOutlineUser size={25}/>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                                    <li><a class="dropdown-item" href="#">Action</a></li>
+                                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                                    <li><a class="dropdown-item" onClick={() => {logoutUser()}} href="#">Wyloguj</a></li>
+                                </ul>
+                                </li>
+                            </ul>
                             : <a className="nav-link active" href="/signin"><AiOutlineLogin size={25}/></a> 
                             }
                         </li>

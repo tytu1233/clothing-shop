@@ -37,7 +37,7 @@ const Rating = styled.span`
   flex: 0.2;
 `;
 
-export function TvShow(props) {
+export function SearchShow(props) {
   const { thumbanilSrc, name, rating } = props;
 
   return (
