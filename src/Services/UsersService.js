@@ -4,20 +4,16 @@ const USERS_BASE_REST_API_URL = "http://localhost:8080/users"
 
 class UsersService {
 
-    getCategoriesByLoginAndEmail(login, email) {
+    getUsersByLoginAndEmail(login, email) {
         return axios.get(USERS_BASE_REST_API_URL + '/data/' + login + '/' + email);
     }
 
-    getCategoriesByLoginAndPassword(login, password) {
+    getUsersByLoginAndPassword(login, password) {
         return axios.get(USERS_BASE_REST_API_URL + '/login/' + login + '/' + password);
     }
 
-    getAllCategories() {
+    getAllUsers() {
         return axios.get(USERS_BASE_REST_API_URL);
-    }
-
-    getForMainPageCategories() {
-        return axios.get(USERS_BASE_REST_API_URL + '/main/' + 4);
     }
 
     getUserId(userId) {
@@ -25,7 +21,7 @@ class UsersService {
     }
 
     createUser(user) {
-        return axios.post(USERS_BASE_REST_API_URL, user);
+        return axios.post(USERS_BASE_REST_API_URL + '/1', user);
     }
 
     updateUser(userId, user) {

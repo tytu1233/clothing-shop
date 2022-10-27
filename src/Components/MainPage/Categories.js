@@ -18,6 +18,7 @@ const Categories = () => {
 
   return (
     <div className='container p-3'>
+
         <div className='d-flex justify-content-center p-3'>
             <h1 className="display-6">Przykładowe kategorie</h1>
         </div>

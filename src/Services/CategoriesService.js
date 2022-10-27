@@ -4,14 +4,6 @@ const CATEGORIES_BASE_REST_API_URL = "http://localhost:8080/categories"
 
 class CategoriesService {
 
-    getCategoriesByLoginAndEmail(login, email) {
-        return axios.get(CATEGORIES_BASE_REST_API_URL + '/data/' + login + '/' + email);
-    }
-
-    getCategoriesByLoginAndPassword(login, password) {
-        return axios.get(CATEGORIES_BASE_REST_API_URL + '/login/' + login + '/' + password);
-    }
-
     getAllCategories() {
         return axios.get(CATEGORIES_BASE_REST_API_URL);
     }
@@ -20,20 +12,20 @@ class CategoriesService {
         return axios.get(CATEGORIES_BASE_REST_API_URL + '/main/' + 4);
     }
 
-    getUserId(userId) {
-        return axios.get(CATEGORIES_BASE_REST_API_URL + '/' + userId);
+    getCategoryId(categoryId) {
+        return axios.get(CATEGORIES_BASE_REST_API_URL + '/' + categoryId);
     }
 
-    createUser(user) {
-        return axios.post(CATEGORIES_BASE_REST_API_URL, user);
+    createCategory(category) {
+        return axios.post(CATEGORIES_BASE_REST_API_URL, category);
     }
 
-    updateUser(userId, user) {
-        return axios.put(CATEGORIES_BASE_REST_API_URL + '/' + userId, user);
+    updateCategory(categoryId, category) {
+        return axios.put(CATEGORIES_BASE_REST_API_URL + '/' + categoryId, category);
     }
 
-    deleteUser(userId) {
-        return axios.delete(CATEGORIES_BASE_REST_API_URL + '/' + userId);
+    deleteCategory(categoryId) {
+        return axios.delete(CATEGORIES_BASE_REST_API_URL + '/' + categoryId);
     }
 
 }

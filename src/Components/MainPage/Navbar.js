@@ -1,30 +1,38 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import SearchBar from '../SearchComponents/SearchBar'
 import Men from './Men'
 import Women from './Women'
 import { TfiSearch } from "react-icons/tfi";
 import { AiOutlineShoppingCart, AiOutlineLogin, AiOutlineUserAdd, AiOutlineLogout } from "react-icons/ai";
 import AuthenticationService from '../../Services/AuthenticationService';
-
+import { UserContext } from '../../other/UserContext';
+import CustomizedToast from '../Toast/CustomizedToast';
 
 const Navbar = () => {
 
-    const [loggedUser, setLoggedUser] = useState([]);
     const [isLogged, setIsLogged] = useState(0);
 
+    const { user, setUser } = useContext(UserContext);
+    const [open, setOpen] = React.useState(false);
+
     const logoutUser = async () => {
-        const res = await AuthenticationService.logoutUser(loggedUser);
+        const res = await AuthenticationService.logoutUser(user);
         if(res.data === "true") {
-            setIsLogged([]);
             setIsLogged(0);
         }
+        setOpen(true)
+        const interval = setInterval(() => {
+            setOpen(false);
+        }, 2000);
+          return () => clearInterval(interval);
     }
+
     
     const checkAuthorization = async () => {
         const res = await AuthenticationService.checkAuthenticationUser(JSON.parse(localStorage.getItem('token')));
         if(!(res.data.status === "pass")) return;
         console.log(res.data.user_id)
-        setLoggedUser({"user_id": res.data.user_id, "token": JSON.parse(localStorage.getItem('token'))})
+        setUser({"user_id": res.data.user_id, "token": JSON.parse(localStorage.getItem('token'))})
         setIsLogged(1);
     }
     
@@ -69,12 +77,13 @@ const Navbar = () => {
                     <div className='d-flex justify-content-round'>
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         <li className="nav-item">
-                            {isLogged === 1 ?
+                            { isLogged === 1 ?
                             <a className="nav-link active" onClick={() => {logoutUser()}}><AiOutlineLogout size={25}/></a>
-                            : <a className="nav-link active" href="/signin"><AiOutlineLogin size={25}/></a>}
+                            : <a className="nav-link active" href="/signin"><AiOutlineLogin size={25}/></a> 
+                            }
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link active"><AiOutlineUserAdd size={25}/></a>
+                            <a className="nav-link active" href="/signup"><AiOutlineUserAdd size={25}/></a>
                         </li>
                         <li className="nav-item">
                             <a href='/cart' className="nav-link active"><AiOutlineShoppingCart size={25}/></a>
@@ -86,6 +95,9 @@ const Navbar = () => {
         </nav>
         <Men/>
         <Women/>
+        <>
+        <CustomizedToast text={"Nastąpi wylogowanie"} open={open}/>
+        </>
     </div>
   )
 }

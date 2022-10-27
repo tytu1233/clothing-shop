@@ -9,7 +9,6 @@ class AuthenticationService {
     }
 
     checkAuthenticationUser(token) {
-        //console.log(token)
         return axios.get(AUTH_BASE_REST_API_URL, {
             validateStatus: function () {
                 return true;

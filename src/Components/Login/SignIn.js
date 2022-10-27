@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext} from 'react'
 import '../../styles/login.css'
 import AuthenticationService from '../../Services/AuthenticationService';
 
@@ -27,11 +27,8 @@ const SignIn = () => {
 
     const authUser = () => {
         AuthenticationService.authenticateUser(newUser).then((response) => {
-            console.log(response.data.user_id);
-            if(response.data.user_id ==! -1) {
-                localStorage.setItem("token", JSON.stringify(response.data.token));
-                
-            }
+            console.log(response.data)
+            localStorage.setItem("token", JSON.stringify(response.data.token));
         })
       }
 
@@ -45,7 +42,7 @@ const SignIn = () => {
                 <div className="row d-flex align-items-center justify-content-center h-100">
                 <div className="col-md-8 col-lg-7 col-xl-6">
                     <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
-                    className="img-fluid" alt="Phone image"/>
+                    className="img-fluid" alt=""/>
                 </div>
                 <div className="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
                     <form>
@@ -59,7 +56,7 @@ const SignIn = () => {
                         <label className="form-label" htmlFor="form1Example23">Hasło</label>
                     </div>
 
-                    <button type="button" id="liveToastBtn" onClick={() => {authUser();}} className="btn btn-primary btn-lg btn-block">Zaloguj się</button>
+                    <button type="button" id="liveToastBtn" onClick={() => {authUser()}} className="btn btn-primary btn-lg btn-block">Zaloguj się</button>
                     </form>
                 </div>
                 </div>

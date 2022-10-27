@@ -12,7 +12,7 @@ const Footer = () => {
                     <div className="footer__logo">
                         <a href="src/Components/MainPage/Footer#"><img src="img/footer-logo.png" alt=""/></a>
                     </div>
-                    <p>The customer is at the heart of our unique business model, which includes design.</p>
+                    <p>Sklep z męskimi ubraniami - wpadającymi w każde gusta</p>
                     <a href="src/Components/MainPage/Footer#"><img src="img/payment.png" alt=""/></a>
                 </div>
             </div>
@@ -40,9 +40,9 @@ const Footer = () => {
             </div>
             <div className="col-lg-3 offset-lg-1 col-md-6 col-sm-6">
                 <div className="footer__widget">
-                    <h6>NewLetter</h6>
+                    <h6>Newsletter</h6>
                     <div className="footer__newslatter">
-                        <p>Be the first to know about new arrivals, look books, sales & promos!</p>
+                        <p>Zapisz się, aby byc na bieżąco z promocjami oraz nowymi towarami!</p>
                         <form action="src/Components/MainPage/Footer#">
                             <input type="text" placeholder="Your email"/>
                             <button type="submit"><AiOutlineMail/></button>
