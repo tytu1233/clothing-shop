@@ -24,7 +24,8 @@ const Navbar = () => {
         const interval = setInterval(() => {
             setOpen(false);
         }, 2000);
-          return () => clearInterval(interval);
+        window.location.reload(false);
+          return () => {clearInterval(interval);}
     }
 
     
@@ -54,10 +55,10 @@ const Navbar = () => {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         <li className="nav-item dropdown">
-                            <a className="nav-link active dropdown-toggle" data-bs-toggle="collapse" href="src/Components/MainPage/Navbar#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">MĘŻCZYZNA</a>
+                            <a className="nav-link active dropdown-toggle" data-bs-toggle="collapse" href="src/Components/MainPage/Navbar#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">KATEGORIE</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link active dropdown-toggle" data-bs-toggle="collapse" href="src/Components/MainPage/Navbar#multiCollapseExample2" role="button" aria-expanded="false" aria-controls="multiCollapseExample2">KOBIETA</a>
+                            <a className="nav-link active" href='/products'>PRODUKTY</a>
                         </li>
                     </ul>
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
@@ -105,7 +106,6 @@ const Navbar = () => {
             </div>
         </nav>
         <Men/>
-        <Women/>
         <>
         <CustomizedToast text={"Nastąpi wylogowanie"} open={open}/>
         </>

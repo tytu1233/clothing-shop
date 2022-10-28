@@ -3,9 +3,12 @@ import '../../styles/products.css'
 import { TfiShoppingCart } from "react-icons/tfi";
 import ProductsService from '../../Services/ProductsService';
 import { Pagination } from '@mui/material';
+import { useCart } from "react-use-cart";
 import CustomizedToast from '../Toast/CustomizedToast';
 
 const Products = () => {
+
+    const { addItem } = useCart();
 
     const [products, setProducts] = useState([]);
     const [pagination, setPagination] = useState([]);
@@ -15,10 +18,10 @@ const Products = () => {
     const handleChange = (e, p) => {
         console.log(e,p)
         setPage(p-1)
+        window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
     }
 
-    const addToCart = () => {
-        setOpen(true)
+    const addToCart = (i) => {
         const interval = setInterval(() => {
             setOpen(false);
         }, 2000);
@@ -129,8 +132,8 @@ const Products = () => {
                         </div>
                     </div>
                     <div className="row">
-                    {products.map((product, i) => {
-                        return <div className="col-lg-4 col-md-6 col-sm-6" key={i}>
+                    {products.map((product) => {
+                        return <div className="col-lg-4 col-md-6 col-sm-6" key={product.id_product}>
                             <div className='row'>
                                     <img src={require('../../img/product/product-1.jpg')}/>
                                     <div className='col-10'>
@@ -138,7 +141,7 @@ const Products = () => {
                                         <h5>{product.price} zł</h5>
                                     </div>
                                     <div className='col-2'>
-                                        <TfiShoppingCart onClick={() => addToCart()}/>
+                                        <TfiShoppingCart onClick={() => addToCart(product)}/>
                                     </div>
                             </div>
                         </div>

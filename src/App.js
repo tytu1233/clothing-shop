@@ -9,6 +9,7 @@ import Products from './Components/ProductsPage/Products';
 import SignIn from './Components/Login/SignIn';
 import SignUp from './Components/Login/SignUp';
 import { UserContext } from './other/UserContext';
+import { CartProvider } from 'react-use-cart';
 
 
 const App = () => {
@@ -24,18 +25,20 @@ const App = () => {
     <div>
         <Router>
         <UserContext.Provider value={userProvider}>
-            <div>
-            <Navbar/>
-                <Routes>
-                    <Route path='/' element = {<Main/>}></Route>
-                    <Route path='/details' element = {<Details/>}></Route>
-                    <Route path='/cart' element = {<Cart/>}></Route>
-                    <Route path='/products' element = {<Products/>}></Route>
-                    <Route path='/signin' element = {<SignIn/>}></Route>
-                    <Route path='/signup' element = {<SignUp/>}></Route>
-                </Routes>
-            <Footer/>
-            </div>
+            <CartProvider>
+                <div>
+                <Navbar/>
+                    <Routes>
+                        <Route path='/' element = {<Main/>}></Route>
+                        <Route path='/details' element = {<Details/>}></Route>
+                        <Route path='/cart' element = {<Cart/>}></Route>
+                        <Route path='/products' element = {<Products/>}></Route>
+                        <Route path='/signin' element = {<SignIn/>}></Route>
+                        <Route path='/signup' element = {<SignUp/>}></Route>
+                    </Routes>
+                <Footer/>
+                </div>
+            </CartProvider>
         </UserContext.Provider>
         </Router>
 
