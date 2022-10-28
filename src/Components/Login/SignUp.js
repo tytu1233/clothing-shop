@@ -1,35 +1,32 @@
 import React, { useEffect, useState } from 'react'
 import UsersService from '../../Services/UsersService';
-
-const initialState = {
-    name: "",
-    surname: "",
-    email: "",
-    login: "",
-    password: "",
-    address: "",
-};
+import { useForm } from 'react-hook-form';
+import '../../styles/signup.css'
 
 
 const SignUp = () => {
 
-    const [newUser, setNewUser] = useState(initialState);
+    const [mail, setMail] = useState(0)
 
-    useEffect(() => {}, [newUser]);
-
-    const handleOnChange = (e) => {
-        const { name, value } = e.target;
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        reset,
+        trigger,
+      } = useForm();
     
-        setNewUser({ ...newUser, [name]: value });
-    
+      const onSubmit = async (data) => {
+        const res = await UsersService.getUserEmail(data.email);
+        if(res.data==="wolne") {
+            UsersService.createUser(data)
+            .then((response) => {
+                console.log(response.data)
+            })
+        reset();
+        } else 
+            setMail(1)
       };
-
-    const registerUser = () => {
-        UsersService.createUser(newUser)
-        .then((response) => {
-            console.log(response.data)
-        })
-    }
 
 
   return (
@@ -42,47 +39,137 @@ const SignUp = () => {
                     <div className="card-body p-5">
                     <h2 className="text-uppercase text-center mb-5">Stwórz konto</h2>
 
-                    <form>
+                    <form onSubmit={handleSubmit(onSubmit)}>
 
                         <div className="form-outline mb-4">
-                            <input type="text" name="name" id="signUpName" value={newUser.name} onChange={handleOnChange} className="form-control form-control-lg" />
+                            <div className='form-group'>
                             <label className="form-label" htmlFor="signUpName">Imię</label>
+                            <input type="text"
+                            className={`form-control ${errors.name && "invalid"}`}
+                                {...register("name", { required: "Imię jest wymagane" })}
+                                onKeyUp={() => {
+                                trigger("name");
+                                }}
+                            />
+
+                            {errors.name && (
+                                <div className='d-flex justify-content-center'>
+                                    <small className="text-danger">{errors.name.message}</small>
+                                </div>
+                            )}
+                            </div>
+                        </div>
+                        
+                        <div className="form-outline mb-4">
+                        <label className="form-label" htmlFor="signUpSurname">Nazwisko</label>
+                            <input type="text" className={`form-control ${errors.surname && "invalid"}`}
+                                {...register("surname", { required: "Nazwisko jest wymagane" })}
+                                onKeyUp={() => {
+                                trigger("surname");
+                                }}
+                            />
+
+                            {errors.surname && (
+                                <div className='d-flex justify-content-center'>
+                                    <small className="text-danger">{errors.surname.message}</small>
+                                </div>
+                            )}
+                            
                         </div>
 
                         <div className="form-outline mb-4">
-                            <input type="text" name="surname" id="signUpSurname" value={newUser.surname} onChange={handleOnChange} className="form-control form-control-lg" />
-                            <label className="form-label" htmlFor="signUpSurname">Nazwisko</label>
+                        <label className="form-label" htmlFor="signUpLogin">Login</label>
+                            <input type="text" className={`form-control ${errors.login && "invalid"}`}
+                                {...register("login", { required: "Login jest wymagany" })}
+                                onKeyUp={() => {
+                                trigger("login");
+                                }}
+                            />
+
+                            {errors.login && (
+                                <div className='d-flex justify-content-center'>
+                                    <small className="text-danger">{errors.login.message}</small>
+                                </div>
+                            )}
+                            
                         </div>
 
                         <div className="form-outline mb-4">
-                            <input type="text" name="login" id="signUpLogin" value={newUser.login} onChange={handleOnChange} className="form-control form-control-lg" />
-                            <label className="form-label" htmlFor="signUpLogin">Login</label>
-                        </div>
-
-                        <div className="form-outline mb-4">
-                            <input type="password" name="password" id="signUpPassword" value={newUser.password} onChange={handleOnChange} className="form-control form-control-lg" />
                             <label className="form-label" htmlFor="signUpPassword">Hasło</label>
+                            <input type="password" className={`form-control ${errors.password && "invalid"}`}
+                                {...register("password", { required: "Hasło jest wymagane",
+                                pattern: {
+                                    value: /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/,
+                                    message: "Hasło musi zawierać co najmniej 1 cyfrę, dużą literę, małą literę i co najmniej 8 znaków"
+                                }
+                                })}
+                                onKeyUp={() => {
+                                trigger("password");
+                                }}
+                            />
+
+                            {errors.password && (
+                                <div className='d-flex justify-content-center'>
+                                    <small className="text-danger">{errors.password.message}</small>
+                                </div>
+                            )}
+                            
                         </div>
 
                         <div className="form-outline mb-4">
-                            <input type="email" id="signUpMail" name="email" value={newUser.email} onChange={handleOnChange} className="form-control form-control-lg" />
                             <label className="form-label" htmlFor="signUpMail">E-mail</label>
+                            <input type="email" className={`form-control ${errors.email && "invalid"}`}
+                                {...register("email", { required: "Email jest wymagany" ,
+                                pattern: {
+                                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                message: "Adres email jest niepoprawny",
+                                }
+                            })}
+                                onKeyUp={() => {
+                                    trigger("email");
+                                    setMail(0);
+                                }}
+                            />
+                            {
+                            <div className='d-flex justify-content-center'>
+                                {errors.email && (
+                                <div className='d-flex justify-content-center'>
+                                    <small className="text-danger">{errors.email.message}</small>
+                                </div>
+                                )}
+                                {mail === 1 ? (
+                                    <small className="text-danger">Podany e-mail jest zajęty</small>
+                                ) : null}
+                            </div>
+                            }
                         </div>
 
                         <div className="form-outline mb-4">
-                            <input type="text" id="signUpAddress" name="address" value={newUser.address} onChange={handleOnChange} className="form-control form-control-lg" />
-                            <label className="form-label" htmlFor="signUpAddress">Adres</label>
+                        <label className="form-label" htmlFor="signUpAddress">Adres</label>
+                            <input type="text" className={`form-control ${errors.address && "invalid"}`}
+                                {...register("address", { required: "Adres jest wymagany" })}
+                                onKeyUp={() => {
+                                trigger("address");
+                                }}
+                            />
+
+                            {errors.address && (
+                                <div className='d-flex justify-content-center'>
+                                    <small className="text-danger">{errors.address.message}</small>
+                                </div>
+                            )}
+                            
                         </div>
 
                         <div className="form-check d-flex justify-content-center mb-5">
-                        <input className="form-check-input me-2" type="checkbox" value="" id="form2Example3cg" />
+                        <input className="form-check-input me-2" type="checkbox" id="form2Example3cg" />
                         <label className="form-check-label" htmlFor="form2Example3g">
                             Zgadzam się na <a href="#!" className="text-body"><u>warunki serwisu</u></a>
                         </label>
                         </div>
 
                         <div className="d-flex justify-content-center">
-                        <button type="button" onClick={() => registerUser()}
+                        <button type="submit"
                             className="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Register</button>
                         </div>
 

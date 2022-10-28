@@ -20,6 +20,10 @@ class UsersService {
         return axios.get(USERS_BASE_REST_API_URL + '/' + userId);
     }
 
+    getUserEmail(email) {
+        return axios.get(USERS_BASE_REST_API_URL + '/email/' + email);
+    }
+
     createUser(user) {
         return axios.post(USERS_BASE_REST_API_URL + '/1', user);
     }
