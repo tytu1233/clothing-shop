@@ -28,7 +28,6 @@ const Cart = () => {
         </div>
       );
 
-
       const createOrder = () => {
         OrdersService.createOrder(user.user_id)
         .then((response) => {

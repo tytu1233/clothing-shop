@@ -13,11 +13,13 @@ class ProductsService {
         return axios.get(PRODUCTS_BASE_REST_API_URL + '/' + id);
     }
 
-    getFilteredData(e) {
-        let arrayBrands = e.toString()
-        return axios.get(PRODUCTS_BASE_REST_API_URL + '/filter', {
+    getFilteredData(brand, price, page) {
+        let arrayBrands = brand.toString()
+        let arrayPrices = price.toString()
+        return axios.get(PRODUCTS_BASE_REST_API_URL + '/filter' + '?pageNo=' + page, {
             params: {
                 brands: arrayBrands,
+                prices: arrayPrices,
             }
         })
     }

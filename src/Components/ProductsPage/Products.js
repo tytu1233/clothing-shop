@@ -12,37 +12,52 @@ const Products = () => {
     const { addItem } = useCart();
 
     const [products, setProducts] = useState([]);
-    const [filteredData, setFilteredData] = useState([])
+    const [brandFiltered, setBrandFiltered] = useState([])
+    const [priceFiltered, setPriceFiltered] = useState([])
     const [pagination, setPagination] = useState([]);
     const [page, setPage] = useState(0);
     const [open, setOpen] = useState(false);
 
     const handleChange = (e, p) => {
-        //console.log(e,p)
         setPage(p-1)
         window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
     }
 
     const loadProducts = async () => {
-        await ProductsService.getFilteredData(filteredData).then((res) => {
+        if(brandFiltered.length > 0 || priceFiltered.length > 0) setPage(0)
+        await ProductsService.getFilteredData(brandFiltered, priceFiltered, page).then((res) => {
             setProducts(res.data.content);
             setPagination(res.data)
+            console.log(res.data)
             //console.log(res.data.content)
         })
         //console.log(list)
     }
 
     const handleCheckboxes = (e) => {
-        let prev = filteredData;
-        let itemIndex = prev.indexOf(e.target.value);
-  
-        if (itemIndex !== -1) {
-          prev.splice(itemIndex, 1);
+        if(e.target.name === "brand") {
+            console.log(e.target.name)
+            let prev = brandFiltered;
+            let itemIndex = prev.indexOf(e.target.value);
+    
+            if (itemIndex !== -1) {
+            prev.splice(itemIndex, 1);
+            } else {
+            prev.push(e.target.value);
+            }
+            setBrandFiltered([...brandFiltered]);
         } else {
-          prev.push(e.target.value);
+            let prev = priceFiltered;
+            let itemIndex = prev.indexOf(e.target.value);
+    
+            if (itemIndex !== -1) {
+            prev.splice(itemIndex, 1);
+            } else {
+            prev.push(e.target.value);
+            }
+            setPriceFiltered([...priceFiltered]);
         }
-        setFilteredData([...prev]);
-        console.log(filteredData)
+        console.log(priceFiltered)
     }
 
     const addToCart = (i) => {
@@ -56,7 +71,7 @@ const Products = () => {
 
     useEffect(() => {
         loadProducts();
-    },[filteredData, page])
+    },[brandFiltered, priceFiltered,page])
 
   return (
         <div className="container p-4">
@@ -75,18 +90,20 @@ const Products = () => {
                                                 <input className="form-check-input" 
                                                 onChange={handleCheckboxes}
                                                 value="nike"
+                                                name="brand"
                                                 type="checkbox" id="flexCheckDefault"/>
                                                 <label className="form-check-label" htmlFor="flexCheckDefault">
-                                                    Default checkbox
+                                                    nike
                                                 </label>
                                                 </div>
                                                 <div className="form-check">
                                                 <input className="form-check-input" 
                                                 onChange={handleCheckboxes}
                                                 value="adik"
+                                                name="brand"
                                                 type="checkbox"  id="flexCheckChecked" />
                                                 <label className="form-check-label" htmlFor="flexCheckChecked">
-                                                    Checked checkbox
+                                                    adik
                                                 </label>
                                                 </div>
                                             </div>
@@ -103,17 +120,23 @@ const Products = () => {
                                                 <div className="form-check">
                                                 <input className="form-check-input" 
                                                 onChange={handleCheckboxes}
-                                                value="1200"
+                                                value="12"
+                                                name="price"
                                                 type="checkbox"  id="flexCheckChecked" />
                                                 <label className="form-check-label" htmlFor="flexCheckChecked">
-                                                    Checked checkbox
+                                                    12
                                                 </label>
                                                 </div>
-                                                    <li><a href="#">$50.00 - $100.00</a></li>
-                                                    <li><a href="#">$100.00 - $150.00</a></li>
-                                                    <li><a href="#">$150.00 - $200.00</a></li>
-                                                    <li><a href="#">$200.00 - $250.00</a></li>
-                                                    <li><a href="#">250.00+</a></li>
+                                                <div className="form-check">
+                                                    <input className="form-check-input" 
+                                                    onChange={handleCheckboxes}
+                                                    value="15"
+                                                    name="price"
+                                                    type="checkbox"  id="flexCheckChecked" />
+                                                <label className="form-check-label" htmlFor="flexCheckChecked">
+                                                    15
+                                                </label>
+                                                </div>
                                                 </ul>
                                             </div>
                                         </div>
@@ -160,7 +183,7 @@ const Products = () => {
                         <div className="row">
                             <div className="col-lg-6 col-md-6 col-sm-6">
                                 <div className="shop__product__option__left">
-                                    {products.length > 0 ?<p>Znaleziono {pagination.pageable.offset+1}-{pagination.pageable.offset+pagination.numberOfElements} z {pagination.totalElements}</p> : <p>Nie znaleziono elementów</p>}
+                                {products.length > 0 ?<p>Znaleziono {pagination.pageable.offset+1}-{pagination.pageable.offset+pagination.numberOfElements} z {pagination.totalElements}</p> : <p>Nie znaleziono elementów</p>}
                                 </div>
                             </div>
                         </div>
