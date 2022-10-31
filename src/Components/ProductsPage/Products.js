@@ -1,48 +1,62 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import '../../styles/products.css'
 import { TfiShoppingCart } from "react-icons/tfi";
 import ProductsService from '../../Services/ProductsService';
 import { Pagination } from '@mui/material';
 import { useCart } from "react-use-cart";
 import CustomizedToast from '../Toast/CustomizedToast';
+import { Link } from 'react-router-dom';
 
 const Products = () => {
 
     const { addItem } = useCart();
 
     const [products, setProducts] = useState([]);
+    const [filteredData, setFilteredData] = useState([])
     const [pagination, setPagination] = useState([]);
     const [page, setPage] = useState(0);
     const [open, setOpen] = useState(false);
 
     const handleChange = (e, p) => {
-        console.log(e,p)
+        //console.log(e,p)
         setPage(p-1)
         window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
     }
 
+    const loadProducts = async () => {
+        await ProductsService.getFilteredData(filteredData).then((res) => {
+            setProducts(res.data.content);
+            setPagination(res.data)
+            console.log(res.data.content)
+        })
+        //console.log(list)
+    }
+
+    const handleCheckboxes = (e) => {
+        let prev = filteredData;
+        let itemIndex = prev.indexOf(e.target.value);
+  
+        if (itemIndex !== -1) {
+          prev.splice(itemIndex, 1);
+        } else {
+          prev.push(e.target.value);
+        }
+        setFilteredData([...prev]);
+        //console.log(filteredData)
+    }
+
     const addToCart = (i) => {
+        addItem(i)
+        setOpen(true);
         const interval = setInterval(() => {
             setOpen(false);
         }, 2000);
           return () => clearInterval(interval);
     }
 
-    const loadProducts = async () => {
-        const res = await ProductsService.getAll(page)
-        setProducts(res.data.content);
-        setPagination(res.data)
-        console.log(res.data)
-    }
-
-
     useEffect(() => {
         loadProducts();
-        console.log("effect" + page)
-    }, [page])
-
-
-
+    },[filteredData, page])
 
   return (
         <div className="container p-4">
@@ -57,12 +71,24 @@ const Products = () => {
                                     </div>
                                         <div className="card-body">
                                             <div className="shop__sidebar__brand">
-                                                <ul>
-                                                    <li><a href="#">Louis Vuitton</a></li>
-                                                    <li><a href="#">Chanel</a></li>
-                                                    <li><a href="#">Hermes</a></li>
-                                                    <li><a href="#">Gucci</a></li>
-                                                </ul>
+                                            <div className="form-check">
+                                                <input className="form-check-input" 
+                                                onChange={handleCheckboxes}
+                                                value="nike"
+                                                type="checkbox" id="flexCheckDefault"/>
+                                                <label className="form-check-label" htmlFor="flexCheckDefault">
+                                                    Default checkbox
+                                                </label>
+                                                </div>
+                                                <div className="form-check">
+                                                <input className="form-check-input" 
+                                                onChange={handleCheckboxes}
+                                                value="adik"
+                                                type="checkbox"  id="flexCheckChecked" />
+                                                <label className="form-check-label" htmlFor="flexCheckChecked">
+                                                    Checked checkbox
+                                                </label>
+                                                </div>
                                             </div>
                                     </div>
                                 </div>
@@ -133,9 +159,13 @@ const Products = () => {
                     </div>
                     <div className="row">
                     {products.map((product) => {
-                        return <div className="col-lg-4 col-md-6 col-sm-6" key={product.id_product}>
-                            <div className='row'>
+                        return <div className="col-lg-4 col-md-6 col-sm-6" key={product.id}>
+                            <Link to={`/details/${product.id}`}>
+                                <div className='row'>
                                     <img src={require('../../img/product/product-1.jpg')}/>
+                                </div>
+                            </Link>
+                            <div className='row'>
                                     <div className='col-10'>
                                         <h6>{product.name}</h6>
                                         <h5>{product.price} zł</h5>

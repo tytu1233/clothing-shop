@@ -153,7 +153,7 @@ export function SearchText(props) {
   }, [isClickedOutside]);
 
   const prepareSearchQuery = (query) => {
-    const url = `http://localhost:8080/products/${query}`;
+    const url = `http://localhost:8080/products/search/${query}`;
 
     return encodeURI(url);
   };
