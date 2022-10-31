@@ -1,9 +1,10 @@
-import React, { useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import '../../styles/cart.css'
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import { TfiPlus, TfiMinus } from "react-icons/tfi";
 import { UserContext } from '../../other/UserContext';
 import { useCart } from "react-use-cart";
+import OrdersService from '../../Services/OrdersService';
 
 const Cart = () => {
 
@@ -16,6 +17,9 @@ const Cart = () => {
         removeItem,
       } = useCart();
 
+      const { user } = useContext(UserContext);
+      const [orderId, setOrderId] = useState(0);
+
       if (isEmpty) return (
         <div className='container p-4'>
             <div className='d-flex justify-content-center'>
@@ -24,6 +28,20 @@ const Cart = () => {
         </div>
       );
 
+
+      const createOrder = () => {
+        OrdersService.createOrder(user.user_id)
+        .then((response) => {
+            setOrderId(response.data)
+            for(let i = 0; i<items.length; i++) {
+                OrdersService.createOrdersProduct(response.data, items[i])
+                .then((response) => {
+                    console.log(response.data)
+                })
+            }
+        })
+      }
+      console.log(items)
   return (
     <div>
     <div className="container p-4">
@@ -89,7 +107,7 @@ const Cart = () => {
                             <li>Koszt produktów <span>{cartTotal} zł</span></li>
                             <li>Cena końcowa <span>{cartTotal - (cartTotal*0.05)} zł</span></li>
                         </ul>
-                        <a href="#" className="primary-btn">Złóż zamówienie</a>
+                        <a onClick={() => {createOrder()}} className="primary-btn">Złóż zamówienie</a>
                     </div>
                 </div>
             </div>
