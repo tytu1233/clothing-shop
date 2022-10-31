@@ -27,7 +27,7 @@ const Products = () => {
         await ProductsService.getFilteredData(filteredData).then((res) => {
             setProducts(res.data.content);
             setPagination(res.data)
-            console.log(res.data.content)
+            //console.log(res.data.content)
         })
         //console.log(list)
     }
@@ -42,7 +42,7 @@ const Products = () => {
           prev.push(e.target.value);
         }
         setFilteredData([...prev]);
-        //console.log(filteredData)
+        console.log(filteredData)
     }
 
     const addToCart = (i) => {
@@ -100,7 +100,15 @@ const Products = () => {
                                             
                                             <div className="shop__sidebar__price">
                                                 <ul>
-                                                    <li><a href="#">$0.00 - $50.00</a></li>
+                                                <div className="form-check">
+                                                <input className="form-check-input" 
+                                                onChange={handleCheckboxes}
+                                                value="1200"
+                                                type="checkbox"  id="flexCheckChecked" />
+                                                <label className="form-check-label" htmlFor="flexCheckChecked">
+                                                    Checked checkbox
+                                                </label>
+                                                </div>
                                                     <li><a href="#">$50.00 - $100.00</a></li>
                                                     <li><a href="#">$100.00 - $150.00</a></li>
                                                     <li><a href="#">$150.00 - $200.00</a></li>

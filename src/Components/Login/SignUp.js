@@ -1,33 +1,31 @@
 import React, { useEffect, useState } from 'react'
 import UsersService from '../../Services/UsersService';
-import { useForm } from 'react-hook-form';
 import '../../styles/signup.css'
+import { useFormik } from 'formik';
+import { registerSchema } from '../schemas/register';
 
 
 const SignUp = () => {
 
-    const [mail, setMail] = useState(0)
-
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-        reset,
-        trigger,
-      } = useForm();
-    
-      const onSubmit = async (data) => {
-        const res = await UsersService.getUserEmail(data.email);
-        if(res.data==="wolne") {
-            UsersService.createUser(data)
+    const onSubmit = async () => {
+            UsersService.createUser(values)
             .then((response) => {
                 console.log(response.data)
             })
-        reset();
-        } else 
-            setMail(1)
       };
 
+    const { values, errors, handleBlur, touched, handleChange, handleSubmit } = useFormik({
+        initialValues: {
+            name: "",
+            surname: "",
+            login: "",
+            password: "",
+            email: "",
+            address: ""
+        },
+        validationSchema: registerSchema,
+        onSubmit
+    });
 
   return (
     <section className="container p-4">
@@ -39,126 +37,100 @@ const SignUp = () => {
                     <div className="card-body p-5">
                     <h2 className="text-uppercase text-center mb-5">Stwórz konto</h2>
 
-                    <form onSubmit={handleSubmit(onSubmit)}>
+                    <form onSubmit={handleSubmit}>
 
                         <div className="form-outline mb-4">
                             <div className='form-group'>
                             <label className="form-label" htmlFor="signUpName">Imię</label>
                             <input type="text"
-                            className={`form-control ${errors.name && "invalid"}`}
-                                {...register("name", { required: "Imię jest wymagane" })}
-                                onKeyUp={() => {
-                                trigger("name");
-                                }}
+                            className={`form-control ${errors.name && touched.name ? "invalid" : ""}`}
+                            value={values.name}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            id="name"
+                            placeholder='Podaj swoje imię'
                             />
-
-                            {errors.name && (
-                                <div className='d-flex justify-content-center'>
-                                    <small className="text-danger">{errors.name.message}</small>
-                                </div>
-                            )}
+                            {errors.name && touched.name &&
+                                    <small className="text-danger">{errors.name}</small>
+                            }
                             </div>
                         </div>
                         
                         <div className="form-outline mb-4">
                         <label className="form-label" htmlFor="signUpSurname">Nazwisko</label>
-                            <input type="text" className={`form-control ${errors.surname && "invalid"}`}
-                                {...register("surname", { required: "Nazwisko jest wymagane" })}
-                                onKeyUp={() => {
-                                trigger("surname");
-                                }}
+                        <input type="text"
+                            className={`form-control ${errors.surname && touched.surname ? "invalid" : ""}`}
+                            value={values.surname}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            id="surname"
+                            placeholder='Podaj swoje nazwisko'
                             />
-
-                            {errors.surname && (
-                                <div className='d-flex justify-content-center'>
-                                    <small className="text-danger">{errors.surname.message}</small>
-                                </div>
-                            )}
-                            
+                            {errors.surname && touched.surname &&
+                                    <small className="text-danger">{errors.surname}</small>
+                            }
                         </div>
 
                         <div className="form-outline mb-4">
                         <label className="form-label" htmlFor="signUpLogin">Login</label>
-                            <input type="text" className={`form-control ${errors.login && "invalid"}`}
-                                {...register("login", { required: "Login jest wymagany" })}
-                                onKeyUp={() => {
-                                trigger("login");
-                                }}
+                        <input type="text"
+                            className={`form-control ${errors.login && touched.login ? "invalid" : ""}`}
+                            value={values.login}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            name="login"
+                            id="login"
+                            placeholder='Podaj login'
                             />
-
-                            {errors.login && (
-                                <div className='d-flex justify-content-center'>
-                                    <small className="text-danger">{errors.login.message}</small>
-                                </div>
-                            )}
-                            
+                            {errors.login && touched.login &&
+                                    <small name="login" className="text-danger">{errors.login}</small>
+                            }
                         </div>
 
                         <div className="form-outline mb-4">
                             <label className="form-label" htmlFor="signUpPassword">Hasło</label>
-                            <input type="password" className={`form-control ${errors.password && "invalid"}`}
-                                {...register("password", { required: "Hasło jest wymagane",
-                                pattern: {
-                                    value: /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/,
-                                    message: "Hasło musi zawierać co najmniej 1 cyfrę, dużą literę, małą literę i co najmniej 8 znaków"
-                                }
-                                })}
-                                onKeyUp={() => {
-                                trigger("password");
-                                }}
+                            <input type="password"
+                            className={`form-control ${errors.password && touched.password ? "invalid" : ""}`}
+                            value={values.password}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            id="password"
+                            placeholder='Podaj hasło'
                             />
-
-                            {errors.password && (
-                                <div className='d-flex justify-content-center'>
-                                    <small className="text-danger">{errors.password.message}</small>
-                                </div>
-                            )}
-                            
+                            {errors.password && touched.password &&
+                                    <small className="text-danger">{errors.password}</small>
+                            }
                         </div>
 
                         <div className="form-outline mb-4">
                             <label className="form-label" htmlFor="signUpMail">E-mail</label>
-                            <input type="email" className={`form-control ${errors.email && "invalid"}`}
-                                {...register("email", { required: "Email jest wymagany" ,
-                                pattern: {
-                                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                                message: "Adres email jest niepoprawny",
-                                }
-                            })}
-                                onKeyUp={() => {
-                                    trigger("email");
-                                    setMail(0);
-                                }}
+                            <input type="email"
+                            className={`form-control ${errors.email && touched.email ? "invalid" : ""}`}
+                            value={values.email}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            id="email"
+                            name="email"
+                            placeholder='Podaj e-mail'
                             />
-                            {
-                            <div className='d-flex justify-content-center'>
-                                {errors.email && (
-                                <div className='d-flex justify-content-center'>
-                                    <small className="text-danger">{errors.email.message}</small>
-                                </div>
-                                )}
-                                {mail === 1 ? (
-                                    <small className="text-danger">Podany e-mail jest zajęty</small>
-                                ) : null}
-                            </div>
+                            {errors.email && touched.email &&
+                                    <small name="email" className="text-danger">{errors.email}</small>
                             }
                         </div>
 
                         <div className="form-outline mb-4">
                         <label className="form-label" htmlFor="signUpAddress">Adres</label>
-                            <input type="text" className={`form-control ${errors.address && "invalid"}`}
-                                {...register("address", { required: "Adres jest wymagany" })}
-                                onKeyUp={() => {
-                                trigger("address");
-                                }}
+                        <input type="text"
+                            className={`form-control ${errors.address && touched.address ? "invalid" : ""}`}
+                            value={values.address}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            id="address"
+                            placeholder='Podaj swój adres'
                             />
-
-                            {errors.address && (
-                                <div className='d-flex justify-content-center'>
-                                    <small className="text-danger">{errors.address.message}</small>
-                                </div>
-                            )}
-                            
+                            {errors.address && touched.address &&
+                                    <small className="text-danger">{errors.address}</small>
+                            }
                         </div>
 
                         <div className="form-check d-flex justify-content-center mb-5">

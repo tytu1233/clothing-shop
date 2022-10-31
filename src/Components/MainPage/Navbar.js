@@ -33,7 +33,7 @@ const Navbar = () => {
         const res = await AuthenticationService.checkAuthenticationUser(JSON.parse(localStorage.getItem('token')));
         if(!(res.data.status === "pass")) return;
         console.log(res.data.user_id)
-        setUser({"user_id": res.data.user_id, "token": JSON.parse(localStorage.getItem('token'))})
+        setUser({"user_id": res.data.user_id, "token": JSON.parse(localStorage.getItem('token')), "logged": 1})
         setIsLogged(1);
     }
     

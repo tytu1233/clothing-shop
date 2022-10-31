@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import Rating from "@mui/material/Rating";
 import Button from '@mui/material/Button';
+import { UserContext } from '../../other/UserContext';
 
 const Opinions = () => {
 
+    const { user } = useContext(UserContext);
+
     return (
         <div className='container'>
+            {user.logged === 1 ? (
             <div className='container'>
                     <div className='row m-5'>
                         <div className='d-flex justify-content-center'>
@@ -20,7 +24,13 @@ const Opinions = () => {
                         <Button>Dodaj opinię</Button>
                     </div>
             </div>
-
+            ): 
+            <div className='container p-5'>
+                <div className='d-flex justify-content-center'>
+                    <h1>Zaloguj się, aby dodać opinię!</h1>
+                </div>
+            </div>
+            }
                 <div className="row  d-flex justify-content-center">
 
                         <div className="col-md-8">

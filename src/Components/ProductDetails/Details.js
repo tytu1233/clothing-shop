@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import '../../styles/details.css'
 import Opinions from "./Opinions";
 import { useCart } from "react-use-cart";
 import { useParams } from 'react-router-dom';
 import ProductsService from '../../Services/ProductsService';
 import CustomizedToast from '../Toast/CustomizedToast';
+import { UserContext } from '../../other/UserContext';
 
 const Details = () => {
 
@@ -12,6 +13,7 @@ const Details = () => {
     const { addItem } = useCart();
     const [product, setProduct] = useState([]);
     const [open, setOpen] = useState(false);
+    const { user } = useContext(UserContext);
 
     const getProduct = async () => {
         const res = await ProductsService.getById(id);
@@ -31,6 +33,7 @@ const Details = () => {
 
     useEffect(() => {
         getProduct();
+        console.log(user)
     }, [])
 
     return (

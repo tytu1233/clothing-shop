@@ -14,9 +14,11 @@ class ProductsService {
     }
 
     getFilteredData(e) {
-        let array = e.toString()
+        let arrayBrands = e.toString()
         return axios.get(PRODUCTS_BASE_REST_API_URL + '/filter', {
-            params: {brands: array}
+            params: {
+                brands: arrayBrands,
+            }
         })
     }
 }
