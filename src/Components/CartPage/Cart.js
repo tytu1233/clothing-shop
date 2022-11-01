@@ -18,10 +18,10 @@ const Cart = () => {
       } = useCart();
 
       const { user } = useContext(UserContext);
-      const [orderId, setOrderId] = useState(0);
+      const [finalPrice, setFinalPrice] = useState(cartTotal)
 
       if (isEmpty) return (
-        <div className='container p-4'>
+        <div className='container-fluid p-4 full-layout'>
             <div className='d-flex justify-content-center'>
                 <h1>Koszyk jest pusty!</h1>
             </div>
@@ -31,7 +31,8 @@ const Cart = () => {
       const createOrder = () => {
         OrdersService.createOrder(user.user_id)
         .then((response) => {
-            setOrderId(response.data)
+            OrdersService.updateFinalPrice(response.data, finalPrice)
+            .then((response) => {
             for(let i = 0; i<items.length; i++) {
                 OrdersService.createOrdersProduct(response.data, items[i])
                 .then((response) => {
@@ -39,8 +40,16 @@ const Cart = () => {
                 })
             }
         })
+        })
       }
-      console.log(items)
+
+    const handleChange = (e) => {
+        if(e.target.value === "5%")
+            setFinalPrice(cartTotal - (cartTotal*0.05))
+        else
+            setFinalPrice(cartTotal)
+    }
+
   return (
     <div>
     <div className="container p-4">
@@ -96,17 +105,19 @@ const Cart = () => {
                     <div className="cart__discount">
                         <h6>Zniżka</h6>
                         <form action="#">
-                            <input type="text" placeholder="Kod zniżkowy"/>
-                            <button type="submit">Zatwierdź</button>
+                            <input type="text" onChange={handleChange} placeholder="Kod zniżkowy"/>
                         </form>
                     </div>
                     <div className="cart__total">
                         <h6>Podsumowanie koszyka</h6>
                         <ul>
                             <li>Koszt produktów <span>{cartTotal} zł</span></li>
-                            <li>Cena końcowa <span>{cartTotal - (cartTotal*0.05)} zł</span></li>
+                            <li>Cena końcowa <span>{finalPrice} zł</span></li>
                         </ul>
+                        {user.logged === 1 ?
                         <a onClick={() => {createOrder()}} className="primary-btn">Złóż zamówienie</a>
+                        : 
+                        <div className='d-flex justify-content-center'><p style={{color: 'red'}}>Zaloguj się, aby złożyć zamówienie</p></div>}
                     </div>
                 </div>
             </div>

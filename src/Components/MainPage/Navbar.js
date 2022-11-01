@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react'
 import SearchBar from '../SearchComponents/SearchBar'
 import Men from './Men'
-import Women from './Women'
 import { TfiSearch } from "react-icons/tfi";
 import { AiOutlineShoppingCart, AiOutlineLogin, AiOutlineUserAdd, AiOutlineUser } from "react-icons/ai";
 import AuthenticationService from '../../Services/AuthenticationService';
 import { UserContext } from '../../other/UserContext';
 import CustomizedToast from '../Toast/CustomizedToast';
+import '../../styles/navbar.css'
 
 const Navbar = () => {
 
@@ -81,13 +81,13 @@ const Navbar = () => {
                             { isLogged === 1 ?
                             <ul class="navbar-nav">
                                 <li class="nav-item dropdown">
-                                <a class="nav-link active dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <a class="nav-link active dropdown-togglea" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <AiOutlineUser size={25}/>
                                 </a>
-                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                                    <li><a class="dropdown-item" href="#">Action</a></li>
-                                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                                    <li><a class="dropdown-item" onClick={() => {logoutUser()}} href="#">Wyloguj</a></li>
+                                <ul style={{backgroundColor: 'rgb(17, 17, 17)'}} class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                                    <li><a class="dropdown-item" href="/profile">Profil</a></li>
+                                    <li><a class="dropdown-item">Zamówienia</a></li>
+                                    <li><a class="dropdown-item" onClick={() => {logoutUser()}}>Wyloguj</a></li>
                                 </ul>
                                 </li>
                             </ul>

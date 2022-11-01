@@ -10,6 +10,7 @@ import SignIn from './Components/Login/SignIn';
 import SignUp from './Components/Login/SignUp';
 import { UserContext } from './other/UserContext';
 import { CartProvider } from 'react-use-cart';
+import Profile from './Components/MainPage/Profile';
 
 
 const App = () => {
@@ -35,6 +36,7 @@ const App = () => {
                         <Route path='/products' element = {<Products/>}></Route>
                         <Route path='/signin' element = {<SignIn/>}></Route>
                         <Route path='/signup' element = {<SignUp/>}></Route>
+                        <Route path='/profile' element = {<Profile/>}></Route>
                     </Routes>
                 <Footer/>
                 </div>

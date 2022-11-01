@@ -14,6 +14,14 @@ class OrdersService {
         return axios.post(ORDERSPRODUCT + '/' + orderId, product);
     }
 
+    updateFinalPrice(orderID, order) {
+        console.log(order)
+        return axios.put(ORDERS_BASE_REST_API_URL + '/' + orderID + '/' + order, {
+            headers: {
+            'Content-Type': 'application/json',
+            }
+        });
+    }
 }
 
 export default new OrdersService();
