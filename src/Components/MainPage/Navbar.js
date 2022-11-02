@@ -7,9 +7,14 @@ import AuthenticationService from '../../Services/AuthenticationService';
 import { UserContext } from '../../other/UserContext';
 import CustomizedToast from '../Toast/CustomizedToast';
 import '../../styles/navbar.css'
+import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router'
+
 
 const Navbar = () => {
 
+    
+    const location = useLocation()
     const [isLogged, setIsLogged] = useState(0);
 
     const { user, setUser } = useContext(UserContext);
@@ -39,7 +44,7 @@ const Navbar = () => {
     
     useEffect(() => {
         checkAuthorization();
-    }, [])
+    }, [location.key])
     
 
 
@@ -79,15 +84,15 @@ const Navbar = () => {
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         <li className="nav-item">
                             { isLogged === 1 ?
-                            <ul class="navbar-nav">
-                                <li class="nav-item dropdown">
-                                <a class="nav-link active dropdown-togglea" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <ul className="navbar-nav">
+                                <li className="nav-item dropdown">
+                                <a className="nav-link active dropdown-togglea" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <AiOutlineUser size={25}/>
                                 </a>
-                                <ul style={{backgroundColor: 'rgb(17, 17, 17)'}} class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                                    <li><a class="dropdown-item" href="/profile">Profil</a></li>
-                                    <li><a class="dropdown-item">Zamówienia</a></li>
-                                    <li><a class="dropdown-item" onClick={() => {logoutUser()}}>Wyloguj</a></li>
+                                <ul style={{backgroundColor: 'rgb(17, 17, 17)'}} className="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                                    <li><Link to={`/profile/${user.user_id}`} className="dropdown-item" href="/profile">Profil</Link></li>
+                                    <li><Link params={{ userCon: "hello" }} to={`/orders/${user.user_id}`} className="dropdown-item" href="/orders">Zamówienia</Link></li>
+                                    <li><a className="dropdown-item" onClick={() => {logoutUser()}}>Wyloguj</a></li>
                                 </ul>
                                 </li>
                             </ul>

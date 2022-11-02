@@ -21,7 +21,7 @@ const Cart = () => {
       const [finalPrice, setFinalPrice] = useState(cartTotal)
 
       if (isEmpty) return (
-        <div className='container-fluid p-4 full-layout'>
+        <div className='container-fluid p-4 full-layout vh-100'>
             <div className='d-flex justify-content-center'>
                 <h1>Koszyk jest pusty!</h1>
             </div>

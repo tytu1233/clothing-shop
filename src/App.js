@@ -11,6 +11,9 @@ import SignUp from './Components/Login/SignUp';
 import { UserContext } from './other/UserContext';
 import { CartProvider } from 'react-use-cart';
 import Profile from './Components/MainPage/Profile';
+import Error404 from './Components/Errors/error404';
+import Orders from './Components/MainPage/Orders';
+
 
 
 const App = () => {
@@ -36,7 +39,9 @@ const App = () => {
                         <Route path='/products' element = {<Products/>}></Route>
                         <Route path='/signin' element = {<SignIn/>}></Route>
                         <Route path='/signup' element = {<SignUp/>}></Route>
-                        <Route path='/profile' element = {<Profile/>}></Route>
+                        <Route path='/profile/:id' element = {<Profile/>}></Route>
+                        <Route path='/orders/:id' element={<Orders/>}></Route>
+                        <Route path='/*' element={<Error404/>}></Route>
                     </Routes>
                 <Footer/>
                 </div>

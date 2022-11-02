@@ -22,6 +22,14 @@ class OrdersService {
             }
         });
     }
+
+    getOrdersForUser(userId) {
+        return axios.get(ORDERS_BASE_REST_API_URL + '/' + userId);
+    }
+
+    getOrderProductsForOrder(userId) {
+        return axios.get(ORDERSPRODUCT + '/users/' + userId);
+    }
 }
 
 export default new OrdersService();

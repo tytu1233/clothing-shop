@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useContext} from 'react'
 import '../../styles/login.css'
 import AuthenticationService from '../../Services/AuthenticationService';
+import CustomizedToast from '../Toast/CustomizedToast';
+import { useNavigate } from "react-router-dom";
 
 
 const initialState = {
@@ -11,8 +13,9 @@ const initialState = {
 
 const SignIn = () => {
 
+    const navigate = useNavigate();
     const [newUser, setNewUser] = useState(initialState);
-
+    const [open, setOpen] = useState(false);
     useEffect(()=>{},[newUser])
 
     const handleOnChange = (e) => {
@@ -29,6 +32,13 @@ const SignIn = () => {
         AuthenticationService.authenticateUser(newUser).then((response) => {
             console.log(response.data)
             localStorage.setItem("token", JSON.stringify(response.data.token));
+            setOpen(true)
+            setOpen(true);
+            const interval = setInterval(() => {
+                setOpen(false);
+                navigate("/")
+            }, 2000);
+            return () => clearInterval(interval);
         })
       }
 
@@ -61,6 +71,7 @@ const SignIn = () => {
                 </div>
                 </div>
             </div>
+            <CustomizedToast open={open} text={"Zalogowano! Nastąpi przekierowanie na stronę główną"}/>
         </section>
     </div>
   )

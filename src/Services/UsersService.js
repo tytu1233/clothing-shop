@@ -16,7 +16,7 @@ class UsersService {
         return axios.get(USERS_BASE_REST_API_URL);
     }
 
-    getUserId(userId) {
+    getUserById(userId) {
         return axios.get(USERS_BASE_REST_API_URL + '/' + userId);
     }
 
