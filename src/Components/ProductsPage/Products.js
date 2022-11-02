@@ -6,6 +6,7 @@ import { Pagination } from '@mui/material';
 import { useCart } from "react-use-cart";
 import CustomizedToast from '../Toast/CustomizedToast';
 import { Link } from 'react-router-dom';
+import { set } from 'react-hook-form';
 
 const Products = () => {
 
@@ -17,6 +18,9 @@ const Products = () => {
     const [pagination, setPagination] = useState([]);
     const [page, setPage] = useState(0);
     const [open, setOpen] = useState(false);
+    const [min, setMin] = useState(0)
+    const [max, setMax] = useState(2000000000)
+    const [error, setError] = useState('')
 
     const handleChange = (e, p) => {
         setPage(p-1)
@@ -24,11 +28,17 @@ const Products = () => {
     }
 
     const loadProducts = async () => {
+        if(max < min) {
+            setError("Max nie wieksze od min")
+            return
+        } else 
+            setError('')
+        console.log("asfsaf")
         if(brandFiltered.length > 0 || priceFiltered.length > 0) setPage(0)
-        await ProductsService.getFilteredData(brandFiltered, priceFiltered, page).then((res) => {
+        await ProductsService.getFilteredData(brandFiltered, min, max, page).then((res) => {
             setProducts(res.data.content);
             setPagination(res.data)
-            console.log(res.data)
+            //console.log(res.data)
             //console.log(res.data.content)
         })
         //console.log(list)
@@ -36,7 +46,7 @@ const Products = () => {
 
     const handleCheckboxes = (e) => {
         if(e.target.name === "brand") {
-            console.log(e.target.name)
+            //console.log(e.target.name)
             let prev = brandFiltered;
             let itemIndex = prev.indexOf(e.target.value);
     
@@ -46,18 +56,12 @@ const Products = () => {
             prev.push(e.target.value);
             }
             setBrandFiltered([...brandFiltered]);
-        } else {
-            let prev = priceFiltered;
-            let itemIndex = prev.indexOf(e.target.value);
-    
-            if (itemIndex !== -1) {
-            prev.splice(itemIndex, 1);
-            } else {
-            prev.push(e.target.value);
-            }
-            setPriceFiltered([...priceFiltered]);
-        }
-        console.log(priceFiltered)
+        } else if(e.target.name === "min")
+            setMin(e.target.value)
+        else if(e.target.name === "max")
+            setMax(e.target.value)
+        //console.log(min)
+        //console.log(max)
     }
 
     const addToCart = (i) => {
@@ -71,7 +75,7 @@ const Products = () => {
 
     useEffect(() => {
         loadProducts();
-    },[brandFiltered, priceFiltered,page])
+    },[brandFiltered, min, max, page])
 
   return (
         <div className="container p-4">
@@ -111,39 +115,28 @@ const Products = () => {
                                 </div>
                                 <div className="card">
                                     <div>
-                                        <p>Filter Price</p>
+                                        <p>Cena</p>
                                     </div>
                                         <div className="card-body">
-                                            
                                             <div className="shop__sidebar__price">
-                                                <ul>
-                                                <div className="form-check">
-                                                <input className="form-check-input" 
-                                                onChange={handleCheckboxes}
-                                                value="12"
-                                                name="price"
-                                                type="checkbox"  id="flexCheckChecked" />
-                                                <label className="form-check-label" htmlFor="flexCheckChecked">
-                                                    12
-                                                </label>
+                                            <form>
+                                                
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <input name="min" onChange={handleCheckboxes} type="number" class="form-control" placeholder="Min"/>
+                                                    </div>
+                                                    <div class="col">
+                                                        <input name="max" onChange={handleCheckboxes} type="number" class="form-control" placeholder="Max"/>
+                                                    </div> 
+                                                    {error === "Max nie wieksze od min" ? (<p style={{color: 'red'}}>Cena minimalna musi być większa od maksymalnej</p>) : null}
                                                 </div>
-                                                <div className="form-check">
-                                                    <input className="form-check-input" 
-                                                    onChange={handleCheckboxes}
-                                                    value="15"
-                                                    name="price"
-                                                    type="checkbox"  id="flexCheckChecked" />
-                                                <label className="form-check-label" htmlFor="flexCheckChecked">
-                                                    15
-                                                </label>
-                                                </div>
-                                                </ul>
+                                            </form>
                                             </div>
                                         </div>
                                 </div>
                                 <div className="card">
                                     <div>
-                                        <p>Size</p>
+                                        <p>Rozmiar</p>
                                     </div>
                                         <div className="card-body">
                                             <div className="shop__sidebar__size">
