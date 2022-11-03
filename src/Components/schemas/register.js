@@ -40,7 +40,7 @@ export const registerSchema = yup.object().shape({
     name: yup.string().required("Imię jest wymagane"),
     password: yup
     .string()
-    .min(5)
+    .min(5, "Hasło musi składać się z co najmniej 5 znaków")
     .matches(passwordRules, {message: "Wymagane jest silniejsze hasło"})
     .required("Hasło jest wymagane"),
     surname: yup.string().required("Nazwisko jest wymagane"),

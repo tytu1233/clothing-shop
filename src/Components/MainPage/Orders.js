@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { useParams } from 'react-router-dom';
 import OrdersService from '../../Services/OrdersService'
+import AuthenticationService from '../../Services/AuthenticationService';
 import { UserContext } from '../../other/UserContext';
 import { useNavigate } from "react-router-dom";
 
@@ -8,7 +9,6 @@ import { useNavigate } from "react-router-dom";
 const Orders = () => {
 
     const {id} = useParams();
-    const { user } = useContext(UserContext);
     const [ordersa, setOrders] = useState([]);
     const [productsa, setProducts] = useState([]);
     const navigate = useNavigate();
@@ -22,13 +22,19 @@ const Orders = () => {
         //console.log(res2.data)
     }
 
-    const authenticated = () => {
+
+    const checkAuthorization = async () => {
+        const res = await AuthenticationService.checkAuthenticationUser(JSON.parse(localStorage.getItem('token')));
+        if(!(res.data.status === "pass")) {
+            navigate("/");
+            return;
+        }        
         loadOrders()
     }
 
 
     useEffect(() => {
-        authenticated()
+        checkAuthorization()
     }, [])
 
     return (
@@ -71,7 +77,7 @@ const Orders = () => {
                                                             </div>
                                                         </div>
                                                         <div className='col-3'>{product.products.name}</div>
-                                                        <div className='col-2'>{product.products.price}</div>
+                                                        <div className='col-2'>{product.products.price} zł</div>
                                                         <div className='col-2'>{product.quantity}</div>
                                                         <div className='col-2'>{product.products.price*product.quantity}</div>
                                                     </div>

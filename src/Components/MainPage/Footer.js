@@ -7,35 +7,25 @@ const Footer = () => {
     <footer className="footer">
     <div className="container">
         <div className="row">
-            <div className="col-lg-3 col-md-6 col-sm-6">
+            <div className="col-lg-4 col-md-6 col-sm-6">
                 <div className="footer__about">
                     <div className="footer__logo">
                         <a href="src/Components/MainPage/Footer#"><img src="img/footer-logo.png" alt=""/></a>
                     </div>
                     <p>Sklep z męskimi ubraniami - wpadającymi w każde gusta</p>
-                    <a href="src/Components/MainPage/Footer#"><img src="img/payment.png" alt=""/></a>
                 </div>
             </div>
-            <div className="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
+            <div className="col-lg-4 col-md-3 col-sm-6">
                 <div className="footer__widget">
-                    <h6>Shopping</h6>
-                    <ul>
-                        <li><a href="src/Components/MainPage/Footer#">Clothing Store</a></li>
-                        <li><a href="src/Components/MainPage/Footer#">Trending Shoes</a></li>
-                        <li><a href="src/Components/MainPage/Footer#">Accessories</a></li>
-                        <li><a href="src/Components/MainPage/Footer#">Sale</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div className="col-lg-2 col-md-3 col-sm-6">
-                <div className="footer__widget">
-                    <h6>Shopping</h6>
-                    <ul>
-                        <li><a href="src/Components/MainPage/Footer#">Contact Us</a></li>
-                        <li><a href="src/Components/MainPage/Footer#">Payment Methods</a></li>
-                        <li><a href="src/Components/MainPage/Footer#">Delivary</a></li>
-                        <li><a href="src/Components/MainPage/Footer#">Return & Exchanges</a></li>
-                    </ul>
+                    <h6 style={{textAlign: 'center'}}>Shopping</h6>
+                    <div className='d-flex justify-content-center'>
+                        <ul>
+                            <li><a href="src/Components/MainPage/Footer#">Kontakt</a></li>
+                            <li><a href="src/Components/MainPage/Footer#">Metody płatności</a></li>
+                            <li><a href="src/Components/MainPage/Footer#">Dostawa</a></li>
+                            <li><a href="src/Components/MainPage/Footer#">Zwroty i wymiany</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
             <div className="col-lg-3 offset-lg-1 col-md-6 col-sm-6">

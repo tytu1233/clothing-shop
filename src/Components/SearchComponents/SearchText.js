@@ -1,15 +1,12 @@
-import React from "react";
+import React, { useRef, useState, useEffect } from "react";
+import axios from "axios";
 import styled from "styled-components";
-import { IoClose, IoSearch } from "react-icons/io5";
-import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import { useClickOutside } from "react-click-outside-hook";
-import { useEffect } from "react";
-import { useRef } from "react";
 import MoonLoader from "react-spinners/MoonLoader";
 import { useDebounce } from "../../hooks/debounceHook";
-import axios from "axios";
-import { SearchShow } from "./SearchShow";
+import ShowProducts from "./ShowProducts";
+import { IoClose, IoSearch } from "react-icons/io5";
+import { AnimatePresence, motion } from "framer-motion";
+import { useClickOutside } from "react-click-outside-hook";
 
 const SearchBarContainer = styled(motion.div)`
   display: flex;
@@ -117,20 +114,21 @@ const containerVariants = {
 
 const containerTransition = { type: "spring", damping: 22, stiffness: 150 };
 
-export function SearchText(props) {
+const SearchText = () => {
   const [isExpanded, setExpanded] = useState(false);
-  const [parentRef, isClickedOutside] = useClickOutside();
   const inputRef = useRef();
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoading, setLoading] = useState(false);
-  const [tvShows, setTvShows] = useState([]);
-  const [noTvShows, setNoTvShows] = useState(false);
+  const [products, setProducts] = useState([]);
+  const [noProducts, setNoProducts] = useState(false);
+  const [parentRef, isClickedOutside] = useClickOutside();
 
-  const isEmpty = !tvShows || tvShows.length === 0;
+  
+  const isEmpty = !products || products.length === 0;
 
   const changeHandler = (e) => {
     e.preventDefault();
-    if (e.target.value.trim() === "") setNoTvShows(false);
+    if (e.target.value.trim() === "") setNoProducts(false);
 
     setSearchQuery(e.target.value);
   };
@@ -143,8 +141,8 @@ export function SearchText(props) {
     setExpanded(false);
     setSearchQuery("");
     setLoading(false);
-    setNoTvShows(false);
-    setTvShows([]);
+    setNoProducts(false);
+    setProducts([]);
     if (inputRef.current) inputRef.current.value = "";
   };
 
@@ -162,7 +160,7 @@ export function SearchText(props) {
     if (!searchQuery || searchQuery.trim() === "") return;
 
     setLoading(true);
-    setNoTvShows(false);
+    setNoProducts(false);
 
     const URL = prepareSearchQuery(searchQuery);
 
@@ -172,9 +170,9 @@ export function SearchText(props) {
 
     if (response) {
       console.log("Response: ", response.data);
-      if (response.data && response.data.length === 0) setNoTvShows(true);
+      if (response.data && response.data.length === 0) setNoProducts(true);
 
-      setTvShows(response.data);
+      setProducts(response.data);
     }
 
     setLoading(false);
@@ -223,20 +221,20 @@ export function SearchText(props) {
               <MoonLoader loading color="#000" size={20} />
             </LoadingWrapper>
           )}
-          {!isLoading && isEmpty && !noTvShows && (
+          {!isLoading && isEmpty && !noProducts && (
             <LoadingWrapper>
               <WarningMessage>Zacznij pisać, aby wyszukać!</WarningMessage>
             </LoadingWrapper>
           )}
-          {!isLoading && noTvShows && (
+          {!isLoading && noProducts && (
             <LoadingWrapper>
               <WarningMessage>Nie znaleziono wyszukiwanego produktu!</WarningMessage>
             </LoadingWrapper>
           )}
           {!isLoading && !isEmpty && (
             <>
-              {tvShows.map((show) => (
-                <SearchShow
+              {products.map((show) => (
+                <ShowProducts
                   key={show.id_product}
                   name={show.name}
                   rating={show.price}
@@ -249,3 +247,5 @@ export function SearchText(props) {
     </SearchBarContainer>
   );
 }
+
+export default SearchText

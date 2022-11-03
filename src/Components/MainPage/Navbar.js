@@ -8,17 +8,21 @@ import { UserContext } from '../../other/UserContext';
 import CustomizedToast from '../Toast/CustomizedToast';
 import '../../styles/navbar.css'
 import { Link } from 'react-router-dom';
-import { useLocation } from 'react-router'
+import { useNavigate } from 'react-router'
 
 
 const Navbar = () => {
 
     
-    const location = useLocation()
+    const navigate = useNavigate();
     const [isLogged, setIsLogged] = useState(0);
-
     const { user, setUser } = useContext(UserContext);
     const [open, setOpen] = useState(false);
+
+    const changeLocation = (placeToGo) => {
+        navigate(placeToGo, { replace: true });
+        window.location.reload();
+    }
 
     const logoutUser = async () => {
         const res = await AuthenticationService.logoutUser(user);
@@ -44,7 +48,7 @@ const Navbar = () => {
     
     useEffect(() => {
         checkAuthorization();
-    }, [location.key])
+    }, [])
     
 
 
@@ -90,8 +94,8 @@ const Navbar = () => {
                                     <AiOutlineUser size={25}/>
                                 </a>
                                 <ul style={{backgroundColor: 'rgb(17, 17, 17)'}} className="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                                    <li><Link to={`/profile/${user.user_id}`} className="dropdown-item" href="/profile">Profil</Link></li>
-                                    <li><Link params={{ userCon: "hello" }} to={`/orders/${user.user_id}`} className="dropdown-item" href="/orders">Zamówienia</Link></li>
+                                    <li><Link onClick={() => {changeLocation(`/profile/${user.user_id}`)}} className="dropdown-item" >Profil</Link></li>
+                                    <li><Link onClick={() => {changeLocation(`/orders/${user.user_id}`)}} className="dropdown-item">Zamówienia</Link></li>
                                     <li><a className="dropdown-item" onClick={() => {logoutUser()}}>Wyloguj</a></li>
                                 </ul>
                                 </li>

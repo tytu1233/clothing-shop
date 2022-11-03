@@ -6,7 +6,6 @@ import { Pagination } from '@mui/material';
 import { useCart } from "react-use-cart";
 import CustomizedToast from '../Toast/CustomizedToast';
 import { Link } from 'react-router-dom';
-import { set } from 'react-hook-form';
 
 const Products = () => {
 
@@ -30,7 +29,7 @@ const Products = () => {
     const loadProducts = async () => {
         if(max < min) {
             setError("Max nie wieksze od min")
-            return
+            
         } else 
             setError('')
         console.log("asfsaf")
@@ -123,7 +122,7 @@ const Products = () => {
                                                 
                                                 <div class="row">
                                                     <div class="col">
-                                                        <input name="min" onChange={handleCheckboxes} type="number" class="form-control" placeholder="Min"/>
+                                                        <input name="min" min={max} onChange={handleCheckboxes} type="number" class="form-control" placeholder="Min"/>
                                                     </div>
                                                     <div class="col">
                                                         <input name="max" onChange={handleCheckboxes} type="number" class="form-control" placeholder="Max"/>

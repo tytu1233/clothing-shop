@@ -1,6 +1,6 @@
 import React from 'react'
 import { TfiClose } from "react-icons/tfi";
-import { SearchText } from './SearchText';
+import SearchText from './SearchText';
 
 const SearchBar = () => {
   return (

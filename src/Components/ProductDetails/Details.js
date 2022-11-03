@@ -13,12 +13,14 @@ const Details = () => {
     const { addItem } = useCart();
     const [product, setProduct] = useState([]);
     const [open, setOpen] = useState(false);
+    const [isLoading, setLoading] = useState(true);
     const { user } = useContext(UserContext);
 
     const getProduct = async () => {
         const res = await ProductsService.getById(id);
         setProduct(res.data);
         console.log(res.data)
+        setLoading(false);
     }
 
     const addToCart = (i) => {
@@ -33,9 +35,11 @@ const Details = () => {
 
     useEffect(() => {
         getProduct();
-        console.log(user)
     }, [])
 
+    if (isLoading) {
+        return <div className="App">Loading...</div>;
+      }
     return (
         <div>
             <div className="container mt-5 mb-5">
@@ -89,7 +93,7 @@ const Details = () => {
                 </div>
             </div>
             <CustomizedToast open={open} text={"Dodano do koszyka!"}/>
-            <Opinions/>
+            <Opinions productId={product.id}/>
         </div>
     );
 }

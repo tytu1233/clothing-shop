@@ -1,11 +1,44 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import Rating from "@mui/material/Rating";
 import Button from '@mui/material/Button';
 import { UserContext } from '../../other/UserContext';
+import OpinionsService from '../../Services/OpinionsService';
+import { Pagination } from '@mui/material';
 
-const Opinions = () => {
+const Opinions = ({productId}) => {
 
     const { user } = useContext(UserContext);
+    const [pagination, setPagination] = useState([]);
+    const [opinions, setOpinions] = useState([])
+    const [page, setPage] = useState(0);
+    const [comment, setComment] = useState('');
+    const [rating, setRating] = useState(0);
+
+
+    const handleChange = (e, p) => {
+        setPage(p-1)
+    }
+
+    const addOpinion = () => {
+        const opinion = { "rating": rating, "comment": comment };
+        OpinionsService.addOpinion(user.user_id, productId, opinion)
+        .then((response) => {
+            loadOpinions(productId)
+        })
+    }
+
+    const loadOpinions = async (productId) => {
+        const res = await OpinionsService.getAllForProduct(productId, page);
+        setPagination(res.data)
+        console.log(res.data.content)
+        setOpinions(res.data.content)
+    }
+
+
+
+    useEffect(() => {
+        loadOpinions(productId)
+    }, [page])
 
     return (
         <div className='container'>
@@ -15,19 +48,23 @@ const Opinions = () => {
                         <div className='d-flex justify-content-center'>
                             <Rating
                                 name="simple-controlled"
+                                value={rating}
+                                onChange={(event, value) => {
+                                    setRating(value);
+                                }}
                             />
                         </div>
                         <div className="mt-3 mt-3">
                             <label htmlFor="comment">Opinia:</label>
-                            <textarea  className="form-control" rows="5" id="comment" name="text"></textarea>
+                            <textarea  className="form-control" rows="5" id="comment" onChange={(e) => setComment(e.target.value)} name="text"></textarea>
                         </div>
-                        <Button>Dodaj opinię</Button>
+                        <Button onClick={() => {addOpinion()}}>Dodaj opinię</Button>
                     </div>
             </div>
             ): 
             <div className='container p-5'>
                 <div className='d-flex justify-content-center'>
-                    <h1>Zaloguj się, aby dodać opinię!</h1>
+                    <h1 style={{textAlign: 'center'}}>Zaloguj się, aby dodać opinię!</h1>
                 </div>
             </div>
             }
@@ -36,26 +73,32 @@ const Opinions = () => {
                         <div className="col-md-8">
 
                             <div className="headings d-flex justify-content-between align-items-center mb-3">
-                                <h5>Liczba opinii</h5>
+                                <h5>Liczba opinii: {pagination.totalElements}</h5>
                             </div>
+                            {opinions.map((opinion) => {
+                                return (
+                                <div className="card p-3 m-3" key={opinion.idOpinion}>
+                                    <div className="d-flex justify-content-between align-items-center">
 
-                            <div className="card p-3 m-3">
+                                        <div className="user d-flex flex-row align-items-center">
 
-                                <div className="d-flex justify-content-between align-items-center">
+                                            <span><small className="font-weight-bold text-primary">{opinion.usersOpinion.name}</small></span>
 
-                                    <div className="user d-flex flex-row align-items-center">
-
-                                        <span><small className="font-weight-bold text-primary">bardzo dobra</small></span>
-
+                                        </div>
+                                        <Rating
+                                            name="read-only"
+                                            value={opinion.rating}
+                                            readOnly
+                                        />
                                     </div>
-                                    <Rating
-                                        name="read-only"
-                                        readOnly
-                                    />
+                                    <span><small className="font-weight-bold">{opinion.comment}</small></span>
                                 </div>
-                                <span><small className="font-weight-bold">gitowa</small></span>
-                            </div>
+                                )
+                             })}
                         </div>
+                    <div className='d-flex justify-content-center mb-2'>
+                        <Pagination count={pagination.totalPages} onChange={handleChange}></Pagination>
+                    </div>
                 </div>
             <div/>
         </div>
