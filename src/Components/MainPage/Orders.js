@@ -69,7 +69,7 @@ const Orders = () => {
                                     </div>
                                 {productsa.map((product) => {
                                         return (
-                                            <div>
+                                            <div key={product.id_orders_product}>
                                                 {order.idOrders === product.orders.idOrders ? 
                                                     <div className='row p-2'>
                                                         <div className='col-3'>

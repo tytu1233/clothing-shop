@@ -10,7 +10,7 @@ const Cart = () => {
 
     const {
         isEmpty,
-        totalUniqueItems,
+        emptyCart,
         items,
         cartTotal,
         updateItemQuantity,
@@ -63,7 +63,7 @@ const Cart = () => {
                                     <th>Produkt</th>
                                     <th>Ilość</th>
                                     <th>Cena</th>
-                                    <th></th>
+                                    <th><span style={{cursor: "pointer"}} onClick={() => {emptyCart()}}> Wyczyść koszyk</span></th>
                                 </tr>
                             </thead>
                             <tbody>

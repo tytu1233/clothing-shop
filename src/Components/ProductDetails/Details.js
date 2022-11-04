@@ -31,7 +31,8 @@ const Details = () => {
     }
 
     const addToCart = (i) => {
-            const index = items.findIndex(item => item.size === sizeFilters);
+            let zmienna = i.id + sizeFilters
+            const index = items.findIndex((item) => item.id === zmienna );
             console.log(index)
             if(index === -1) {
                 i = {
