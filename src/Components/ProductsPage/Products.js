@@ -6,24 +6,34 @@ import { Pagination } from '@mui/material';
 import { useCart } from "react-use-cart";
 import CustomizedToast from '../Toast/CustomizedToast';
 import { Link } from 'react-router-dom';
+import ServiceSizes from '../../Services/ServiceSizes';
 
 const Products = () => {
 
     const { addItem } = useCart();
 
+    const [names, setNames] = useState([]);
     const [products, setProducts] = useState([]);
     const [brandFiltered, setBrandFiltered] = useState([])
-    const [priceFiltered, setPriceFiltered] = useState([])
+    const [sizeFiltered, setSizeFiltered] = useState([])
     const [pagination, setPagination] = useState([]);
     const [page, setPage] = useState(0);
     const [open, setOpen] = useState(false);
     const [min, setMin] = useState(0)
     const [max, setMax] = useState(2000000000)
     const [error, setError] = useState('')
+    const [isLoading, setLoading] = useState(true);
 
     const handleChange = (e, p) => {
         setPage(p-1)
         window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+    }
+
+    const loadNames = async () => {
+        const res = await ServiceSizes.getAllNames();
+        setNames(res.data)
+        console.log(res.data)
+        setLoading(false)
     }
 
     const loadProducts = async () => {
@@ -32,9 +42,9 @@ const Products = () => {
             
         } else 
             setError('')
-        console.log("asfsaf")
-        if(brandFiltered.length > 0 || priceFiltered.length > 0) setPage(0)
-        await ProductsService.getFilteredData(brandFiltered, min, max, page).then((res) => {
+        console.log(sizeFiltered)
+        if(brandFiltered.length > 0 || sizeFiltered.length > 0) setPage(0)
+        await ProductsService.getFilteredData(brandFiltered, sizeFiltered, min, max, page).then((res) => {
             setProducts(res.data.content);
             setPagination(res.data)
             //console.log(res.data)
@@ -45,7 +55,7 @@ const Products = () => {
 
     const handleCheckboxes = (e) => {
         if(e.target.name === "brand") {
-            //console.log(e.target.name)
+            console.log(e.target.name)
             let prev = brandFiltered;
             let itemIndex = prev.indexOf(e.target.value);
     
@@ -59,7 +69,19 @@ const Products = () => {
             setMin(e.target.value)
         else if(e.target.name === "max")
             setMax(e.target.value)
-        //console.log(min)
+        else if(e.target.name === "size") {
+            console.log(e.target.value)
+            let prev = sizeFiltered;
+            let itemIndex = prev.indexOf(e.target.value);
+    
+            if (itemIndex !== -1) {
+            prev.splice(itemIndex, 1);
+            } else {
+            prev.push(e.target.value);
+            }
+            setSizeFiltered([...sizeFiltered]);
+        }
+        console.log(sizeFiltered)
         //console.log(max)
     }
 
@@ -74,8 +96,12 @@ const Products = () => {
 
     useEffect(() => {
         loadProducts();
-    },[brandFiltered, min, max, page])
+        loadNames();
+    },[brandFiltered, sizeFiltered, min, max, page])
 
+    if (isLoading) {
+        return <div className="App">Loading...</div>;
+      }
   return (
         <div className="container p-4">
             <div className="row">
@@ -120,12 +146,12 @@ const Products = () => {
                                             <div className="shop__sidebar__price">
                                             <form>
                                                 
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <input name="min" min={max} onChange={handleCheckboxes} type="number" class="form-control" placeholder="Min"/>
+                                                <div className="row">
+                                                    <div className="col">
+                                                        <input name="min" min={max} onChange={handleCheckboxes} type="number" className="form-control" placeholder="Min"/>
                                                     </div>
-                                                    <div class="col">
-                                                        <input name="max" onChange={handleCheckboxes} type="number" class="form-control" placeholder="Max"/>
+                                                    <div className="col">
+                                                        <input name="max" onChange={handleCheckboxes} type="number" className="form-control" placeholder="Max"/>
                                                     </div> 
                                                     {error === "Max nie wieksze od min" ? (<p style={{color: 'red'}}>Cena minimalna musi być większa od maksymalnej</p>) : null}
                                                 </div>
@@ -139,30 +165,13 @@ const Products = () => {
                                     </div>
                                         <div className="card-body">
                                             <div className="shop__sidebar__size">
-                                                <label htmlFor="xs">xs
-                                                    <input type="radio" id="xs"/>
-                                                </label>
-                                                <label htmlFor="sm">s
-                                                    <input type="radio" id="sm"/>
-                                                </label>
-                                                <label htmlFor="md">m
-                                                    <input type="radio" id="md"/>
-                                                </label>
-                                                <label htmlFor="xl">xl
-                                                    <input type="radio" id="xl"/>
-                                                </label>
-                                                <label htmlFor="2xl">2xl
-                                                    <input type="radio" id="2xl"/>
-                                                </label>
-                                                <label htmlFor="xxl">xxl
-                                                    <input type="radio" id="xxl"/>
-                                                </label>
-                                                <label htmlFor="3xl">3xl
-                                                    <input type="radio" id="3xl"/>
-                                                </label>
-                                                <label htmlFor="4xl">4xl
-                                                    <input type="radio" id="4xl"/>
-                                                </label>
+                                                {names.map((name) => {
+                                                    return (
+                                                        <label key={name.idSize} htmlFor={name.sizeName}>{name.sizeName}
+                                                            <input onChange={handleCheckboxes} value={name.sizeName} name="size" type="checkbox" id={name.sizeName}/>
+                                                        </label>
+                                                    )
+                                                })}
                                             </div>
                                         </div>
                                 </div>

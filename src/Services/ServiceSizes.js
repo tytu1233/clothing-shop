@@ -8,6 +8,10 @@ class SizesService {
         return axios.get(SIZES_BASE_REST_API_URL + '/' + id)
     }
 
+    getAllNames() {
+        return axios.get(SIZES_BASE_REST_API_URL + '/names')
+    }
+
 }
 
 export default new SizesService();

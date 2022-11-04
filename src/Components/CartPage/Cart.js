@@ -49,6 +49,7 @@ const Cart = () => {
         else
             setFinalPrice(cartTotal)
     }
+    
 
   return (
     <div>
