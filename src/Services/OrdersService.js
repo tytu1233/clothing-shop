@@ -11,6 +11,7 @@ class OrdersService {
     }
 
     createOrdersProduct(orderId, product) {
+        console.log(product)
         return axios.post(ORDERSPRODUCT + '/' + orderId, product);
     }
 

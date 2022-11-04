@@ -6,25 +6,49 @@ import { useParams } from 'react-router-dom';
 import ProductsService from '../../Services/ProductsService';
 import CustomizedToast from '../Toast/CustomizedToast';
 import { UserContext } from '../../other/UserContext';
+import ServiceSizes from '../../Services/ServiceSizes';
+import { style } from '@mui/system';
 
 const Details = () => {
 
     const {id} = useParams();
-    const { addItem } = useCart();
+    const { addItem, items } = useCart();
     const [product, setProduct] = useState([]);
+    const [sizeFilters, setSizeFilters] = useState('')
+    const [sizes, setSizes] = useState([]);
+    const [name, setName] = useState('')
     const [open, setOpen] = useState(false);
     const [isLoading, setLoading] = useState(true);
-    const { user } = useContext(UserContext);
 
     const getProduct = async () => {
         const res = await ProductsService.getById(id);
         setProduct(res.data);
         console.log(res.data)
         setLoading(false);
+        const response = await ServiceSizes.getSizesForProduct(id)
+        console.log(response.data)
+        setSizes(response.data)
     }
 
     const addToCart = (i) => {
-        addItem(i)
+            const index = items.findIndex(item => item.size === sizeFilters);
+            console.log(index)
+            if(index === -1) {
+                i = {
+                    id: i.id + sizeFilters,
+                    price: i.price,
+                    size: sizeFilters
+                } 
+                addItem(i)
+            }
+            if(index !== -1){
+                i = {
+                    id: items[index].id,
+                    price: items[index].price,
+                    size: sizeFilters
+                } 
+                addItem(i)
+            }
         setOpen(true);
         const interval = setInterval(() => {
             setOpen(false);
@@ -32,6 +56,12 @@ const Details = () => {
           return () => clearInterval(interval);
     }
 
+
+    const handleCheckboxes = (e) => {
+        setSizeFilters(e.target.value)
+        console.log(e.target.value)
+        setName(e.target.id)
+    }
 
     useEffect(() => {
         getProduct();
@@ -47,26 +77,26 @@ const Details = () => {
                     <div className="row g-0">
                         <div className="col-md-6 border-end">
                             <div className="d-flex flex-column justify-content-center">
-                                <div class="ecommerce-gallery" data-mdb-zoom-effect="true" data-mdb-auto-height="true">
-                                    <div id="carouselExampleControls" class="carousel carousel-dark slide" data-bs-ride="carousel">
-                                        <div class="carousel-inner">
-                                            <div class="carousel-item active">
-                                            <img src={require("../../img/product/product-1.jpg")} class="d-block w-100" alt="..."/>
+                                <div className="ecommerce-gallery" data-mdb-zoom-effect="true" data-mdb-auto-height="true">
+                                    <div id="carouselExampleControls" className="carousel carousel-dark slide" data-bs-ride="carousel">
+                                        <div className="carousel-inner">
+                                            <div className="carousel-item active">
+                                            <img src={require("../../img/product/product-1.jpg")} className="d-block w-100" alt="..."/>
                                             </div>
-                                            <div class="carousel-item">
-                                            <img src={require("../../img/product/product-2.jpg")} class="d-block w-100" alt="..."/>
+                                            <div className="carousel-item">
+                                            <img src={require("../../img/product/product-2.jpg")} className="d-block w-100" alt="..."/>
                                             </div>
-                                            <div class="carousel-item">
-                                            <img src={require("../../img/product/product-3.jpg")} class="d-block w-100" alt="..."/>
+                                            <div className="carousel-item">
+                                            <img src={require("../../img/product/product-3.jpg")} className="d-block w-100" alt="..."/>
                                             </div>
                                         </div>
-                                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                            <span class="visually-hidden">Previous</span>
+                                        <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                                            <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            <span className="visually-hidden">Previous</span>
                                         </button>
-                                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                            <span class="visually-hidden">Next</span>
+                                        <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                                            <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <span className="visually-hidden">Next</span>
                                         </button>
                                     </div>
                                 </div>
@@ -80,10 +110,18 @@ const Details = () => {
                                 <div className="mt-2 pr-3 content"><p>{product.description}</p></div>
                                 <h3>{product.price} zł</h3>
                                 <div className="ratings d-flex flex-row align-items-center">
-                                    <div className="d-flex flex-row"><i className='bx bxs-star'></i> <i
-                                        className='bx bxs-star'></i> <i className='bx bxs-star'></i> <i
-                                        className='bx bxs-star'></i> <i className='bx bx-star'></i></div>
-                                    <span>441 ocen</span></div>
+                                    <div className="shop__sidebar__size">
+                                        {sizes.map((size) => {
+                                            return(
+                                                <label 
+                                                style={name === size.sizeName ? {backgroundColor:'black', color: 'white'} : {backgroundColor:'white', color: 'black'}} 
+                                                key={size.idSize} htmlFor={size.sizeName}>{size.sizeName}
+                                                    <input onClick={handleCheckboxes} type="radio" value={size.sizeName} id={size.sizeName}/>
+                                                </label>
+                                            )
+                                        })}
+                                        </div>
+                                </div>
                                 <div className="buttons d-flex flex-row mt-5 gap-3">
                                     <button className="btn btn-dark" onClick={() => {addToCart(product)}}>Dodaj do koszyka</button>
                                 </div>

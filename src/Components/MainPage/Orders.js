@@ -19,7 +19,7 @@ const Orders = () => {
         //console.log(res.data)
         const res2 = await OrdersService.getOrderProductsForOrder(id)
         setProducts(res2.data)
-        //console.log(res2.data)
+        console.log(res2.data)
     }
 
 
@@ -61,7 +61,8 @@ const Orders = () => {
                                             <div className='col-3'>Zdjęcie</div>
                                             <div className='col-3'>Nazwa</div>
                                             <div className='col-2'>Cena</div>
-                                            <div className='col-2'>Ilość</div>
+                                            <div className='col-1'>Ilość</div>
+                                            <div className='col-1'>Rozmiar</div>
                                             <div className='col-2'>Cena za zestaw</div>
                                         </div>
                                         <hr/>
@@ -78,7 +79,8 @@ const Orders = () => {
                                                         </div>
                                                         <div className='col-3'>{product.products.name}</div>
                                                         <div className='col-2'>{product.products.price} zł</div>
-                                                        <div className='col-2'>{product.quantity}</div>
+                                                        <div className='col-1'>{product.quantity}</div>
+                                                        <div className='col-1'>{product.size}</div>
                                                         <div className='col-2'>{product.products.price*product.quantity}</div>
                                                     </div>
                                                 : null}
