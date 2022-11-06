@@ -7,13 +7,13 @@ import AuthenticationService from '../../Services/AuthenticationService';
 import { UserContext } from '../../other/UserContext';
 import CustomizedToast from '../Toast/CustomizedToast';
 import '../../styles/navbar.css'
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router'
 
 
 const Navbar = () => {
 
-    
+    let location = useLocation();
     const navigate = useNavigate();
     const [isLogged, setIsLogged] = useState(0);
     const { user, setUser } = useContext(UserContext);
@@ -50,7 +50,11 @@ const Navbar = () => {
         checkAuthorization();
     }, [])
     
-
+    if(location.pathname.startsWith('/admin')) {
+        return (
+            <div></div>
+        )
+    }
 
   return (
     <div>

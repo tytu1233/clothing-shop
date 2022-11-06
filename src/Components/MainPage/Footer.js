@@ -1,8 +1,17 @@
 import React from 'react'
 import { AiOutlineMail } from "react-icons/ai";
 import '../../styles/footer.css'
+import { useLocation } from 'react-router-dom';
 
 const Footer = () => {
+    let location = useLocation();
+    
+    if(location.pathname.startsWith('/admin')) {
+        return (
+            <div></div>
+        )
+    }
+
   return (
     <footer className="footer">
     <div className="container">
@@ -34,7 +43,7 @@ const Footer = () => {
                     <div className="footer__newslatter">
                         <p>Zapisz się, aby byc na bieżąco z promocjami oraz nowymi towarami!</p>
                         <form action="src/Components/MainPage/Footer#">
-                            <input type="text" placeholder="Your email"/>
+                            <input type="text" placeholder="Twój e-mail"/>
                             <button type="submit"><AiOutlineMail/></button>
                         </form>
                     </div>

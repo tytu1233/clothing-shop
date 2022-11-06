@@ -14,6 +14,7 @@ const Products = () => {
 
     const [names, setNames] = useState([]);
     const [products, setProducts] = useState([]);
+    const [producers, setProducers] = useState([]);
     const [brandFiltered, setBrandFiltered] = useState([])
     const [sizeFiltered, setSizeFiltered] = useState([])
     const [pagination, setPagination] = useState([]);
@@ -32,17 +33,24 @@ const Products = () => {
     const loadNames = async () => {
         const res = await ServiceSizes.getAllNames();
         setNames(res.data)
-        console.log(res.data)
+        //console.log(res.data)
         setLoading(false)
     }
 
+    const loadProducers = async () => {
+        const res = await ProductsService.getProducers();
+        setProducers(res.data)
+        //console.log(res.data)
+    }
+
     const loadProducts = async () => {
+        //console.log(brandFiltered)
         if(max < min) {
             setError("Max nie wieksze od min")
             
         } else 
             setError('')
-        console.log(sizeFiltered)
+        //console.log(sizeFiltered)
         if(brandFiltered.length > 0 || sizeFiltered.length > 0) setPage(0)
         await ProductsService.getFilteredData(brandFiltered, sizeFiltered, min, max, page).then((res) => {
             setProducts(res.data.content);
@@ -55,7 +63,7 @@ const Products = () => {
 
     const handleCheckboxes = (e) => {
         if(e.target.name === "brand") {
-            console.log(e.target.name)
+            
             let prev = brandFiltered;
             let itemIndex = prev.indexOf(e.target.value);
     
@@ -81,7 +89,7 @@ const Products = () => {
             }
             setSizeFiltered([...sizeFiltered]);
         }
-        console.log(sizeFiltered)
+        //console.log(sizeFiltered)
         //console.log(max)
     }
 
@@ -97,6 +105,7 @@ const Products = () => {
     useEffect(() => {
         loadProducts();
         loadNames();
+        loadProducers();
     },[brandFiltered, sizeFiltered, min, max, page])
 
     if (isLoading) {
@@ -115,26 +124,20 @@ const Products = () => {
                                     </div>
                                         <div className="card-body">
                                             <div className="shop__sidebar__brand">
-                                            <div className="form-check">
-                                                <input className="form-check-input" 
-                                                onChange={handleCheckboxes}
-                                                value="nike"
-                                                name="brand"
-                                                type="checkbox" id="flexCheckDefault"/>
-                                                <label className="form-check-label" htmlFor="flexCheckDefault">
-                                                    nike
-                                                </label>
-                                                </div>
-                                                <div className="form-check">
-                                                <input className="form-check-input" 
-                                                onChange={handleCheckboxes}
-                                                value="adik"
-                                                name="brand"
-                                                type="checkbox"  id="flexCheckChecked" />
-                                                <label className="form-check-label" htmlFor="flexCheckChecked">
-                                                    adik
-                                                </label>
-                                                </div>
+                                            {producers.map((producer) => {
+                                                return (
+                                                    <div className="form-check" key={producer.brand}>
+                                                        <input className="form-check-input" 
+                                                            onChange={handleCheckboxes}
+                                                            value={producer.brand}
+                                                            name="brand"
+                                                            type="checkbox" id="flexCheckDefault"/>
+                                                        <label className="form-check-label" htmlFor="flexCheckDefault">
+                                                        {producer.brand}
+                                                        </label>
+                                                    </div>
+                                                    )
+                                                })}
                                             </div>
                                     </div>
                                 </div>
@@ -167,7 +170,12 @@ const Products = () => {
                                             <div className="shop__sidebar__size">
                                                 {names.map((name) => {
                                                     return (
-                                                        <label key={name.idSize} htmlFor={name.sizeName}>{name.sizeName}
+                                                        <label
+                                                        style={{
+                                                            backgroundColor: sizeFiltered.includes(name.sizeName) ? 'black' : 'white',
+                                                            color: sizeFiltered.includes(name.sizeName) ? 'white' : 'black',
+                                                          }}
+                                                        key={name.idSize} htmlFor={name.sizeName}>{name.sizeName}
                                                             <input onChange={handleCheckboxes} value={name.sizeName} name="size" type="checkbox" id={name.sizeName}/>
                                                         </label>
                                                     )

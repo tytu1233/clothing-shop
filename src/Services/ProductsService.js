@@ -13,6 +13,10 @@ class ProductsService {
         return axios.get(PRODUCTS_BASE_REST_API_URL + '/' + id);
     }
 
+    getProducers() {
+        return axios.get(PRODUCTS_BASE_REST_API_URL + '/producers');
+    }
+
     getFilteredData(brand, size, min, max, page) {
         let arrayBrands = brand.toString()
         let arraySizes = size.toString()

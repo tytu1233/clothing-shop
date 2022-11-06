@@ -13,6 +13,7 @@ import { CartProvider } from 'react-use-cart';
 import Profile from './Components/MainPage/Profile';
 import Error404 from './Components/Errors/error404';
 import Orders from './Components/MainPage/Orders';
+import Admin from './Components/Admin/Admin';
 
 
 
@@ -33,12 +34,15 @@ const App = () => {
                 <div>
                 <Navbar/>
                     <Routes>
-                        <Route path='/' element = {<Main/>}></Route>
+                        <Route index path='/' element = {<Main/>}></Route>
                         <Route path='/details/:id' element = {<Details/>}></Route>
                         <Route path='/cart' element = {<Cart/>}></Route>
                         <Route path='/products' element = {<Products/>}></Route>
                         <Route path='/signin' element = {<SignIn/>}></Route>
                         <Route path='/signup' element = {<SignUp/>}></Route>
+                        <Route renderHeaderAndFooter={false} path='admin' element = {<Admin/>}>
+                            <Route path="profile" element = {<Admin/>}></Route>
+                        </Route>
                         <Route path='/profile/:id' element = {<Profile/>}></Route>
                         <Route path='/orders/:id' element={<Orders/>}></Route>
                         <Route path='/*' element={<Error404/>}></Route>

@@ -63,7 +63,7 @@ const Cart = () => {
                                     <th>Produkt</th>
                                     <th>Ilość</th>
                                     <th>Cena</th>
-                                    <th><span style={{cursor: "pointer"}} onClick={() => {emptyCart()}}> Wyczyść koszyk</span></th>
+                                    <th><span style={{cursor: "pointer"}} onClick={() => {emptyCart()}}>Wyczyść koszyk</span></th>
                                 </tr>
                             </thead>
                             <tbody>
