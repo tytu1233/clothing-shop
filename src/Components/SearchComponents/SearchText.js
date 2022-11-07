@@ -5,7 +5,7 @@ import MoonLoader from "react-spinners/MoonLoader";
 import { useDebounce } from "../../hooks/debounceHook";
 import ShowProducts from "./ShowProducts";
 import { IoClose, IoSearch } from "react-icons/io5";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion }from "framer-motion";
 import { useClickOutside } from "react-click-outside-hook";
 
 const SearchBarContainer = styled(motion.div)`

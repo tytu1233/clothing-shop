@@ -14,6 +14,7 @@ import Profile from './Components/MainPage/Profile';
 import Error404 from './Components/Errors/error404';
 import Orders from './Components/MainPage/Orders';
 import Admin from './Components/Admin/Admin';
+import Dashboard from './Components/Admin/Dashboard';
 
 
 
@@ -40,9 +41,8 @@ const App = () => {
                         <Route path='/products' element = {<Products/>}></Route>
                         <Route path='/signin' element = {<SignIn/>}></Route>
                         <Route path='/signup' element = {<SignUp/>}></Route>
-                        <Route renderHeaderAndFooter={false} path='admin' element = {<Admin/>}>
-                            <Route path="profile" element = {<Admin/>}></Route>
-                        </Route>
+                        <Route path='/admin' element = {<Dashboard/>}></Route>
+                        <Route path="/admin/profile" element = {<Admin/>}></Route>
                         <Route path='/profile/:id' element = {<Profile/>}></Route>
                         <Route path='/orders/:id' element={<Orders/>}></Route>
                         <Route path='/*' element={<Error404/>}></Route>
