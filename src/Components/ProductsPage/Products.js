@@ -120,7 +120,7 @@ const Products = () => {
                             <div className="accordion" id="accordionExample">
                                 <div className="card">
                                     <div>
-                                        <p>Brands</p>
+                                        <p>Producenci</p>
                                     </div>
                                         <div className="card-body">
                                             <div className="shop__sidebar__brand">

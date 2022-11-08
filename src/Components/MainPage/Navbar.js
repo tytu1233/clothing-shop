@@ -41,14 +41,16 @@ const Navbar = () => {
     const checkAuthorization = async () => {
         const res = await AuthenticationService.checkAuthenticationUser(JSON.parse(localStorage.getItem('token')));
         if(!(res.data.status === "pass")) return;
-        console.log(res.data.user_id)
-        setUser({"user_id": res.data.user_id, "token": JSON.parse(localStorage.getItem('token')), "logged": 1})
+        console.log(res.data)
+        setUser({"user_id": res.data.user_id, "token": JSON.parse(localStorage.getItem('token')), "logged": 1, "role": res.data.role})
         setIsLogged(1);
+        
     }
     
     useEffect(() => {
         checkAuthorization();
-    }, [])
+        console.log(user)
+    }, [isLogged])
     
     if(location.pathname.startsWith('/admin')) {
         return (
@@ -100,7 +102,8 @@ const Navbar = () => {
                                 <ul style={{backgroundColor: 'rgb(17, 17, 17)'}} className="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
                                     <li><Link onClick={() => {changeLocation(`/profile/${user.user_id}`)}} className="dropdown-item" >Profil</Link></li>
                                     <li><Link onClick={() => {changeLocation(`/orders/${user.user_id}`)}} className="dropdown-item">Zamówienia</Link></li>
-                                    <li><a className="dropdown-item" onClick={() => {logoutUser()}}>Wyloguj</a></li>
+                                    {user.role === "Admin" ? <li><Link onClick={() => {changeLocation(`/admin`)}} className="dropdown-item">Panel admina</Link></li> : null}
+                                    <li><Link className="dropdown-item" onClick={() => {logoutUser()}}>Wyloguj</Link></li>
                                 </ul>
                                 </li>
                             </ul>
@@ -108,7 +111,7 @@ const Navbar = () => {
                             }
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link active" href="/signup"><AiOutlineUserAdd size={25}/></a>
+                            {isLogged === 1 ? null : <a className="nav-link active" href="/signup"><AiOutlineUserAdd size={25}/></a>}
                         </li>
                         <li className="nav-item">
                             <a href='/cart' className="nav-link active"><AiOutlineShoppingCart size={25}/></a>

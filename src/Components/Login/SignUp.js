@@ -3,6 +3,7 @@ import UsersService from '../../Services/UsersService';
 import '../../styles/signup.css'
 import { useFormik } from 'formik';
 import { registerSchema } from '../schemas/register';
+import CustomizedToast from '../Toast/CustomizedToast';
 
 
 const SignUp = () => {
@@ -21,7 +22,10 @@ const SignUp = () => {
             login: "",
             password: "",
             email: "",
-            address: ""
+            city: "",
+            zipCode: "",
+            street: "",
+            terms: false
         },
         validationSchema: registerSchema,
         onSubmit
@@ -119,30 +123,65 @@ const SignUp = () => {
                         </div>
 
                         <div className="form-outline mb-4">
-                        <label className="form-label" htmlFor="signUpAddress">Adres</label>
+                        <label className="form-label" htmlFor="signUpCity">Miasto</label>
                         <input type="text"
-                            className={`form-control ${errors.address && touched.address ? "invalid" : ""}`}
-                            value={values.address}
+                            className={`form-control ${errors.city && touched.city ? "invalid" : ""}`}
+                            value={values.city}
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            id="address"
-                            placeholder='Podaj swój adres'
+                            id="city"
+                            placeholder='Podaj miasto'
                             />
-                            {errors.address && touched.address &&
-                                    <small className="text-danger">{errors.address}</small>
+                            {errors.city && touched.city &&
+                                    <small className="text-danger">{errors.city}</small>
                             }
                         </div>
 
-                        <div className="form-check d-flex justify-content-center mb-5">
-                        <input className="form-check-input me-2" type="checkbox" id="form2Example3cg" />
-                        <label className="form-check-label" htmlFor="form2Example3g">
-                            Zgadzam się na <a href="#!" className="text-body"><u>warunki serwisu</u></a>
-                        </label>
+                        <div className="form-outline mb-4">
+                        <label className="form-label" htmlFor="signUpStreet">Ulica</label>
+                        <input type="text"
+                            className={`form-control ${errors.street && touched.street ? "invalid" : ""}`}
+                            value={values.street}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            id="street"
+                            placeholder='Podaj ulicę'
+                            />
+                            {errors.street && touched.street &&
+                                    <small className="text-danger">{errors.street}</small>
+                            }
                         </div>
 
+                        <div className="form-outline mb-4">
+                        <label className="form-label" htmlFor="signUpZipCode">Kod pocztowy</label>
+                        <input type="text"
+                            className={`form-control ${errors.zipCode && touched.zipCode ? "invalid" : ""}`}
+                            value={values.zipCode}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            id="zipCode"
+                            placeholder='Podaj kod pocztowy'
+                            />
+                            {errors.zipCode && touched.zipCode &&
+                                    <small className="text-danger">{errors.zipCode}</small>
+                            }
+                        </div>
+                        <div className="form-outline mb-4">
+                            <div className='d-flex justify-content-center'>
+                                <input className="form-check-input me-2" onChange={handleChange} value={values.terms} onBlur={handleBlur} type="checkbox" id="terms" />
+                                <label className="form-check-label" htmlFor="form2Example3g">
+                                    Zapoznałem się z <a href="#!" className="text-body"><u>regulaminem serwisu</u></a>
+                                </label>
+                            </div>
+                            <div className='d-flex justify-content-center'>
+                                {errors.terms && touched.terms &&
+                                        <small className="text-danger">{errors.terms}</small>
+                                }
+                            </div>
+                        </div>
                         <div className="d-flex justify-content-center">
                         <button type="submit"
-                            className="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Register</button>
+                            className="btn btn-dark btn-block btn-lg ">Register</button>
                         </div>
 
                         <p className="text-center text-muted mt-5 mb-0">Masz już konto? <a href="/signin"

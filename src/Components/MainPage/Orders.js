@@ -37,6 +37,22 @@ const Orders = () => {
         checkAuthorization()
     }, [])
 
+    if(ordersa.length === 0) {
+        return (
+            <div className='container p-5 vh-100'>
+                    <div className="my-5">
+                        <h3>Twoje zamówienia</h3>
+                        <hr/>
+                    </div>
+                    <div className="my-5">
+                        <div className='d-flex justify-content-center'>
+                            <h1>Brak zamówień</h1>
+                        </div>
+                    </div>
+                </div>
+        )
+    }
+
     return (
         <div className='container p-5'>
                     <div className="my-5">

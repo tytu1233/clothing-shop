@@ -80,7 +80,7 @@ const SignIn = () => {
                         <span style={{color: 'red'}}>Niepoprawne dane logowania</span>
                         </div>
                     ) : null}
-                    <button type="button" id="liveToastBtn" onClick={() => {authUser()}} className="btn btn-primary btn-lg btn-block">Zaloguj się</button>
+                    <button type="button" id="liveToastBtn" onClick={() => {authUser()}} className="btn btn-dark btn-lg btn-block">Zaloguj się</button>
                     </form>
                 </div>
                 </div>
