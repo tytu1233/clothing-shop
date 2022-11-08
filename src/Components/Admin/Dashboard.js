@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
@@ -8,9 +8,6 @@ import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
@@ -24,17 +21,42 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 import LayersIcon from '@mui/icons-material/Layers';
 import DrawerComponent from './DrawerComponent';
 import BarComponent from './BarComponent';
+import { ListItem } from '@mui/material';
 import Admin from './Admin';
-
+import { Route, Routes, useNavigate } from 'react-router-dom';
+import AdminUsers from './AdminUsers';
   
 const mdTheme = createTheme();
   
 const Dashboard = () => {
     const [isClicked, setIsClicked] = useState(false);
+    const navigate = useNavigate();
     const [open, setOpen] = useState(false);
     const toggleDrawer = () => {
       setOpen(!open);
     };
+
+
+    const [selectedLink, setSelectedLink] = useState('');
+
+    const list = useMemo(
+      () => [
+        {
+          title: 'Messages',
+          icon: <NotificationsIcon />,
+          link: 'messages',
+          component: <Admin />,
+        },
+        {
+          title: 'Profile',
+          icon: <NotificationsIcon />,
+          link: 'profile',
+          component: <AdminUsers />,
+        },
+      ],
+      []
+    );
+
   
     return (
       <ThemeProvider theme={mdTheme}>
@@ -90,90 +112,41 @@ const Dashboard = () => {
             </Toolbar>
             <Divider />
             <List component="nav">
-            <ListItemButton>
-                <ListItemIcon>
-                    <DashboardIcon />
+            {list.map((item) => (
+            <ListItem key={item.title} disablePadding sx={{ display: 'block' }}>
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? 'initial' : 'center',
+                  px: 2.5,
+                }}
+                onClick={() => navigate(item.link)}
+                selected={selectedLink === item.link}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : 'auto',
+                    justifyContent: 'center',
+                  }}
+                >
+                  {item.icon}
                 </ListItemIcon>
-                <ListItemText primary="Dashboard" />
-                </ListItemButton>
-                <ListItemButton onClick={() => {setIsClicked(true)}}>
-                <ListItemIcon>
-                        <ShoppingCartIcon />
-                </ListItemIcon>
-                <ListItemText primary="Orders" />
-                </ListItemButton>
-                <ListItemButton>
-                <ListItemIcon>
-                    <PeopleIcon />
-                </ListItemIcon>
-                <ListItemText primary="Customers" />
-                </ListItemButton>
-                <ListItemButton>
-                <ListItemIcon>
-                    <BarChartIcon />
-                </ListItemIcon>
-                <ListItemText primary="Reports" />
-                </ListItemButton>
-                <ListItemButton>
-                <ListItemIcon>
-                    <LayersIcon />
-                </ListItemIcon>
-                <ListItemText primary="Integrations" />
-            </ListItemButton>
-              <Divider sx={{ my: 1 }} />
-              
+                <ListItemText
+                  primary={item.title}
+                  sx={{ opacity: open ? 1 : 0 }}
+                />
+              </ListItemButton>
+            </ListItem>
+          ))}
             </List>
           </DrawerComponent>
-          <Box
-            component="main"
-            sx={{
-              backgroundColor: (theme) =>
-                theme.palette.mode === 'light'
-                  ? theme.palette.grey[100]
-                  : theme.palette.grey[900],
-              flexGrow: 1,
-              height: '100vh',
-              overflow: 'auto',
-            }}
-          >
-            <Toolbar />
-            <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-              <Grid container spacing={3}>
-                {/* Chart */}
-                <Grid item xs={12} md={8} lg={9}>
-                  <Paper
-                    sx={{
-                      p: 2,
-                      display: 'flex',
-                      flexDirection: 'column',
-                      height: 240,
-                    }}
-                  >
-                    
-                  </Paper>
-                </Grid>
-                {/* Recent Deposits */}
-                <Grid item xs={12} md={4} lg={3}>
-                  <Paper
-                    sx={{
-                      p: 2,
-                      display: 'flex',
-                      flexDirection: 'column',
-                      height: 240,
-                    }}
-                  >
-                
-                  </Paper>
-                </Grid>
-                {/* Recent Orders */}
-                <Grid item xs={12}>
-                  <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-
-                  </Paper>
-                </Grid>
-              </Grid>
-            </Container>
-            {isClicked ? (<Admin/>) : null }
+          <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+          <Routes>
+              {list.map((item) => (
+                <Route key={item.title} path={item.link} element={item.component} />
+              ))}
+            </Routes>
           </Box>
         </Box>
       </ThemeProvider>

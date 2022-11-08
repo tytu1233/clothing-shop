@@ -35,14 +35,13 @@ const App = () => {
                 <div>
                 <Navbar/>
                     <Routes>
-                        <Route index path='/' element = {<Main/>}></Route>
+                        <Route index path='/*' element = {<Main/>}></Route>
                         <Route path='/details/:id' element = {<Details/>}></Route>
                         <Route path='/cart' element = {<Cart/>}></Route>
                         <Route path='/products' element = {<Products/>}></Route>
                         <Route path='/signin' element = {<SignIn/>}></Route>
                         <Route path='/signup' element = {<SignUp/>}></Route>
-                        <Route path='/admin' element = {<Dashboard/>}></Route>
-                        <Route path="/admin/profile" element = {<Admin/>}></Route>
+                        <Route exact path='/admin/*' element = {<Dashboard/>}></Route>
                         <Route path='/profile/:id' element = {<Profile/>}></Route>
                         <Route path='/orders/:id' element={<Orders/>}></Route>
                         <Route path='/*' element={<Error404/>}></Route>
