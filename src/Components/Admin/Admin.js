@@ -4,7 +4,6 @@ import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import Dashboard from './Dashboard';
 import UsersService from '../../Services/UsersService';
 
 const columns = [
@@ -17,7 +16,7 @@ const columns = [
     { field: 'roles', headerName: 'Rola', width: 150, valueFormatter: ({ value }) => value.role_name}
 ];
 
-const Admin = ({ setSelectedLink, link }) => {
+const Admin = () => {
 
     const [users, setUsers] = useState()
     const [loading, setLoading] = useState(true)

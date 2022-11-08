@@ -4,6 +4,10 @@ const USERS_BASE_REST_API_URL = "http://localhost:8080/users"
 
 class UsersService {
 
+    getAllRoles() {
+        return axios.get("http://localhost:8080/roles");
+    }
+
     getUsersByLoginAndEmail(login, email) {
         return axios.get(USERS_BASE_REST_API_URL + '/data/' + login + '/' + email);
     }
@@ -28,8 +32,9 @@ class UsersService {
         return axios.post(USERS_BASE_REST_API_URL + '/1', user);
     }
 
-    updateUser(userId, user) {
-        return axios.put(USERS_BASE_REST_API_URL + '/' + userId, user);
+    updateUser(user) {
+        console.log(user)
+        return axios.put(USERS_BASE_REST_API_URL + '/' + user.id_user, user);
     }
 
     deleteUser(userId) {

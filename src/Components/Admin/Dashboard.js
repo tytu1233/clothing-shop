@@ -24,12 +24,11 @@ import BarComponent from './BarComponent';
 import { ListItem } from '@mui/material';
 import Admin from './Admin';
 import { Route, Routes, useNavigate } from 'react-router-dom';
-import AdminUsers from './AdminUsers';
+import AdminUsers from './Users/AdminUsers';
   
 const mdTheme = createTheme();
   
 const Dashboard = () => {
-    const [isClicked, setIsClicked] = useState(false);
     const navigate = useNavigate();
     const [open, setOpen] = useState(false);
     const toggleDrawer = () => {
@@ -37,20 +36,18 @@ const Dashboard = () => {
     };
 
 
-    const [selectedLink, setSelectedLink] = useState('');
-
     const list = useMemo(
       () => [
         {
-          title: 'Messages',
-          icon: <NotificationsIcon />,
-          link: 'messages',
+          title: 'Panel',
+          icon: <DashboardIcon />,
+          link: '',
           component: <Admin />,
         },
         {
-          title: 'Profile',
-          icon: <NotificationsIcon />,
-          link: 'profile',
+          title: 'Użytkownicy',
+          icon: <PeopleIcon />,
+          link: 'users',
           component: <AdminUsers />,
         },
       ],
@@ -121,7 +118,6 @@ const Dashboard = () => {
                   px: 2.5,
                 }}
                 onClick={() => navigate(item.link)}
-                selected={selectedLink === item.link}
               >
                 <ListItemIcon
                   sx={{
