@@ -207,7 +207,8 @@ const Products = () => {
                             </Link>
                             <div className='row'>
                                     <div className='col-10'>
-                                        <h6>{product.name}</h6>
+                                        <h5>{product.name}</h5>
+                                        <h6>{product.brand}</h6>
                                         <h5>{product.price} zł</h5>
                                     </div>
                                     <div className='col-2'>

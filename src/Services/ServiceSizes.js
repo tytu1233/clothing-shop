@@ -12,6 +12,17 @@ class SizesService {
         return axios.get(SIZES_BASE_REST_API_URL + '/names')
     }
 
+    checkQuantity(ids, sizes) {
+        let arrayIds = ids.toString()
+        let arraySizes = sizes.toString()
+        return axios.get(SIZES_BASE_REST_API_URL + '/check', {
+            params: {
+                ids: arrayIds,
+                sizesNames: arraySizes,
+            }
+        })
+    }
+
 }
 
 export default new SizesService();

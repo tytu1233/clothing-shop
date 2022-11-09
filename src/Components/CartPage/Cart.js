@@ -5,6 +5,7 @@ import { TfiPlus, TfiMinus } from "react-icons/tfi";
 import { UserContext } from '../../other/UserContext';
 import { useCart } from "react-use-cart";
 import OrdersService from '../../Services/OrdersService';
+import ServiceSizes from '../../Services/ServiceSizes';
 
 const Cart = () => {
 
@@ -19,14 +20,10 @@ const Cart = () => {
 
       const { user } = useContext(UserContext);
       const [finalPrice, setFinalPrice] = useState(cartTotal)
-
-      if (isEmpty) return (
-        <div className='container-fluid p-4 full-layout vh-100'>
-            <div className='d-flex justify-content-center'>
-                <h1>Koszyk jest pusty!</h1>
-            </div>
-        </div>
-      );
+      const [sizesName, setSizesName] = useState([]) 
+      const [ids, setIds] = useState([])
+      const [sizes, setSizes] = useState([])
+      const [loading, setLoading] = useState(false)
 
       const createOrder = () => {
         OrdersService.createOrder(user.user_id)
@@ -49,8 +46,40 @@ const Cart = () => {
         else
             setFinalPrice(cartTotal)
     }
-    
 
+    const addProducts = async () => {
+        items.forEach((item) => {
+            sizesName.push(item.size)
+            setSizesName([...sizesName]);
+            ids.push(item.id)
+            setIds([...ids])
+        })
+
+        const res = await ServiceSizes.checkQuantity(ids, sizesName)
+        console.log(res.data)
+        setSizes(res.data.map((value)=> {
+            value.productsSizes = value.productsSizes.id + value.sizeName
+            return value
+         }))
+
+        setLoading(true)
+    }
+
+    useEffect(() => {
+        addProducts()
+    }, [])
+    
+    if (isEmpty) return (
+        <div className='container-fluid p-4 full-layout vh-100'>
+            <div className='d-flex justify-content-center'>
+                <h1>Koszyk jest pusty!</h1>
+            </div>
+        </div>
+      );
+
+      if(!loading) {
+        return (<div>Waiting for data</div>)
+      }
   return (
     <div>
     <div className="container p-4">
@@ -75,7 +104,12 @@ const Cart = () => {
                                         </div>
                                         <div className="product__cart__item__text">
                                             <h5>{item.name}</h5>
-                                            <h6>{item.price} zł</h6>
+                                            <h6>Rozmiar: {item.size}</h6>
+                                            {sizes.map((size) => {
+                                                    return (
+                                                        <div>{size.productsSizes === item.id ? (<span>{item.quantity > size.amount ? <span>niedostępne</span> : <span>dostępne</span>}</span>) : null}</div>
+                                                    )
+                                                })}
                                         </div>
                                     </td>
                                     <td className="quantity__item">

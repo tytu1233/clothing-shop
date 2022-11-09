@@ -38,6 +38,7 @@ const Details = () => {
                 i = {
                     id: i.id + sizeFilters,
                     price: i.price,
+                    name: i.name,
                     size: sizeFilters
                 } 
                 addItem(i)
@@ -46,6 +47,7 @@ const Details = () => {
                 i = {
                     id: items[index].id,
                     price: items[index].price,
+                    name: items[index].name,
                     size: sizeFilters
                 } 
                 addItem(i)
