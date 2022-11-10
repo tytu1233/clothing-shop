@@ -49,7 +49,7 @@ const Navbar = () => {
     
     useEffect(() => {
         checkAuthorization();
-        console.log(user)
+        //console.log(user)
     }, [isLogged])
     
     if(location.pathname.startsWith('/admin')) {
@@ -91,6 +91,7 @@ const Navbar = () => {
                         </li>
                     </ul>
                     <div className='d-flex justify-content-round'>
+                        
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         <li className="nav-item">
                             { isLogged === 1 ?

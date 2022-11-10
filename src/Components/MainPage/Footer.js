@@ -37,7 +37,7 @@ const Footer = () => {
                     </div>
                 </div>
             </div>
-            <div className="col-lg-3 offset-lg-1 col-md-6 col-sm-6">
+            <div className="col-lg-3 offset-lg-1 col-md-12 col-sm-12">
                 <div className="footer__widget">
                     <h6>Newsletter</h6>
                     <div className="footer__newslatter">

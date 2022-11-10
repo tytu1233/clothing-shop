@@ -7,6 +7,7 @@ import { useCart } from "react-use-cart";
 import CustomizedToast from '../Toast/CustomizedToast';
 import { Link } from 'react-router-dom';
 import ServiceSizes from '../../Services/ServiceSizes';
+import CategoriesService from '../../Services/CategoriesService';
 
 const Products = () => {
 
@@ -15,7 +16,9 @@ const Products = () => {
     const [names, setNames] = useState([]);
     const [products, setProducts] = useState([]);
     const [producers, setProducers] = useState([]);
+    const [categories, setCategories] = useState([]);
     const [brandFiltered, setBrandFiltered] = useState([])
+    const [categoriesFiltered, setCategoriesFiltered] = useState([])
     const [sizeFiltered, setSizeFiltered] = useState([])
     const [pagination, setPagination] = useState([]);
     const [page, setPage] = useState(0);
@@ -43,6 +46,11 @@ const Products = () => {
         //console.log(res.data)
     }
 
+    const loadCategories = async () => {
+        const res = await CategoriesService.getAllCategories();
+        setCategories(res.data.content)
+    }
+
     const loadProducts = async () => {
         //console.log(brandFiltered)
         if(max < min) {
@@ -52,7 +60,7 @@ const Products = () => {
             setError('')
         //console.log(sizeFiltered)
         if(brandFiltered.length > 0 || sizeFiltered.length > 0) setPage(0)
-        await ProductsService.getFilteredData(brandFiltered, sizeFiltered, min, max, page).then((res) => {
+        await ProductsService.getFilteredData(brandFiltered, sizeFiltered, categoriesFiltered, min, max, page).then((res) => {
             setProducts(res.data.content);
             setPagination(res.data)
             //console.log(res.data)
@@ -88,8 +96,19 @@ const Products = () => {
             prev.push(e.target.value);
             }
             setSizeFiltered([...sizeFiltered]);
+        }else if(e.target.name === "categories") {
+            console.log(e.target.value)
+            let prev = categoriesFiltered;
+            let itemIndex = prev.indexOf(e.target.value);
+    
+            if (itemIndex !== -1) {
+            prev.splice(itemIndex, 1);
+            } else {
+            prev.push(e.target.value);
+            }
+            setCategoriesFiltered([...categoriesFiltered]);
         }
-        //console.log(sizeFiltered)
+        //console.log(categoriesFiltered)
         //console.log(max)
     }
 
@@ -106,7 +125,8 @@ const Products = () => {
         loadProducts();
         loadNames();
         loadProducers();
-    },[brandFiltered, sizeFiltered, min, max, page])
+        loadCategories();
+    },[brandFiltered, sizeFiltered, min, max, page, categoriesFiltered])
 
     if (isLoading) {
         return <div className="App">Loading...</div>;
@@ -118,6 +138,29 @@ const Products = () => {
                     <div className="shop__sidebar">
                         <div className="shop__sidebar__accordion">
                             <div className="accordion" id="accordionExample">
+                            <div className="card">
+                                    <div>
+                                        <p>Kategorie</p>
+                                    </div>
+                                        <div className="card-body">
+                                            <div className="shop__sidebar__brand">
+                                            {categories.map((category) => {
+                                                return (
+                                                    <div className="form-check" key={category.idCategory}>
+                                                        <input className="form-check-input" 
+                                                            onChange={handleCheckboxes}
+                                                            value={category.categoryName}
+                                                            name="categories"
+                                                            type="checkbox" id="flexCheckDefault"/>
+                                                        <label className="form-check-label" htmlFor="flexCheckDefault">
+                                                        {category.categoryName}
+                                                        </label>
+                                                    </div>
+                                                    )
+                                                })}
+                                            </div>
+                                    </div>
+                                </div>
                                 <div className="card">
                                     <div>
                                         <p>Producenci</p>
