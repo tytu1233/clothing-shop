@@ -181,7 +181,7 @@ const SignUp = () => {
                         </div>
                         <div className="d-flex justify-content-center">
                         <button type="submit"
-                            className="btn btn-dark btn-block btn-lg ">Register</button>
+                            className="btn btn-dark btn-block btn-lg ">Zarejestruj</button>
                         </div>
 
                         <p className="text-center text-muted mt-5 mb-0">Masz już konto? <a href="/signin"
