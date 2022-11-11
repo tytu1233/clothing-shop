@@ -15,6 +15,7 @@ import Error404 from './Components/Errors/error404';
 import Orders from './Components/MainPage/Orders';
 import Admin from './Components/Admin/Admin';
 import Dashboard from './Components/Admin/Dashboard';
+import Checkout from './Components/CartPage/Checkout';
 
 
 
@@ -41,6 +42,7 @@ const App = () => {
                         <Route path='/products' element = {<Products/>}></Route>
                         <Route path='/signin' element = {<SignIn/>}></Route>
                         <Route path='/signup' element = {<SignUp/>}></Route>
+                        <Route path='/checkout' element = {<Checkout/>}></Route>
                         <Route exact path='/admin/*' element = {<Dashboard/>}></Route>
                         <Route path='/profile/:id' element = {<Profile/>}></Route>
                         <Route path='/orders/:id' element={<Orders/>}></Route>

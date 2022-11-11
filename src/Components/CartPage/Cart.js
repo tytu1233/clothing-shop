@@ -6,6 +6,8 @@ import { UserContext } from '../../other/UserContext';
 import { useCart } from "react-use-cart";
 import OrdersService from '../../Services/OrdersService';
 import ServiceSizes from '../../Services/ServiceSizes';
+import { Link } from 'react-router-dom';
+
 
 const Cart = () => {
 
@@ -24,21 +26,6 @@ const Cart = () => {
       const [ids, setIds] = useState([])
       const [sizes, setSizes] = useState([])
       const [loading, setLoading] = useState(false)
-
-      const createOrder = () => {
-        OrdersService.createOrder(user.user_id)
-        .then((response) => {
-            OrdersService.updateFinalPrice(response.data, finalPrice)
-            .then((response) => {
-            for(let i = 0; i<items.length; i++) {
-                OrdersService.createOrdersProduct(response.data, items[i])
-                .then((response) => {
-                    console.log(response.data)
-                })
-            }
-        })
-        })
-      }
 
     const handleChange = (e) => {
         if(e.target.value === "5%")
@@ -150,7 +137,10 @@ const Cart = () => {
                             <li>Cena końcowa <span>{finalPrice} zł</span></li>
                         </ul>
                         {user.logged === 1 ?
-                        <a onClick={() => {createOrder()}} className="primary-btn">Złóż zamówienie</a>
+                        <Link 
+                        to={{pathname: '/checkout'}} 
+                        state={{finalPrice: finalPrice}}
+                        className="primary-btn">Złóż zamówienie</Link>
                         : 
                         <div className='d-flex justify-content-center'><p style={{color: 'red'}}>Zaloguj się, aby złożyć zamówienie</p></div>}
                     </div>

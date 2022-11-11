@@ -8,6 +8,7 @@ import CustomizedToast from '../Toast/CustomizedToast';
 import { Link } from 'react-router-dom';
 import ServiceSizes from '../../Services/ServiceSizes';
 import CategoriesService from '../../Services/CategoriesService';
+import Loader from '../Loader';
 
 const Products = () => {
 
@@ -129,7 +130,7 @@ const Products = () => {
     },[brandFiltered, sizeFiltered, min, max, page, categoriesFiltered])
 
     if (isLoading) {
-        return <div className="App">Loading...</div>;
+        return <Loader/>;
       }
   return (
         <div className="container p-4">

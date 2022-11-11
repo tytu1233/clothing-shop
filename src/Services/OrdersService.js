@@ -5,8 +5,8 @@ const ORDERSPRODUCT = "http://localhost:8080/ordersproduct"
 
 class OrdersService {
 
-    createOrder(user_id) {
-        //console.log(page)
+    createOrder(user_id, order) {
+        console.log(order)
         return axios.post(ORDERS_BASE_REST_API_URL + '/' + user_id);
     }
 

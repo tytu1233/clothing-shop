@@ -4,6 +4,7 @@ import OpinionsService from '../../Services/OpinionsService';
 import "react-multi-carousel/lib/styles.css";
 import Carousel from "react-multi-carousel";
 import { useNavigate } from 'react-router'
+import Loader from '../Loader';
 
 const responsive = {
   superLargeDesktop: {
@@ -27,8 +28,9 @@ const responsive = {
 
 const Categories = () => {
 
-    const navigate = useNavigate();
 
+    const navigate = useNavigate();
+    const [loading, setLoading] = useState(true)
     const [recommended, setRecommended] = useState([]);
 
     const getCategories = async () => {
@@ -37,11 +39,17 @@ const Categories = () => {
         console.log(res.data)
         const response = await OpinionsService.getHighRated();
         console.log(response.data)
+        setLoading(false)
+
     }
 
     useEffect(() => {
         getCategories();
     }, [])
+
+    if(loading) {
+      return <Loader/>
+    }
 
 
   return (

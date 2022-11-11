@@ -4,7 +4,7 @@ import SearchText from './SearchText';
 
 const SearchBar = () => {
   return (
-        <div className="position-relative" style={{zIndex:'500',}}>
+        <div className="position-relative" style={{zIndex:'1001',}}>
                 <div className="position-absolute top-0" style={{width: '100%', height: '25%'}}>
                     <div className="collapse multi-collapse" id="multiCollapseExample3">
                         <div className='container-fluid g-0'>
