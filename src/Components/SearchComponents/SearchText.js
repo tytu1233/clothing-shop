@@ -1,6 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
 import axios from "axios";
-import styled from "styled-components";
 import MoonLoader from "react-spinners/MoonLoader";
 import { useDebounce } from "../../hooks/debounceHook";
 import ShowProducts from "./ShowProducts";
@@ -87,7 +86,7 @@ const SearchText = () => {
   useDebounce(searchQuery, 500, searchTvShow);
 
   return (
-    <motion.div class='search_bar'
+    <motion.div className='search_bar'
       animate={isExpanded ? "expanded" : "collapsed"}
       variants={containerVariants}
       transition={containerTransition}

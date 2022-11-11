@@ -67,7 +67,7 @@ const Orders = () => {
                         <div className="accordion-item" key={order.idOrders}>
                             <h2 className="accordion-header" id={`headingOne${order.idOrders}`}>
                             <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={`#collapseOne${order.idOrders}`}  aria-expanded="true" aria-controls={`collapseOne${order.idOrders}`} >
-                                ID: {order.idOrders}, cena końcowa: {order.final_price}
+                                ID: {order.idOrders}, cena końcowa: {order.finalPrice} zł, data: {order.date}, status: {order.status}
                             </button>
                             </h2>
                             <div id={`collapseOne${order.idOrders}`} className="accordion-collapse collapse" aria-labelledby={`headingOne${order.idOrders}`} data-bs-parent={`accordion${order.idOrders}`}>
@@ -87,7 +87,7 @@ const Orders = () => {
                                         return (
                                             <div key={product.id_orders_product}>
                                                 {order.idOrders === product.orders.idOrders ? 
-                                                    <div className='row p-2'>
+                                                    <div  className='row p-2'>
                                                         <div className='col-3'>
                                                             <div className='row'>
                                                                 <img src={require("../../img/product/product-1.jpg")}/>

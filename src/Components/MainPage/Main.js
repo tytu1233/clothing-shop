@@ -3,6 +3,7 @@ import Navbar from "./Navbar";
 import Slider from "./Slider";
 import Categories from "./Categories";
 import Footer from "./Footer";
+import HighRated from './HighRated';
 
 
 const Main = () => {
@@ -10,6 +11,7 @@ const Main = () => {
         <div>
             <Slider/>
             <Categories/>
+            <HighRated/>
         </div>
     )
 

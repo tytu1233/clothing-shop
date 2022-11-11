@@ -21,6 +21,10 @@ class ProductsService {
         return axios.get()
     }
 
+    getRecommended() {
+        return axios.get(PRODUCTS_BASE_REST_API_URL + '/recommended')
+    }
+
     getFilteredData(brand, size, categories, min, max, page) {
         let arrayBrands = brand.toString()
         let arraySizes = size.toString()
