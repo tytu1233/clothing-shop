@@ -29,6 +29,10 @@ class ProductsService {
         return axios.get()
     }
 
+    creteProducts(values) {
+        return axios.post(PRODUCTS_BASE_REST_API_URL, values);
+    }
+
     getRecommended() {
         return axios.get(PRODUCTS_BASE_REST_API_URL + '/recommended')
     }

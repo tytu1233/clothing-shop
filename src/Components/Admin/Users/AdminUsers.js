@@ -106,7 +106,7 @@ const AdminUsers = () => {
   return (
     <>
     <div className='d-flex justify-content-end'><AddCircleIcon type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo" sx={{width: 40, height: 40}}/></div>
-      <div onClick={() => setDelted(prev=>prev+1)} className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content" style={{overflowY: 'auto', height: '700px'}}>
           <form onSubmit={handleSubmit}>

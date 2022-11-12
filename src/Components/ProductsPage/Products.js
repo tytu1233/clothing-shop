@@ -1,9 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../../styles/products.css'
-import { TfiShoppingCart } from "react-icons/tfi";
 import ProductsService from '../../Services/ProductsService';
 import { Pagination } from '@mui/material';
-import { useCart } from "react-use-cart";
 import CustomizedToast from '../Toast/CustomizedToast';
 import { Link } from 'react-router-dom';
 import ServiceSizes from '../../Services/ServiceSizes';
@@ -13,7 +11,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const Products = () => {
 
-    const { addItem } = useCart();
 
     const [names, setNames] = useState([]);
     const [products, setProducts] = useState([]);
@@ -112,15 +109,6 @@ const Products = () => {
         }
         //console.log(categoriesFiltered)
         //console.log(max)
-    }
-
-    const addToCart = (i) => {
-        addItem(i)
-        setOpen(true);
-        const interval = setInterval(() => {
-            setOpen(false);
-        }, 2000);
-          return () => clearInterval(interval);
     }
 
     useEffect(() => {

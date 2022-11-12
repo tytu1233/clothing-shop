@@ -68,6 +68,12 @@ const Opinions = ({productId}) => {
                 </div>
             </div>
             }
+
+            {opinions.length === 0 ? (
+                <div className="row  d-flex justify-content-center p-2">
+                    <h1 class='text-center'>Brak opinii</h1>
+                </div>
+            ): (
                 <div className="row  d-flex justify-content-center">
 
                         <div className="col-md-8">
@@ -100,9 +106,10 @@ const Opinions = ({productId}) => {
                         <Pagination count={pagination.totalPages} onChange={handleChange}></Pagination>
                     </div>
                 </div>
+                )}
             <div/>
         </div>
-            )
+    )
 
 }
 

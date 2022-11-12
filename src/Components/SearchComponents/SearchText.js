@@ -143,7 +143,7 @@ const SearchText = () => {
                 <ShowProducts
                   key={show.id_product}
                   name={show.name}
-                  rating={show.price}
+                  price={show.price}
                 />
               ))}
             </>

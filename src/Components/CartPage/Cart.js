@@ -4,10 +4,9 @@ import { AiOutlineCloseCircle } from "react-icons/ai";
 import { TfiPlus, TfiMinus } from "react-icons/tfi";
 import { UserContext } from '../../other/UserContext';
 import { useCart } from "react-use-cart";
-import OrdersService from '../../Services/OrdersService';
 import ServiceSizes from '../../Services/ServiceSizes';
 import { Link } from 'react-router-dom';
-import CustomizedToast from '../Toast/CustomizedToast';
+import Loader from '../Loader';
 
 const Cart = () => {
 
@@ -18,7 +17,6 @@ const Cart = () => {
         cartTotal,
         updateItemQuantity,
         removeItem,
-        getItem,
       } = useCart();
 
       const { user } = useContext(UserContext);
@@ -66,7 +64,7 @@ const Cart = () => {
       );
 
       if(!loading) {
-        return (<div>Waiting for data</div>)
+        return (<Loader/>)
       }
   return (
     <div>
