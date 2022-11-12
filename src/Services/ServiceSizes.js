@@ -23,6 +23,10 @@ class SizesService {
         })
     }
 
+    checkItemQuantity(product) {
+        return axios.post(SIZES_BASE_REST_API_URL + '/quantity', product)
+    }
+
 }
 
 export default new SizesService();

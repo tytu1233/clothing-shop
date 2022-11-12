@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { useCart } from "react-use-cart";
 import OrdersService from '../../Services/OrdersService';
 import { UserContext } from '../../other/UserContext';
@@ -7,6 +7,7 @@ import Loader from '../Loader';
 import { useFormik } from 'formik';
 import { checkoutSchema } from '../schemas/checkout';
 import CustomizedToast from '../Toast/CustomizedToast';
+import ServiceSizes from '../../Services/ServiceSizes';
 import { useNavigate } from "react-router-dom";
 
 const Checkout = () => {
@@ -64,11 +65,44 @@ const Checkout = () => {
       const [loading, setLoading] = useState(false)
       const location = useLocation();
       const [open, setOpen] = useState(false)
+      const [error, setError] = useState(false)
+      const check = async () => {
+        for(let i = 0; i<items.length; i++) {
+            await ServiceSizes.checkItemQuantity(items[i]).then((res) => {
+                console.log("ok")
+            })
+            .catch((err) => {
+                //changeLocation('/cart')
+                setError(true)
+            })
+        }
+      }
+
+        useEffect(() => {
+            check();
+        }, [])
 
       if(loading) {
         return (<div style={{opacity: '0.4'}}><Loader/></div>)
+      }  
+
+      if(error) {
+        return (
+            <div className="d-flex align-items-center justify-content-center vh-100">
+                <div className="text-center">
+                    <h1 className="display-1 fw-bold">403</h1>
+                    <p className="fs-3"> <span className="text-danger">Opps!</span></p>
+                    <p className="lead">
+                        Została wybrana zbyt duża ilość jednego z towarów, wróć do koszyka, by naprawić swój błąd!
+                    </p>
+                    <p className="lead">
+                        Sprawdź status pod przedmiotem, by zamówić dodany towar - status musi wskazywać <span style={{color: 'green', fontWeight: 'bold'}}>Dostępne</span>
+                    </p>
+                    <a href="/cart" className="btn btn-dark">Koszyk</a>
+                </div>
+            </div>
+        )
       }
-    
   return (
     <section className="container p-4">
     <div className="mask d-flex align-items-center h-100 gradient-custom-3">
@@ -183,7 +217,7 @@ const Checkout = () => {
                                 <div>
                                     {items.map((item) =>  {
                                         return (
-                                            <span key={item.id}>Nazwa: {item.name}, ilość: {item.quantity}, rozmiar: {item.size}</span>
+                                            <div><span key={item.id}>Nazwa: {item.name}, ilość: {item.quantity}, rozmiar: {item.size}</span></div>
                                         )
                                     })}
                                 </div>

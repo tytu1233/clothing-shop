@@ -7,7 +7,7 @@ import { useCart } from "react-use-cart";
 import OrdersService from '../../Services/OrdersService';
 import ServiceSizes from '../../Services/ServiceSizes';
 import { Link } from 'react-router-dom';
-
+import CustomizedToast from '../Toast/CustomizedToast';
 
 const Cart = () => {
 
@@ -18,6 +18,7 @@ const Cart = () => {
         cartTotal,
         updateItemQuantity,
         removeItem,
+        getItem,
       } = useCart();
 
       const { user } = useContext(UserContext);
@@ -94,7 +95,7 @@ const Cart = () => {
                                             <h6>Rozmiar: {item.size}</h6>
                                             {sizes.map((size) => {
                                                     return (
-                                                        <div>{size.productsSizes === item.id ? (<span>{item.quantity > size.amount ? <span>niedostępne</span> : <span>dostępne</span>}</span>) : null}</div>
+                                                        <div>{size.productsSizes === item.id ? (<span>{(item.quantity > size.amount) ? <span style={{color: 'red'}}>Niedostępne</span> : <span style={{color: 'green'}}>Dostępne</span>}</span>) : null}</div>
                                                     )
                                                 })}
                                         </div>
@@ -102,9 +103,9 @@ const Cart = () => {
                                     <td className="quantity__item">
                                         <div className="quantity">
                                             <div className="pro-qty-2">
-                                                <TfiMinus onClick={() => updateItemQuantity(item.id, item.quantity - 1)}/>
+                                                <TfiMinus onClick={() => updateItemQuantity(item.id, item.quantity-1)}/>
                                                 <span style={{margin: '5px'}}>{item.quantity}</span>
-                                                <TfiPlus onClick={() => updateItemQuantity(item.id, item.quantity + 1)}/>
+                                                <TfiPlus onClick={() => updateItemQuantity(item.id, item.quantity+1)}/>
                                             </div>
                                         </div>
                                     </td>
@@ -138,7 +139,7 @@ const Cart = () => {
                         </ul>
                         {user.logged === 1 ?
                         <Link 
-                        to={{pathname: '/checkout'}} 
+                        to={{pathname: '/checkout'}}
                         state={{finalPrice: finalPrice}}
                         className="primary-btn">Złóż zamówienie</Link>
                         : 
