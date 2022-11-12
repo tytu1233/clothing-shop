@@ -10,19 +10,20 @@ import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import PeopleIcon from '@mui/icons-material/People';
 import DrawerComponent from './DrawerComponent';
+import InventoryIcon from '@mui/icons-material/Inventory';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import BarComponent from './BarComponent';
 import { ListItem } from '@mui/material';
 import Admin from './Admin';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import AdminUsers from './Users/AdminUsers';
+import AdminProducts from './Products/AdminProducts';
   
 const mdTheme = createTheme();
   
@@ -47,6 +48,12 @@ const Dashboard = () => {
           icon: <PeopleIcon />,
           link: 'users',
           component: <AdminUsers />,
+        },
+        {
+          title: 'Produkty',
+          icon: <InventoryIcon />,
+          link: 'products',
+          component: <AdminProducts />,
         },
       ],
       []
@@ -135,7 +142,7 @@ const Dashboard = () => {
           ))}
             </List>
           </DrawerComponent>
-          <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+          <Box component="main" sx={{ flexGrow: 1, p: 3, marginTop: '60px' }}>
           <Routes>
               {list.map((item) => (
                 <Route key={item.title} path={item.link} element={item.component} />

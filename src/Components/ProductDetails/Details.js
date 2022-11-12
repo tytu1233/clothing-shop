@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../../styles/details.css'
 import Opinions from "./Opinions";
 import { useCart } from "react-use-cart";
@@ -7,7 +7,7 @@ import ProductsService from '../../Services/ProductsService';
 import CustomizedToast from '../Toast/CustomizedToast';
 import { UserContext } from '../../other/UserContext';
 import ServiceSizes from '../../Services/ServiceSizes';
-import { style } from '@mui/system';
+import Loader from '../Loader';
 
 const Details = () => {
 
@@ -18,6 +18,7 @@ const Details = () => {
     const [sizes, setSizes] = useState([]);
     const [name, setName] = useState('')
     const [open, setOpen] = useState(false);
+    const [text, setText] = useState('')
     const [isLoading, setLoading] = useState(true);
 
     const getProduct = async () => {
@@ -31,6 +32,14 @@ const Details = () => {
     }
 
     const addToCart = (i) => {
+            if(sizeFilters.length === 0) {
+                setText('Wybierz rozmiar!')
+                setOpen(true);
+                const interval = setInterval(() => {
+                    setOpen(false);
+                }, 2000);
+                return () => clearInterval(interval);
+            }
             let zmienna = i.id + sizeFilters
             const index = items.findIndex((item) => item.id === zmienna );
             console.log(index)
@@ -52,11 +61,14 @@ const Details = () => {
                 } 
                 addItem(i)
             }
+        setText('Dodano do koszyka!')
         setOpen(true);
         const interval = setInterval(() => {
             setOpen(false);
         }, 2000);
+        
           return () => clearInterval(interval);
+        
     }
 
 
@@ -71,7 +83,7 @@ const Details = () => {
     }, [])
 
     if (isLoading) {
-        return <div className="App">Loading...</div>;
+        return <Loader/>;
       }
     return (
         <div>
@@ -133,7 +145,7 @@ const Details = () => {
                     </div>
                 </div>
             </div>
-            <CustomizedToast open={open} text={"Dodano do koszyka!"}/>
+            <CustomizedToast open={open} text={text}/>
             <Opinions productId={product.id}/>
         </div>
     );

@@ -17,6 +17,14 @@ class ProductsService {
         return axios.get(PRODUCTS_BASE_REST_API_URL + '/producers');
     }
 
+    deleteProducts(id) {
+        return axios.delete(PRODUCTS_BASE_REST_API_URL + '/' + id)
+    }
+
+    updateProducts(product) {
+        return axios.put(PRODUCTS_BASE_REST_API_URL + '/' + product.id, product);
+    }
+
     getCategories() {
         return axios.get()
     }

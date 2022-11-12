@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import ServiceSizes from '../../Services/ServiceSizes';
 import CategoriesService from '../../Services/CategoriesService';
 import Loader from '../Loader';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Products = () => {
 
@@ -242,25 +243,27 @@ const Products = () => {
                         </div>
                     </div>
                     <div className="row">
+                        <AnimatePresence>
                     {products.map((product) => {
-                        return <div className="col-lg-4 col-md-6 col-sm-6" key={product.id}>
+                        return <motion.div animate={{opacity: 1}} initial={{opacity: 0}} exit={{opacity: 0}} layout className="col-lg-4 col-md-6 col-sm-6" key={product.id}>
                             <Link to={`/details/${product.id}`}>
                                 <div className='row'>
                                     <img src={require('../../img/product/product-1.jpg')}/>
                                 </div>
                             </Link>
                             <div className='row'>
-                                    <div className='col-10'>
+                                    <div className='col-8'>
                                         <h5>{product.name}</h5>
                                         <h6>{product.brand}</h6>
-                                        <h5>{product.price} zł</h5>
+                                        
                                     </div>
-                                    <div className='col-2'>
-                                        <TfiShoppingCart onClick={() => addToCart(product)}/>
+                                    <div className='col-4'>
+                                        <h6 className='text-end'>{product.price} zł</h6>
                                     </div>
                             </div>
-                        </div>
+                        </motion.div>
                         })}
+                        </AnimatePresence>
                     </div>
                     <div className='d-flex justify-content-center'>
                         <Pagination count={pagination.totalPages} onChange={handleChange}></Pagination>

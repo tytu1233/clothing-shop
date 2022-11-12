@@ -7,6 +7,7 @@ import UsersActions from './UsersActions';
 import { useFormik } from 'formik';
 import { registerSchema } from '../../schemas/register';
 import UsersDelete from './UsersDelete';
+import { Pagination } from '@mui/material';
 
 
 const AdminUsers = () => {
@@ -14,6 +15,13 @@ const AdminUsers = () => {
   const [users, setUsers] = useState([])
   const [loading, setLoading] = useState(true)
   const [deleted, setDelted] = useState(0)
+  const [page, setPage] = useState(0)
+  const [pagination, setPagination] = useState([])
+
+
+  const handleChangea = (e, p) => {
+    setPage(p-1)
+  }
 
 
   const onSubmit = async () => {
@@ -45,6 +53,7 @@ const AdminUsers = () => {
         return value
      }))
       console.log(users)
+      setPagination(res.data)
       setLoading(false)
   }
 
@@ -87,7 +96,7 @@ const AdminUsers = () => {
 
   useEffect(() => {
     loadUsers();
-  }, [deleted])
+  }, [deleted, page])
 
 
 
@@ -96,7 +105,7 @@ const AdminUsers = () => {
   }
   return (
     <>
-    <div className='d-flex justify-content-end mt-5'><AddCircleIcon type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo" sx={{width: 40, height: 40}}/></div>
+    <div className='d-flex justify-content-end'><AddCircleIcon type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo" sx={{width: 40, height: 40}}/></div>
       <div onClick={() => setDelted(prev=>prev+1)} className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content" style={{overflowY: 'auto', height: '700px'}}>
@@ -258,6 +267,11 @@ const AdminUsers = () => {
                       bottom: params.isLastVisible ? 0 : 5,
                     })}
                     onCellEditCommit={(params) => {setRowId(params?.id);}}
+                    components={{
+                      Footer: () => <div className='d-flex justify-content-center'>
+                                      <Pagination count={pagination.totalPages} page={page+1} onChange={handleChangea}></Pagination>
+                                    </div>,
+                  }}
                   />
                 </div>
             </div>

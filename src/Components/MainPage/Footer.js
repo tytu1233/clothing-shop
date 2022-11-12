@@ -30,9 +30,7 @@ const Footer = () => {
                     <div className='d-flex justify-content-center'>
                         <ul>
                             <li><a href="src/Components/MainPage/Footer#">Kontakt</a></li>
-                            <li><a href="src/Components/MainPage/Footer#">Metody płatności</a></li>
-                            <li><a href="src/Components/MainPage/Footer#">Dostawa</a></li>
-                            <li><a href="src/Components/MainPage/Footer#">Zwroty i wymiany</a></li>
+                            <li><a href="src/Components/MainPage/Footer#">Regulamin sklepu</a></li>
                         </ul>
                     </div>
                 </div>
