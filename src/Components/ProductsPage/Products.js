@@ -141,8 +141,8 @@ const Products = () => {
                                                             onChange={handleCheckboxes}
                                                             value={category.categoryName}
                                                             name="categories"
-                                                            type="checkbox" id="flexCheckDefault"/>
-                                                        <label className="form-check-label" htmlFor="flexCheckDefault">
+                                                            type="checkbox" id={`flexCheckDefault${category.categoryName}`}/>
+                                                        <label className="form-check-label" htmlFor={`flexCheckDefault${category.categoryName}`}>
                                                         {category.categoryName}
                                                         </label>
                                                     </div>
@@ -164,8 +164,8 @@ const Products = () => {
                                                             onChange={handleCheckboxes}
                                                             value={producer.brand}
                                                             name="brand"
-                                                            type="checkbox" id="flexCheckDefault"/>
-                                                        <label className="form-check-label" htmlFor="flexCheckDefault">
+                                                            type="checkbox" id={`flexCheckDefault${producer.brand}`}/>
+                                                        <label className="form-check-label" htmlFor={`flexCheckDefault${producer.brand}`}>
                                                         {producer.brand}
                                                         </label>
                                                     </div>
@@ -236,7 +236,7 @@ const Products = () => {
                         return <motion.div animate={{opacity: 1}} initial={{opacity: 0}} exit={{opacity: 0}} layout className="col-lg-4 col-md-6 col-sm-6" key={product.id}>
                             <Link to={`/details/${product.id}`}>
                                 <div className='row'>
-                                    <img src={require('../../img/product/product-1.jpg')}/>
+                                    <img style={{width: '323px', height: '400px'}} src={require(`../../img/product/${product.image}`)}/>
                                 </div>
                             </Link>
                             <div className='row'>

@@ -86,7 +86,7 @@ const Cart = () => {
                                 <tr key={item.id}>
                                     <td className="product__cart__item">
                                         <div className="product__cart__item__pic">
-                                        <img alt="product image" style={{width: '150px', height: '150px'}} src={require('../../img/product/product-1.jpg')}/>
+                                        <img alt="product image" style={{width: '150px', height: '150px'}} src={require(`../../img/product/${item.image}`)}/>
                                         </div>
                                         <div className="product__cart__item__text">
                                             <h5>{item.name}</h5>

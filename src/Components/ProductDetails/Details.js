@@ -5,7 +5,6 @@ import { useCart } from "react-use-cart";
 import { useParams } from 'react-router-dom';
 import ProductsService from '../../Services/ProductsService';
 import CustomizedToast from '../Toast/CustomizedToast';
-import { UserContext } from '../../other/UserContext';
 import ServiceSizes from '../../Services/ServiceSizes';
 import Loader from '../Loader';
 
@@ -48,7 +47,8 @@ const Details = () => {
                     id: i.id + sizeFilters,
                     price: i.price,
                     name: i.name,
-                    size: sizeFilters
+                    size: sizeFilters,
+                    image: i.image
                 } 
                 addItem(i)
             }
@@ -57,7 +57,8 @@ const Details = () => {
                     id: items[index].id,
                     price: items[index].price,
                     name: items[index].name,
-                    size: sizeFilters
+                    size: sizeFilters,
+                    image: items[index].image,
                 } 
                 addItem(i)
             }
