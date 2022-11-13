@@ -5,6 +5,7 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
@@ -24,6 +25,7 @@ import Admin from './Admin';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import AdminUsers from './Users/AdminUsers';
 import AdminProducts from './Products/AdminProducts';
+import AdminOrders from './Orders/AdminOrders';
   
 const mdTheme = createTheme();
   
@@ -54,6 +56,12 @@ const Dashboard = () => {
           icon: <InventoryIcon />,
           link: 'products',
           component: <AdminProducts />,
+        },
+        {
+          title: 'Zamówienia',
+          icon: <LocalShippingIcon />,
+          link: 'orders',
+          component: <AdminOrders />,
         },
       ],
       []

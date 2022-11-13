@@ -233,7 +233,6 @@ const AdminProducts = () => {
       flexGrow: 1,
       height: '90vh',
       overflow: 'auto',
-      marginTop: '30px'
     }}
   >
     <div style={{ display: 'flex', height: '100%' }}>

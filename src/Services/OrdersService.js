@@ -24,6 +24,22 @@ class OrdersService {
         });
     }
 
+    updateOrder(order) {
+        console.log(order)
+        return axios.put(ORDERS_BASE_REST_API_URL + '/admin', order)
+    }
+
+    deleteOrder(userId) {
+        return axios.delete(ORDERS_BASE_REST_API_URL + '/' + userId);
+    }
+
+
+
+    getAll(page) {
+        //console.log(page)
+        return axios.get(ORDERS_BASE_REST_API_URL + '?pageNo=' + page);
+    }
+
     getOrdersForUser(userId) {
         return axios.get(ORDERS_BASE_REST_API_URL + '/' + userId);
     }
