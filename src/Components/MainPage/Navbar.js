@@ -63,7 +63,7 @@ const Navbar = () => {
         <SearchBar/>
         <nav className="navbar navbar-expand-lg navbar-dark" style={{backgroundColor: '#111111',}}>
             <div className="container">
-                <a className="navbar-brand text-light border-2 border-end pe-4" href="/">NOX CLOTHING</a>
+                <a className="navbar-brand text-light border-2 border-end pe-4" href="/">CLOTHING STORE</a>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>

@@ -30,7 +30,8 @@ class ProductsService {
     }
 
     creteProducts(values) {
-        return axios.post(PRODUCTS_BASE_REST_API_URL, values);
+        console.log(values)
+        return axios.post(PRODUCTS_BASE_REST_API_URL + '/' + values.category, values);
     }
 
     getRecommended() {

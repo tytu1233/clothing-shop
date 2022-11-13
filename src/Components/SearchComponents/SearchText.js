@@ -141,7 +141,8 @@ const SearchText = () => {
             <>
               {products.map((show) => (
                 <ShowProducts
-                  key={show.id_product}
+                  key={show.id}
+                  idProduct={show.id}
                   name={show.name}
                   price={show.price}
                 />

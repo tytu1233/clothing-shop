@@ -11,7 +11,7 @@ const SearchBar = () => {
                             <div className="row g-0" style={{backgroundColor: 'white',}}>
                                 <div className='col-md-12'>
                                     <div className='d-flex justify-content-between p-3'>
-                                        <div>NOX-CLOTHING</div>
+                                        <div>CLOTHING STORE</div>
                                         <div><TfiClose data-bs-toggle="collapse" href="#multiCollapseExample3" role="button" aria-expanded="false" aria-controls="multiCollapseExample3"/></div>
                                     </div>
                                 </div>

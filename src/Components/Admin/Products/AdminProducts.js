@@ -46,7 +46,7 @@ const AdminProducts = () => {
   
     const onSubmit = async () => {
       console.log(values)
-      ProductsService.createUser(values)
+      ProductsService.creteProducts(values)
       .then((response) => {
           console.log(response.data)
       })
@@ -69,9 +69,9 @@ const AdminProducts = () => {
       { field: 'id', headerName: 'ID', width: 0 },
       { field: 'name', headerName: 'Nazwa', width: 200, editable: true, },
       { field: 'brand', headerName: 'Producent', width: 200, editable: true },
-      { field: 'description', headerName: 'Opis', width: 350, editable: true},
-      { field: 'price', headerName: 'Cena', width: 90, editable: true },
-      { field: 'image', headerName: 'Zdjęcie',  width: 100, editable: true },
+      { field: 'description', headerName: 'Opis', width: 550, editable: true},
+      { field: 'price', headerName: 'Cena', width: 140, editable: true },
+      { field: 'image', headerName: 'Zdjęcie',  width: 300, editable: true },
       { 
         field: 'categories', 
         headerName: 'Kategoria', 

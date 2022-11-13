@@ -4,14 +4,26 @@ import '../../styles/signup.css'
 import { useFormik } from 'formik';
 import { registerSchema } from '../schemas/register';
 import CustomizedToast from '../Toast/CustomizedToast';
-
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
+    const [open, setOpen] = useState(false);
+    let navigate = useNavigate();
 
+    const changeLocation = (placeToGo) => {
+        navigate(placeToGo, { replace: true });
+        window.location.reload();
+    }
     const onSubmit = async () => {
             UsersService.createUser(values)
             .then((response) => {
                 console.log(response.data)
+                setOpen(true);
+                const interval = setInterval(() => {
+                    setOpen(false);
+                    changeLocation("/signin")
+                }, 2000);
+                return () => clearInterval(interval);
             })
       };
 
@@ -195,6 +207,7 @@ const SignUp = () => {
             </div>
             </div>
         </div>
+        <CustomizedToast open={open} text={"Pomyślnie zarejestrowano!"}/>
     </section>
   )
 }
