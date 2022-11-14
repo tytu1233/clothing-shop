@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { DataGrid } from '@mui/x-data-grid'
 import UsersService from '../../../Services/UsersService';
 import { Box } from '@mui/material';
@@ -8,6 +8,7 @@ import { useFormik } from 'formik';
 import { registerSchema } from '../../schemas/register';
 import UsersDelete from './UsersDelete';
 import { Pagination } from '@mui/material';
+import Loader from '../../Loader';
 
 
 const AdminUsers = () => {
@@ -46,7 +47,8 @@ const AdminUsers = () => {
     onSubmit
     });
 
-  const loadUsers = async () => {
+    const loadUsers = useRef(() => {});
+    loadUsers.current = async () => {
       const res = await UsersService.getAllUsers();
       setUsers(res.data.content.map((value)=> {
         value.roles = value.roles.roleName
@@ -95,13 +97,13 @@ const AdminUsers = () => {
 
 
   useEffect(() => {
-    loadUsers();
+    loadUsers.current();
   }, [deleted, page])
 
 
 
   if(loading) {
-    return <div>Waiting for data</div>
+    return <Loader/>
   }
   return (
     <>

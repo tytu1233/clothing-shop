@@ -1,8 +1,7 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useParams } from 'react-router-dom';
 import UsersService from '../../Services/UsersService';
 import AuthenticationService from '../../Services/AuthenticationService';
-import { UserContext } from '../../other/UserContext';
 import { useNavigate } from "react-router-dom";
 
 
@@ -10,26 +9,25 @@ const Profile = () => {
 
     const navigate = useNavigate();
     const {id} = useParams();
-    const [usera, setUsera] = useState([])
-    const loadUser = async () => {
-        const res = await UsersService.getUserById(id);
-        setUsera(res.data);
-        //console.log(res.data)
-    }
+    const [user, setUser] = useState([])
 
-    const checkAuthorization = async () => {
+    const checkAuthorization = useRef(() => {});
+
+    checkAuthorization.current = async () => {
         const res = await AuthenticationService.checkAuthenticationUser(JSON.parse(localStorage.getItem('token')));
         if(!(res.data.status === "pass")) {
             navigate("/");
             console.log("asd")
             return;
         }        
-        loadUser()
+        const response = await UsersService.getUserById(id);
+        setUser(response.data);
+        //console.log(res.data)
     }
 
 
     useEffect(() => {
-        checkAuthorization()
+        checkAuthorization.current()
     }, [])
 return (
     <div className="container mb-3">
@@ -53,27 +51,27 @@ return (
                                         
                                         <div className="col-md-6">
                                             <label className="form-label">Imię *</label>
-                                            <input type="text" className="form-control" placeholder="" aria-label="First name" defaultValue={usera.name}/>
+                                            <input type="text" className="form-control" placeholder="" aria-label="First name" defaultValue={user.name}/>
                                         </div>
                                         
                                         <div className="col-md-6">
                                             <label className="form-label">Nazwisko *</label>
-                                            <input type="text" className="form-control" placeholder="" aria-label="Last name" defaultValue={usera.surname}/>
+                                            <input type="text" className="form-control" placeholder="" aria-label="Last name" defaultValue={user.surname}/>
                                         </div>
                                         
                                         <div className="col-md-6">
                                             <label className="form-label">Miasto *</label>
-                                            <input type="text" className="form-control" placeholder="" aria-label="Phone number" defaultValue={usera.address}/>
+                                            <input type="text" className="form-control" placeholder="" aria-label="Phone number" defaultValue={user.address}/>
                                         </div>
                                         
                                         <div className="col-md-6">
                                             <label className="form-label">Ulica</label>
-                                            <input type="text" className="form-control" placeholder="" aria-label="Phone number" defaultValue={usera.address}/>
+                                            <input type="text" className="form-control" placeholder="" aria-label="Phone number" defaultValue={user.address}/>
                                         </div>
                                        
                                         <div className="col-md-6">
                                             <label htmlFor="inputEmail4" className="form-label">Kod pocztowy *</label>
-                                            <input type="text" className="form-control" id="inputEmail4" defaultValue={usera.address}/>
+                                            <input type="text" className="form-control" id="inputEmail4" defaultValue={user.address}/>
                                         </div>
                                         <div className="gap-3 d-md-flex justify-content-md-start text-center">
                                             <button type="button" className="btn btn-dark">Zaktualizuj dane</button>

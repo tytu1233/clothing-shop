@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import '../../styles/details.css'
 import Opinions from "./Opinions";
 import { useCart } from "react-use-cart";
@@ -20,7 +20,9 @@ const Details = () => {
     const [text, setText] = useState('')
     const [isLoading, setLoading] = useState(true);
 
-    const getProduct = async () => {
+    const getProduct = useRef(() => {});
+
+    getProduct.current = async () => {
         const res = await ProductsService.getById(id);
         setProduct(res.data);
         console.log(res.data)
@@ -80,7 +82,7 @@ const Details = () => {
     }
 
     useEffect(() => {
-        getProduct();
+        getProduct.current();
     }, [])
 
     if (isLoading) {

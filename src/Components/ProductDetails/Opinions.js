@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useRef } from 'react';
 import Rating from "@mui/material/Rating";
 import Button from '@mui/material/Button';
 import { UserContext } from '../../other/UserContext';
@@ -19,15 +19,15 @@ const Opinions = ({productId}) => {
         setPage(p-1)
     }
 
-    const addOpinion = () => {
+    const addOpinion = async () => {
         const opinion = { "rating": rating, "comment": comment };
-        OpinionsService.addOpinion(user.user_id, productId, opinion)
-        .then((response) => {
-            loadOpinions(productId)
-        })
+        await OpinionsService.addOpinion(user.user_id, productId, opinion)
+        loadOpinions(productId)
     }
 
-    const loadOpinions = async (productId) => {
+    const loadOpinions = useRef(() => {});
+
+    loadOpinions.current = async () => {
         const res = await OpinionsService.getAllForProduct(productId, page);
         setPagination(res.data)
         console.log(res.data.content)
@@ -37,7 +37,7 @@ const Opinions = ({productId}) => {
 
 
     useEffect(() => {
-        loadOpinions(productId)
+        loadOpinions.current()
     }, [page])
 
     return (

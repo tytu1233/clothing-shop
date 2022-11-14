@@ -36,7 +36,6 @@ const Dashboard = () => {
       setOpen(!open);
     };
 
-
     const list = useMemo(
       () => [
         {
@@ -67,7 +66,6 @@ const Dashboard = () => {
       []
     );
 
-  
     return (
       <ThemeProvider theme={mdTheme}>
         <Box sx={{ display: 'flex' }}>

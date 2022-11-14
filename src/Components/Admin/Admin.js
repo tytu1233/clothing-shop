@@ -16,15 +16,14 @@ import {
 import { EventTracker } from '@devexpress/dx-react-chart';
 import Loader from '../Loader';
 
-
 const Admin = () => {
-
 
   const [loading, setLoading] = useState(false)
   const [chartData, setChartData] = useState([])
   const [targetItem, setTargetItem] = useState(undefined)
 
   const loadChart = async () => {
+    
     setLoading(true)
     const res = await OrdersService.getMonthly();
     setChartData([...res.data.map((value)=> {
@@ -34,6 +33,7 @@ const Admin = () => {
     console.log(res.data)
     setLoading(false)
   }
+
 
   useEffect(() => { 
     loadChart()
@@ -47,13 +47,8 @@ const Admin = () => {
     <Box
             component="main"
             sx={{
-              backgroundColor: (theme) =>
-                theme.palette.mode === 'light'
-                  ? theme.palette.grey[100]
-                  : theme.palette.grey[900],
               flexGrow: 1,
               height: '100vh',
-              overflow: 'auto',
             }}
           >
             <Toolbar />

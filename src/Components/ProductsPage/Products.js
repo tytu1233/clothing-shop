@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import '../../styles/products.css'
 import ProductsService from '../../Services/ProductsService';
 import { Pagination } from '@mui/material';
-import CustomizedToast from '../Toast/CustomizedToast';
 import { Link } from 'react-router-dom';
 import ServiceSizes from '../../Services/ServiceSizes';
 import CategoriesService from '../../Services/CategoriesService';
@@ -21,7 +20,6 @@ const Products = () => {
     const [sizeFiltered, setSizeFiltered] = useState([])
     const [pagination, setPagination] = useState([]);
     const [page, setPage] = useState(0);
-    const [open, setOpen] = useState(false);
     const [min, setMin] = useState(0)
     const [max, setMax] = useState(2000000000)
     const [error, setError] = useState('')
@@ -32,40 +30,35 @@ const Products = () => {
         window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
     }
 
-    const loadNames = async () => {
-        const res = await ServiceSizes.getAllNames();
-        setNames(res.data)
-        //console.log(res.data)
-        setLoading(false)
-    }
+    const loadData = useRef(() => {});
 
-    const loadProducers = async () => {
-        const res = await ProductsService.getProducers();
-        setProducers(res.data)
-        //console.log(res.data)
-    }
-
-    const loadCategories = async () => {
-        const res = await CategoriesService.getAllCategories();
-        setCategories(res.data.content)
-    }
-
-    const loadProducts = async () => {
-        //console.log(brandFiltered)
-        if(max < min) {
-            setError("Max nie wieksze od min")
-            
-        } else 
-            setError('')
-        //console.log(sizeFiltered)
-        if(brandFiltered.length > 0 || sizeFiltered.length > 0) setPage(0)
-        await ProductsService.getFilteredData(brandFiltered, sizeFiltered, categoriesFiltered, min, max, page).then((res) => {
-            setProducts(res.data.content);
-            setPagination(res.data)
-            //console.log(res.data)
-            //console.log(res.data.content)
-        })
-        //console.log(list)
+    loadData.current = async () => {
+        try {
+            if(max < min) {
+                setError("Max nie wieksze od min")
+                
+            } else 
+                setError('')
+            //Names
+            const responseNames = await ServiceSizes.getAllNames();
+            setNames(responseNames.data)
+                //console.log(res.data)
+            //Producers
+            const responseProducers = await ProductsService.getProducers();
+            setProducers(responseProducers.data)
+                //console.log(res.data)
+            //Categories
+            const responseCategories = await CategoriesService.getAllCategories();
+            setCategories(responseCategories.data.content)
+            //Products
+            if(brandFiltered.length > 0 || sizeFiltered.length > 0) setPage(0)
+            const responseProducts = await ProductsService.getFilteredData(brandFiltered, sizeFiltered, categoriesFiltered, min, max, page);
+            setProducts(responseProducts.data.content);
+            setPagination(responseProducts.data)
+            setLoading(false)
+        } catch(err) {
+            console.log(err)
+        }
     }
 
     const handleCheckboxes = (e) => {
@@ -112,10 +105,7 @@ const Products = () => {
     }
 
     useEffect(() => {
-        loadProducts();
-        loadNames();
-        loadProducers();
-        loadCategories();
+        loadData.current();
     },[brandFiltered, sizeFiltered, min, max, page, categoriesFiltered])
 
     if (isLoading) {
@@ -236,7 +226,7 @@ const Products = () => {
                         return <motion.div animate={{opacity: 1}} initial={{opacity: 0}} exit={{opacity: 0}} layout className="col-lg-4 col-md-6 col-sm-6" key={product.id}>
                             <Link to={`/details/${product.id}`}>
                                 <div className='row'>
-                                    <img style={{width: '323px', height: '400px'}} src={require(`../../img/product/${product.image}`)}/>
+                                    <img style={{width: '323px', height: '400px'}} alt="Product" src={require(`../../img/product/${product.image}`)}/>
                                 </div>
                             </Link>
                             <div className='row'>
@@ -258,7 +248,6 @@ const Products = () => {
                     </div>
                 </div>
             </div>
-            <CustomizedToast open={open} text={"Dodano do koszyka!"}/>
         </div>
   )
 }

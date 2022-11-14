@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import ProductsService from '../../../Services/ProductsService';
 import Loader from '../../Loader';
 import { DataGrid } from '@mui/x-data-grid';
@@ -16,7 +16,7 @@ const AdminProducts = () => {
     const [rowId, setRowId] = useState(null);
     const [products, setProducts] = useState([])
     const [categories, setCategories] = useState([]);
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
     const [deleted, setDelted] = useState(0)
     const [pagination, setPagination] = useState([])
     const [page, setPage] = useState(0);
@@ -25,24 +25,25 @@ const AdminProducts = () => {
         setPage(p-1)
     }
 
-  
-    const loadProducts = async () => {
-        const res = await ProductsService.getAll(page);
-        setProducts(res.data.content.map((value)=> {
-          value.categories = value.categories.categoryName
-          return value
-        }))
-        //console.log(res.data)
-        setPagination(res.data)
-        setLoading(false)
+    const loadData = useRef(() => {});
+    loadData.current = async () => {
+        try {
+          setLoading(true)
+          const res = await ProductsService.getAll(page);
+          setProducts(res.data.content.map((value)=> {
+            value.categories = value.categories.categoryName
+            return value
+          }))
+          const response = await CategoriesService.getAllCategories()
+          setCategories(response.data.content)
+          console.log(response.data.content)
+          //console.log(res.data)
+          setPagination(res.data)
+          setLoading(false)
+        } catch(err) {
+          console.log(err)
+        }
     }
-
-    const loadCategories = async () => {
-      const res = await CategoriesService.getAllCategories()
-      setCategories(res.data.content)
-      console.log(res.data.content)
-    }
-  
   
     const onSubmit = async () => {
       console.log(values)
@@ -76,7 +77,7 @@ const AdminProducts = () => {
         field: 'categories', 
         headerName: 'Kategoria', 
         type:'singleSelect', 
-        valueOptions: ['Admin', 'Użytkownik', 'hgfhfg'], 
+        valueOptions: ['Marynarka', 'Kurtka', 'Koszula', 'Spodnie', 'T-shirt', 'Bluza', 'Sweter'], 
         width: 100, 
         editable: true },
       {
@@ -102,8 +103,7 @@ const AdminProducts = () => {
   
   
     useEffect(() => {
-        loadProducts();
-        loadCategories();
+        loadData.current();
     }, [deleted, page])
   
     if(loading) {

@@ -1,8 +1,7 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useParams } from 'react-router-dom';
 import OrdersService from '../../Services/OrdersService'
 import AuthenticationService from '../../Services/AuthenticationService';
-import { UserContext } from '../../other/UserContext';
 import { useNavigate } from "react-router-dom";
 
 
@@ -22,8 +21,9 @@ const Orders = () => {
         console.log(res2.data)
     }
 
+    const checkAuthorization = useRef(() => {});
 
-    const checkAuthorization = async () => {
+    checkAuthorization.current = async () => {
         const res = await AuthenticationService.checkAuthenticationUser(JSON.parse(localStorage.getItem('token')));
         if(!(res.data.status === "pass")) {
             navigate("/");
@@ -34,7 +34,7 @@ const Orders = () => {
 
 
     useEffect(() => {
-        checkAuthorization()
+        checkAuthorization.current()
     }, [])
 
     if(ordersa.length === 0) {
@@ -90,7 +90,7 @@ const Orders = () => {
                                                     <div  className='row p-2'>
                                                         <div className='col-3'>
                                                             <div className='row'>
-                                                                <img src={require("../../img/product/product-1.jpg")}/>
+                                                                <img alt="product" src={require("../../img/product/product-1.jpg")}/>
                                                             </div>
                                                         </div>
                                                         <div className='col-3'>{product.products.name}</div>

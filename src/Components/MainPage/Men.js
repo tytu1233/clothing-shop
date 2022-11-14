@@ -43,7 +43,7 @@ const Men = () => {
                     </div>
                     <div className="col-lg-4 col-md-12">
                         <div className='d-flex justify-content-center'>
-                            <img src='https://www.cropp.com/media/SHARED/stronywizerunkowe/cropp/cms/grafiki_menu/Trends_AW22/popunk.jpg'/>
+                            <img alt="Clothes" src='https://www.cropp.com/media/SHARED/stronywizerunkowe/cropp/cms/grafiki_menu/Trends_AW22/popunk.jpg'/>
                         </div>
                     </div>
                 </div>

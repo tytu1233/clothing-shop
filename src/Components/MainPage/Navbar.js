@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext, useRef } from 'react'
 import SearchBar from '../SearchComponents/SearchBar'
 import Men from './Men'
 import { TfiSearch } from "react-icons/tfi";
@@ -37,18 +37,19 @@ const Navbar = () => {
           return () => {clearInterval(interval);}
     }
 
+    const checkAuthorization = useRef(() => {});
     
-    const checkAuthorization = async () => {
+    checkAuthorization.current = async () => {
         const res = await AuthenticationService.checkAuthenticationUser(JSON.parse(localStorage.getItem('token')));
         if(!(res.data.status === "pass")) return;
-        console.log(res.data)
+        if(location.pathname.startsWith('/admin') && res.data.role !== "Admin") changeLocation('/')
         setUser({"user_id": res.data.user_id, "token": JSON.parse(localStorage.getItem('token')), "logged": 1, "role": res.data.role})
         setIsLogged(1);
         
     }
     
     useEffect(() => {
-        checkAuthorization();
+        checkAuthorization.current();
         //console.log(user)
     }, [isLogged])
     
@@ -85,7 +86,7 @@ const Navbar = () => {
                             />
                             <button
                             style={{backgroundColor: 'white', bsBtnColor: '#111111'}}
-                            data-bs-toggle="collapse" href="#multiCollapseExample3" role="button" aria-expanded="false" aria-controls="multiCollapseExample3"
+                            data-bs-toggle="collapse" href="#multiCollapseExample3" aria-expanded="false" aria-controls="multiCollapseExample3"
                             className="btn btn-outline-secondary border-0" type="button" id="button-addon2"><TfiSearch /></button>
                         </div>
                         </li>
@@ -97,7 +98,7 @@ const Navbar = () => {
                             { isLogged === 1 ?
                             <ul className="navbar-nav">
                                 <li className="nav-item dropdown">
-                                <a className="nav-link active dropdown-togglea" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <a className="nav-link active dropdown-togglea" href="/#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <AiOutlineUser size={25}/>
                                 </a>
                                 <ul style={{backgroundColor: 'rgb(17, 17, 17)'}} className="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">

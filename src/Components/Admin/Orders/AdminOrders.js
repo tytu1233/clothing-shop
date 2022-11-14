@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import OrdersService from '../../../Services/OrdersService';
 import Loader from '../../Loader';
 import { DataGrid } from '@mui/x-data-grid';
@@ -20,8 +20,10 @@ const AdminOrders = () => {
         setPage(p-1)
     }
 
-  
-    const loadOrders = async () => {
+    const loadOrders = useRef(() => {});
+
+    loadOrders.current = async () => {
+      try {
         const res = await OrdersService.getAll(page);
         console.log(res.data)
         setOrders(res.data.content.map((value)=> {
@@ -31,7 +33,11 @@ const AdminOrders = () => {
         console.log(res.data)
         setPagination(res.data)
         setLoading(false)
-    }  
+      } catch(err) {
+        console.log(err)
+      }
+  }  
+
   
     const columns = [
       { field: 'idOrders', headerName: 'ID', width: 0 },
@@ -72,7 +78,7 @@ const AdminOrders = () => {
   
   
     useEffect(() => {
-        loadOrders();
+        loadOrders.current()
     }, [deleted, page])
   
     if(loading) {

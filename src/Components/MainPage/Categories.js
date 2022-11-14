@@ -5,7 +5,6 @@ import "react-multi-carousel/lib/styles.css";
 import Carousel from "react-multi-carousel";
 import { useNavigate } from 'react-router'
 import Loader from '../Loader';
-import { width } from '@mui/system';
 
 const responsive = {
   superLargeDesktop: {
@@ -62,7 +61,7 @@ const Categories = () => {
             {recommended.map((recommend)=>(
                 <div style={{cursor: 'pointer'}} onClick={() => {navigate('/details/'+recommend.id)}} className='p-2'  key={recommend.id}>
                     <div className="position-relative">
-                        <img style={{width: '413px', height: '413px'}} src={require(`../../img/product/${recommend.image}`)} className="w-100"/>
+                        <img style={{width: '413px', height: '413px'}} alt="Recomended product" src={require(`../../img/product/${recommend.image}`)} className="w-100"/>
                         <div className="position-absolute top-0 left-0 d-flex justify-content-center align-items-center text-center w-100 h-100 text-white fs-5" style={{backgroundColor: 'rgba(0, 0, 0, 0.6)'}}>
                         {recommend.name}
                         </div>
