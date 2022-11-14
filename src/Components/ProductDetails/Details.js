@@ -97,7 +97,7 @@ const Details = () => {
                                     <div id="carouselExampleControls" className="carousel carousel-dark slide" data-bs-ride="carousel">
                                         <div className="carousel-inner">
                                             <div className="carousel-item active">
-                                            <img src={require("../../img/product/product-1.jpg")} className="d-block w-100" alt="..."/>
+                                            <img src={require(`../../img/product/${product.image}`)} className="d-block w-100" alt="..."/>
                                             </div>
                                             <div className="carousel-item">
                                             <img src={require("../../img/product/product-2.jpg")} className="d-block w-100" alt="..."/>

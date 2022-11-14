@@ -21,6 +21,7 @@ class OpinionsService {
     getHighRated() {
         return axios.get(OPINIONS_BASE_REST_API_URL + '/rating')
     }
+
 }
 
 export default new OpinionsService();

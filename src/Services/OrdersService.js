@@ -47,6 +47,10 @@ class OrdersService {
     getOrderProductsForOrder(userId) {
         return axios.get(ORDERSPRODUCT + '/users/' + userId);
     }
+
+    getMonthly() {
+        return axios.get(ORDERS_BASE_REST_API_URL + '/monthly')
+    }
 }
 
 export default new OrdersService();

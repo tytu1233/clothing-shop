@@ -4,36 +4,44 @@ import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import UsersService from '../../Services/UsersService';
+import OrdersService from '../../Services/OrdersService';
+import {
+  Chart,
+  BarSeries,
+  Title,
+  ArgumentAxis,
+  ValueAxis,
+  Tooltip,
+} from '@devexpress/dx-react-chart-material-ui';
+import { EventTracker } from '@devexpress/dx-react-chart';
+import Loader from '../Loader';
 
-const columns = [
-    { field: 'id_user', headerName: 'User ID', width: 150 },
-    { field: 'name', headerName: 'Imie', width: 150 },
-    { field: 'surname', headerName: 'Nazwisko', width: 150 },
-    { field: 'login', headerName: 'Login', width: 150 },
-    { field: 'password', headerName: 'Hasło', width: 150 },
-    { field: 'email', headerName: 'Email', width: 150 },
-    { field: 'roles', headerName: 'Rola', width: 150, valueFormatter: ({ value }) => value.role_name}
-];
 
 const Admin = () => {
 
-    const [users, setUsers] = useState()
-    const [loading, setLoading] = useState(true)
 
-    const loadUsers = async () => {
-        const res = await UsersService.getAllUsers();
-        setUsers(res.data.content)
-        console.log(res.data)
-        setLoading(false)
-    }
+  const [loading, setLoading] = useState(false)
+  const [chartData, setChartData] = useState([])
+  const [targetItem, setTargetItem] = useState(undefined)
 
+  const loadChart = async () => {
+    setLoading(true)
+    const res = await OrdersService.getMonthly();
+    setChartData([...res.data.map((value)=> {
+      value.month = value.month.toString()
+      return value
+   })])
+    console.log(res.data)
+    setLoading(false)
+  }
 
-    useEffect(() => {
-        //loadUsers();
-    }, [])
+  useEffect(() => { 
+    loadChart()
+  }, [])
 
-
+  if(loading) {
+    return <Loader/>
+  }
 
   return (
     <Box
@@ -53,34 +61,51 @@ const Admin = () => {
               <Grid container spacing={3}>
                 {/* Chart */}
                 <Grid item xs={12} md={8} lg={9}>
-                  <Paper
-                    sx={{
-                      p: 2,
-                      display: 'flex',
-                      flexDirection: 'column',
-                      height: 240,
-                    }}
-                  >
-                    
-                  </Paper>
+
                 </Grid>
                 {/* Recent Deposits */}
                 <Grid item xs={12} md={4} lg={3}>
-                  <Paper
-                    sx={{
-                      p: 2,
-                      display: 'flex',
-                      flexDirection: 'column',
-                      height: 240,
-                    }}
-                  >
-                
+                <Paper>
+                    <Chart
+                      data={chartData}
+                    >
+                      <ArgumentAxis />
+                      <ValueAxis />
+
+                      <BarSeries
+                        valueField="year"
+                        argumentField="population"
+                      />
+                      <Title
+                        text="Sumaryczne ceny zamówień z danych miesięcy"
+                      />
+                      <EventTracker />
+                      <Tooltip/>
+                    </Chart>
                   </Paper>
+                
                 </Grid>
                 {/* Recent Orders */}
                 <Grid item xs={12}>
-                  <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+                  <Paper>
+                    <Chart
+                      data={chartData}
+                    >
+                      <ArgumentAxis />
+                      <ValueAxis
+                      tickSize={100}
+                      />
 
+                      <BarSeries
+                        valueField="finalPrice"
+                        argumentField="month"
+                      />
+                      <Title
+                        text="Sumaryczne ceny zamówień z danych miesięcy"
+                      />
+                      <EventTracker />
+                      <Tooltip targetItem={targetItem} onTargetItemChange={(targetItem) => setTargetItem(targetItem)}/>
+                    </Chart>
                   </Paper>
                 </Grid>
               </Grid>
