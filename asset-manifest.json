@@ -1,0 +1,35 @@
+{
+  "files": {
+    "main.css": "/inzynierka/static/css/main.54eabe08.css",
+    "main.js": "/inzynierka/static/js/main.22070413.js",
+    "static/js/787.e631b28c.chunk.js": "/inzynierka/static/js/787.e631b28c.chunk.js",
+    "static/media/slider1.jpg": "/inzynierka/static/media/slider1.a28b48cdf62e60247561.jpg",
+    "static/media/slider3.jpg": "/inzynierka/static/media/slider3.8c4a8d4019bb07025e45.jpg",
+    "static/media/product-8.jpg": "/inzynierka/static/media/product-8.66d3716e0fe4ae4b935a.jpg",
+    "static/media/product-9.jpg": "/inzynierka/static/media/product-9.1b74356e88e1a045e2d6.jpg",
+    "static/media/product-4.jpg": "/inzynierka/static/media/product-4.db2bcb734b0bf1abb1a2.jpg",
+    "static/media/product-14.jpg": "/inzynierka/static/media/product-14.bcccd854d94802bd7785.jpg",
+    "static/media/slider2.jpg": "/inzynierka/static/media/slider2.5f9e45d9538ea280efa5.jpg",
+    "static/media/product-3.jpg": "/inzynierka/static/media/product-3.0edb8f6e26d2125e1dda.jpg",
+    "static/media/product-2.jpg": "/inzynierka/static/media/product-2.f9e80bbbc4422113b082.jpg",
+    "static/media/product-5.jpg": "/inzynierka/static/media/product-5.53cbc0c0e52767844833.jpg",
+    "static/media/product-6.jpg": "/inzynierka/static/media/product-6.028b600f47cb517fb345.jpg",
+    "static/media/product-13.jpg": "/inzynierka/static/media/product-13.34018d744fb9698f36ca.jpg",
+    "static/media/product-12.jpg": "/inzynierka/static/media/product-12.677289360d07497dde10.jpg",
+    "static/media/product-1.jpg": "/inzynierka/static/media/product-1.0614c6fac5a7c446cd49.jpg",
+    "static/media/product-10.jpg": "/inzynierka/static/media/product-10.a3c511d76b1256df43de.jpg",
+    "static/media/product-7.jpg": "/inzynierka/static/media/product-7.49d13d67fb2cebea0b72.jpg",
+    "static/media/product-11.jpg": "/inzynierka/static/media/product-11.632e60054a8b96739b27.jpg",
+    "static/media/revicons.eot": "/inzynierka/static/media/revicons.a77de540a38981833f9e.eot",
+    "static/media/revicons.ttf": "/inzynierka/static/media/revicons.57fd05d4ae650374c8de.ttf",
+    "static/media/revicons.woff": "/inzynierka/static/media/revicons.e8746a624ed098489406.woff",
+    "index.html": "/inzynierka/index.html",
+    "main.54eabe08.css.map": "/inzynierka/static/css/main.54eabe08.css.map",
+    "main.22070413.js.map": "/inzynierka/static/js/main.22070413.js.map",
+    "787.e631b28c.chunk.js.map": "/inzynierka/static/js/787.e631b28c.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.54eabe08.css",
+    "static/js/main.22070413.js"
+  ]
+}
