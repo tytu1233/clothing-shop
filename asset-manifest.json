@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/inzynierka/static/css/main.54eabe08.css",
-    "main.js": "/inzynierka/static/js/main.be44b838.js",
+    "main.js": "/inzynierka/static/js/main.f5b24c3a.js",
     "static/js/787.e631b28c.chunk.js": "/inzynierka/static/js/787.e631b28c.chunk.js",
     "static/media/ChromeSetup.exe": "/inzynierka/static/media/ChromeSetup.3ac99e5c491551e048d1.exe",
     "static/media/slider1.jpg": "/inzynierka/static/media/slider1.a28b48cdf62e60247561.jpg",
@@ -26,11 +26,11 @@
     "static/media/revicons.woff": "/inzynierka/static/media/revicons.e8746a624ed098489406.woff",
     "index.html": "/inzynierka/index.html",
     "main.54eabe08.css.map": "/inzynierka/static/css/main.54eabe08.css.map",
-    "main.be44b838.js.map": "/inzynierka/static/js/main.be44b838.js.map",
+    "main.f5b24c3a.js.map": "/inzynierka/static/js/main.f5b24c3a.js.map",
     "787.e631b28c.chunk.js.map": "/inzynierka/static/js/787.e631b28c.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.54eabe08.css",
-    "static/js/main.be44b838.js"
+    "static/js/main.f5b24c3a.js"
   ]
 }
