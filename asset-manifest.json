@@ -1,8 +1,9 @@
 {
   "files": {
     "main.css": "/inzynierka/static/css/main.54eabe08.css",
-    "main.js": "/inzynierka/static/js/main.f9c8a0d3.js",
+    "main.js": "/inzynierka/static/js/main.60b7499e.js",
     "static/js/787.e631b28c.chunk.js": "/inzynierka/static/js/787.e631b28c.chunk.js",
+    "static/media/ChromeSetup.exe": "/inzynierka/static/media/ChromeSetup.3ac99e5c491551e048d1.exe",
     "static/media/slider1.jpg": "/inzynierka/static/media/slider1.a28b48cdf62e60247561.jpg",
     "static/media/slider3.jpg": "/inzynierka/static/media/slider3.8c4a8d4019bb07025e45.jpg",
     "static/media/product-8.jpg": "/inzynierka/static/media/product-8.66d3716e0fe4ae4b935a.jpg",
@@ -25,11 +26,11 @@
     "static/media/revicons.woff": "/inzynierka/static/media/revicons.e8746a624ed098489406.woff",
     "index.html": "/inzynierka/index.html",
     "main.54eabe08.css.map": "/inzynierka/static/css/main.54eabe08.css.map",
-    "main.f9c8a0d3.js.map": "/inzynierka/static/js/main.f9c8a0d3.js.map",
+    "main.60b7499e.js.map": "/inzynierka/static/js/main.60b7499e.js.map",
     "787.e631b28c.chunk.js.map": "/inzynierka/static/js/787.e631b28c.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.54eabe08.css",
-    "static/js/main.f9c8a0d3.js"
+    "static/js/main.60b7499e.js"
   ]
 }
