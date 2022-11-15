@@ -27,6 +27,14 @@ const AdminProducts = () => {
 
     const loadData = useRef(() => {});
     loadData.current = async () => {
+      const [productsResponse, categoriesResponse] = await Promise.all([
+        ProductsService.getAll(page),
+        CategoriesService.getAllCategories()
+      ])
+      const pro = await productsResponse;
+      const cat = await categoriesResponse;
+      return [pro, cat]
+      /*
         try {
           setLoading(true)
           const res = await ProductsService.getAll(page);
@@ -43,6 +51,7 @@ const AdminProducts = () => {
         } catch(err) {
           console.log(err)
         }
+        */
     }
   
     const onSubmit = async () => {
@@ -103,7 +112,19 @@ const AdminProducts = () => {
   
   
     useEffect(() => {
-        loadData.current();
+      setLoading(true)
+        loadData.current().then(([pro, cat]) => {
+          setProducts(pro.data.content.map((value)=> {
+            value.categories = value.categories.categoryName
+            return value
+          }))
+          setPagination(pro.data)
+          console.log(cat)
+          setCategories(cat.data.content)
+          setLoading(false)
+        }).catch(error => {
+          console.log(error)
+        });
     }, [deleted, page])
   
     if(loading) {
@@ -208,9 +229,10 @@ const AdminProducts = () => {
                     <select
                     onChange={handleChange}
                     onBlur={handleBlur}
+                    key={category.idCategory}
                     id="category"
                     name="category"
-                    class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                    className="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
                       <option defaultValue>{category.categoryName}</option>
                       <option key={category.idCategory}
                     value={category.categoryName}>{category.categoryName}</option>
