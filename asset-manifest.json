@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/inzynierka/static/css/main.54eabe08.css",
-    "main.js": "/inzynierka/static/js/main.22070413.js",
+    "main.js": "/inzynierka/static/js/main.3bca3c24.js",
     "static/js/787.e631b28c.chunk.js": "/inzynierka/static/js/787.e631b28c.chunk.js",
     "static/media/slider1.jpg": "/inzynierka/static/media/slider1.a28b48cdf62e60247561.jpg",
     "static/media/slider3.jpg": "/inzynierka/static/media/slider3.8c4a8d4019bb07025e45.jpg",
@@ -25,11 +25,11 @@
     "static/media/revicons.woff": "/inzynierka/static/media/revicons.e8746a624ed098489406.woff",
     "index.html": "/inzynierka/index.html",
     "main.54eabe08.css.map": "/inzynierka/static/css/main.54eabe08.css.map",
-    "main.22070413.js.map": "/inzynierka/static/js/main.22070413.js.map",
+    "main.3bca3c24.js.map": "/inzynierka/static/js/main.3bca3c24.js.map",
     "787.e631b28c.chunk.js.map": "/inzynierka/static/js/787.e631b28c.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.54eabe08.css",
-    "static/js/main.22070413.js"
+    "static/js/main.3bca3c24.js"
   ]
 }
