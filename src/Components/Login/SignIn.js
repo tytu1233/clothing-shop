@@ -14,6 +14,7 @@ const SignIn = () => {
 
     const [newUser, setNewUser] = useState(initialState);
     const [open, setOpen] = useState(false);
+    const [active, setActive] = useState(false)
     const [error, setError] = useState(''); 
     let navigate = useNavigate();
 
@@ -37,6 +38,10 @@ const SignIn = () => {
     const authUser = () => {
         AuthenticationService.authenticateUser(newUser).then((response) => {
             console.log(response.data)
+            if(response.data.active === 0) {
+                setActive(true)
+                return;
+            }
             if(response.data.token === "-1") {
                 setError('blad')
             } else {
@@ -75,9 +80,14 @@ const SignIn = () => {
                         <input type="password" name="password" value={newUser.password} onChange={handleOnChange} id="form1Example23" className="form-control form-control-lg" />
                         <label className="form-label" htmlFor="form1Example23">Hasło</label>
                     </div>
-                    {error.length !== 0 ? (
+                    {error === 'blad' ? (
                         <div className='d-flex justify-content-center mb-4'>
                         <span style={{color: 'red'}}>Niepoprawne dane logowania</span>
+                        </div>
+                    ) : null}
+                    {active ? (
+                        <div className='d-flex justify-content-center mb-4'>
+                        <span className='text-center' style={{color: 'red'}}>Twoje konto zostało dezaktywowane, jeśli chcesz wyjaśnić sprawę - skontaktuj się z nami poprzez formularz kontaktowy dostępny na stronie</span>
                         </div>
                     ) : null}
                     <button type="button" id="liveToastBtn" onClick={() => {authUser()}} className="btn btn-dark btn-lg btn-block">Zaloguj się</button>
