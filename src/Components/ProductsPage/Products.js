@@ -51,7 +51,7 @@ const Products = () => {
             const responseCategories = await CategoriesService.getAllCategories();
             setCategories(responseCategories.data.content)
             //Products
-            if(brandFiltered.length > 0 || sizeFiltered.length > 0) setPage(0)
+            if(brandFiltered.length > 0 || sizeFiltered.length > 0) setPage(prev => prev = 0)
             const responseProducts = await ProductsService.getFilteredData(brandFiltered, sizeFiltered, categoriesFiltered, min, max, page);
             setProducts(responseProducts.data.content);
             setPagination(responseProducts.data)

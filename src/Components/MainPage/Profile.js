@@ -17,12 +17,12 @@ const Profile = () => {
         const res = await AuthenticationService.checkAuthenticationUser(JSON.parse(localStorage.getItem('token')));
         if(!(res.data.status === "pass")) {
             navigate("/");
-            console.log("asd")
+            //console.log("asd")
             return;
         }        
         const response = await UsersService.getUserById(id);
         setUser(response.data);
-        //console.log(res.data)
+        console.log(response.data)
     }
 
 
@@ -44,7 +44,7 @@ return (
                                         <div className="gap-3 d-md-flex justify-content-md-end text-center">
                                             <button type="button" className="btn btn-danger">Usuń konto</button>
                                         </div>
-                            <div className="col-xxl-8 mb-5 mb-xxl-0">
+                            <div className="col-xxl-12 mb-5 mb-xxl-0">
                                 <div className="bg-secondary-soft px-4 py-5 rounded">
                                     <div className="row g-3">
                                         <h4 className="mb-4 mt-0">Dane kontaktowe</h4>
@@ -61,17 +61,17 @@ return (
                                         
                                         <div className="col-md-6">
                                             <label className="form-label">Miasto *</label>
-                                            <input type="text" className="form-control" placeholder="" aria-label="Phone number" defaultValue={user.address}/>
+                                            <input type="text" className="form-control" placeholder="" aria-label="Phone number" defaultValue={user.city}/>
                                         </div>
                                         
                                         <div className="col-md-6">
                                             <label className="form-label">Ulica</label>
-                                            <input type="text" className="form-control" placeholder="" aria-label="Phone number" defaultValue={user.address}/>
+                                            <input type="text" className="form-control" placeholder="" aria-label="Phone number" defaultValue={user.street}/>
                                         </div>
                                        
                                         <div className="col-md-6">
                                             <label htmlFor="inputEmail4" className="form-label">Kod pocztowy *</label>
-                                            <input type="text" className="form-control" id="inputEmail4" defaultValue={user.address}/>
+                                            <input type="text" className="form-control" id="inputEmail4" defaultValue={user.zipCode}/>
                                         </div>
                                         <div className="gap-3 d-md-flex justify-content-md-start text-center">
                                             <button type="button" className="btn btn-dark">Zaktualizuj dane</button>
@@ -82,7 +82,7 @@ return (
                         </div>
 
                         <div className="row mb-5 gx-5">
-                            <div className="col-xxl-6 mb-5 mb-xxl-0">
+                            <div className="col-xxl-12 mb-5 mb-xxl-0">
                                 <div className="bg-secondary-soft px-4 py-5 rounded">
                                     <div className="row g-3">
                                         <h4 className="my-4">Zmień hasło</h4>

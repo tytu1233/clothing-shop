@@ -224,26 +224,26 @@ const AdminProducts = () => {
 
               <div className="form-outline mb-4">
               <label className="form-label" htmlFor="signUpCategory">Kategoria</label>
-                {categories.map((category) => {
-                  return (
                     <select
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    key={category.idCategory}
                     id="category"
                     name="category"
                     className="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                      <option defaultValue>{category.categoryName}</option>
-                      <option key={category.idCategory}
-                    value={category.categoryName}>{category.categoryName}</option>
+                    {categories.map((category) => {
+                        return (
+                          <>
+                            <option key={category.idCategory}
+                          value={category.categoryName}>{category.categoryName}</option>
+                        </>
+                        )
+                        })}
                     </select>
-                  )
-                })}
               </div>
             </div>
             <div className="modal-footer">
               <button type="button" onClick={() => {setDelted(prev=>prev+1)}} className="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
-              <button type="submit" onClick={() => {setDelted(prev=>prev+1)}} className="btn btn-dark">Dodaj produkt</button>
+              <button type="submit" onClick={() => {setDelted(prev=>prev+1)}} className="btn btn-dark" data-bs-dismiss="modal">Dodaj produkt</button>
             </div>
             </form>
           </div>

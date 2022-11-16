@@ -10,7 +10,7 @@ const OrdersUpdate = ({ params, rowId, setRowId }) => {
 
   const handleSubmit = async () => {
     setLoading(true);
-
+    console.log(params.row)
     const result = await OrdersService.updateOrder(params.row);
     
     if (result) {

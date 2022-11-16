@@ -143,6 +143,7 @@ const SearchText = () => {
                 <ShowProducts
                   key={show.id}
                   idProduct={show.id}
+                  image={show.image}
                   name={show.name}
                   price={show.price}
                 />

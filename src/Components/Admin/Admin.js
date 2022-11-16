@@ -54,32 +54,7 @@ const Admin = () => {
             <Toolbar />
             <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
               <Grid container spacing={3}>
-                {/* Chart */}
-                <Grid item xs={12} md={8} lg={9}>
 
-                </Grid>
-                {/* Recent Deposits */}
-                <Grid item xs={12} md={4} lg={3}>
-                <Paper>
-                    <Chart
-                      data={chartData}
-                    >
-                      <ArgumentAxis />
-                      <ValueAxis />
-
-                      <BarSeries
-                        valueField="year"
-                        argumentField="population"
-                      />
-                      <Title
-                        text="Sumaryczne ceny zamówień z danych miesięcy"
-                      />
-                      <EventTracker />
-                      <Tooltip/>
-                    </Chart>
-                  </Paper>
-                
-                </Grid>
                 {/* Recent Orders */}
                 <Grid item xs={12}>
                   <Paper>

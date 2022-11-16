@@ -8,7 +8,7 @@ import { useFormik } from 'formik';
 import { checkoutSchema } from '../schemas/checkout';
 import CustomizedToast from '../Toast/CustomizedToast';
 import ServiceSizes from '../../Services/ServiceSizes';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const Checkout = () => {
 
@@ -98,7 +98,7 @@ const Checkout = () => {
                     <p className="lead">
                         Sprawdź status pod przedmiotem, by zamówić dodany towar - status musi wskazywać <span style={{color: 'green', fontWeight: 'bold'}}>Dostępne</span>
                     </p>
-                    <a href="/cart" className="btn btn-dark">Koszyk</a>
+                    <Link to={"/cart"} className="btn btn-dark">Koszyk</Link>
                 </div>
             </div>
         )

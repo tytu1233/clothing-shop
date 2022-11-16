@@ -1,7 +1,7 @@
 import React from 'react'
 import { AiOutlineMail } from "react-icons/ai";
 import '../../styles/footer.css'
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 
 const Footer = () => {
     let location = useLocation();
@@ -26,10 +26,10 @@ const Footer = () => {
             </div>
             <div className="col-lg-4 col-md-3 col-sm-6">
                 <div className="footer__widget">
-                    <h6 style={{textAlign: 'center'}}>Shopping</h6>
+                    <h6 style={{textAlign: 'center'}}>Zakupy</h6>
                     <div className='d-flex justify-content-center'>
                         <ul>
-                            <li><a href="src/Components/MainPage/Footer#">Kontakt</a></li>
+                            <Link className='footer__widget__link' to={'/contact'}><li>Kontakt</li></Link>
                             <li><a href="src/Components/MainPage/Footer#">Regulamin sklepu</a></li>
                         </ul>
                     </div>

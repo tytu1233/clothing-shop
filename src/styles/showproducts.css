@@ -22,14 +22,14 @@ img {
 .product_name {
   font-size: 15px;
   color: #000;
-  font-family: 'Brush Script MT', cursive;
+  font-family: "Times New Roman", Times, serif;
   margin-left: 10px;
   flex: 2;
   display: flex;
 }
 
 .product_price {
-  font-family: 'Brush Script MT', cursive;
+  font-family: "Times New Roman", Times, serif;
   font-size: 16px;
   display: flex;
   flex: 0.2;

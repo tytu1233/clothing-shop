@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { HashRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import Cart from './Components/CartPage/Cart';
 import Main from "./Components/MainPage/Main";
 import Details from "./Components/ProductDetails/Details";
@@ -15,6 +15,7 @@ import Error404 from './Components/Errors/error404';
 import Orders from './Components/MainPage/Orders';
 import Dashboard from './Components/Admin/Dashboard';
 import Checkout from './Components/CartPage/Checkout';
+import Contact from './Components/MainPage/Contact';
 
 
 
@@ -27,33 +28,28 @@ const App = () => {
     }, []);
 
   return (
-    
-    <div>
-        <Router>
-        <UserContext.Provider value={userProvider}>
-            <CartProvider>
-                <div>
+    <UserContext.Provider value={userProvider}>
+    <CartProvider>
+        <HashRouter>
                 <Navbar/>
                     <Routes>
-                        <Route index path='/' element = {<Main/>}></Route>
+                        <Route exact path='/' element = {<Main/>}></Route>
                         <Route path='/details/:id' element = {<Details/>}></Route>
                         <Route path='/cart' element = {<Cart/>}></Route>
+                        <Route path='/contact' element = {<Contact/>}></Route>
                         <Route path='/products' element = {<Products/>}></Route>
                         <Route path='/signin' element = {<SignIn/>}></Route>
                         <Route path='/signup' element = {<SignUp/>}></Route>
                         <Route path='/checkout' element = {<Checkout/>}></Route>
-                        <Route exact path='/admin/*' element = {<Dashboard/>}></Route>
+                        <Route path='/admin/*' element = {<Dashboard/>}></Route>
                         <Route path='/profile/:id' element = {<Profile/>}></Route>
                         <Route path='/orders/:id' element={<Orders/>}></Route>
                         <Route path='/*' element={<Error404/>}></Route>
                     </Routes>
                 <Footer/>
-                </div>
-            </CartProvider>
-        </UserContext.Provider>
-        </Router>
-
-    </div>
+        </HashRouter>
+    </CartProvider>
+    </UserContext.Provider>
   );
 }
 

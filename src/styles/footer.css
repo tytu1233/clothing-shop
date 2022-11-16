@@ -45,6 +45,22 @@
     text-decoration: none;
 }
 
+.footer__widget__link {
+	margin-block-start: 0;
+    padding-inline-start: 0;
+	line-height: 36px;
+	list-style: none;
+    text-decoration: underline;
+	color: #b7b7b7;
+	font-size: 15px;
+}
+
+.footer__widget__link:hover {
+    text-decoration: none;
+	color: #b7b7b7;
+	font-size: 15px;
+}
+
 .footer__widget ul li a {
 	color: #b7b7b7;
 	font-size: 15px;

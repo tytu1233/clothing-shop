@@ -20,7 +20,7 @@ const Navbar = () => {
     const [open, setOpen] = useState(false);
 
     const changeLocation = (placeToGo) => {
-        navigate(placeToGo, { replace: true });
+        navigate(placeToGo, { replace: false });
         window.location.reload();
     }
 
@@ -64,18 +64,17 @@ const Navbar = () => {
         <SearchBar/>
         <nav className="navbar navbar-expand-lg navbar-dark" style={{backgroundColor: '#111111',}}>
             <div className="container">
-                <a className="navbar-brand text-light border-2 border-end pe-4" href="/">CLOTHING STORE</a>
+                <Link className="navbar-brand text-light border-2 border-end pe-4" to={'/'}>CLOTHING STORE</Link>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li className="nav-item dropdown">
-                            <a className="nav-link active dropdown-toggle" data-bs-toggle="collapse" href="src/Components/MainPage/Navbar#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">KATEGORIE</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link active" href='/products'>PRODUKTY</a>
-                        </li>
+                        <Link style={{textDecoration: 'none'}} className="nav-item" to={'/products'}>
+                            <li className='nav-link active'>
+                                PRODUKTY
+                            </li>
+                        </Link>
                     </ul>
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         <li className="nav-item">
@@ -102,22 +101,26 @@ const Navbar = () => {
                                     <AiOutlineUser size={25}/>
                                 </a>
                                 <ul style={{backgroundColor: 'rgb(17, 17, 17)'}} className="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                                    <li><Link onClick={() => {changeLocation(`/profile/${user.user_id}`)}} className="dropdown-item" >Profil</Link></li>
-                                    <li><Link onClick={() => {changeLocation(`/orders/${user.user_id}`)}} className="dropdown-item">Zamówienia</Link></li>
-                                    {user.role === "Admin" ? <li><Link onClick={() => {changeLocation(`/admin`)}} className="dropdown-item">Panel admina</Link></li> : null}
+                                    <Link to={`/profile/${user.user_id}`} className="dropdown-item" ><li>Profil</li></Link>
+                                    <Link to={`/orders/${user.user_id}`} className="dropdown-item"><li>Zamówienia</li></Link>
+                                    {user.role === "Admin" ? <Link onClick={() => {changeLocation(`/admin`)}} className="dropdown-item"><li>Panel admina</li></Link> : null}
                                     <li><Link className="dropdown-item" onClick={() => {logoutUser()}}>Wyloguj</Link></li>
                                 </ul>
                                 </li>
                             </ul>
-                            : <a className="nav-link active" href="/signin"><AiOutlineLogin size={25}/></a> 
+                            : <Link className="nav-link active" to={'/signin'}><AiOutlineLogin size={25}/></Link> 
                             }
                         </li>
+                        <Link className="nav-link active" to={'/signup'}>
                         <li className="nav-item">
-                            {isLogged === 1 ? null : <a className="nav-link active" href="/signup"><AiOutlineUserAdd size={25}/></a>}
+                            {isLogged === 1 ? null :<AiOutlineUserAdd size={25}/>}
                         </li>
+                        </Link>
+                        <Link to={'/cart'} className="nav-link active">
                         <li className="nav-item">
-                            <a href='/cart' className="nav-link active"><AiOutlineShoppingCart size={25}/></a>
+                            <AiOutlineShoppingCart size={25}/>
                         </li>
+                        </Link>
                     </ul>
                     </div>
                 </div>

@@ -41,7 +41,7 @@ const AdminOrders = () => {
   
     const columns = [
       { field: 'idOrders', headerName: 'ID', width: 0 },
-      { field: 'finalPrice', headerName: 'Cena końcowa', width: 200, editable: true},
+      { field: 'finalPrice', headerName: 'Cena końcowa', width: 200,},
       { field: 'status', 
         headerName: 'Status',
         type:'singleSelect', 
@@ -53,7 +53,6 @@ const AdminOrders = () => {
         field: 'users', 
         headerName: 'ID użytkownika', 
         width: 100, 
-        editable: true 
       },
       {
         field: 'actions',

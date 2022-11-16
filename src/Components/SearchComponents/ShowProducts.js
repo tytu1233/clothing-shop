@@ -12,9 +12,9 @@ const ShowProducts = ({idProduct, name, image, price }) => {
   return (
     <div onClick={() => {changeLocation(`/details/${idProduct}`)} } className='products_container'>
       <div className='thumbnail'>
-        <img alt="product" src={require('../../img/slider2.jpg')} />
+        <img style={{width: '100px', height: '80px'}} alt="product" src={require(`../../img/product/${image}`)} />
       </div>
-      <h4 className='product_name'>{name}fdsfsdfsdfds</h4>
+      <h4 className='product_name'>{name}</h4>
       <span className='product_price'>{price} zł</span>
     </div>
   );

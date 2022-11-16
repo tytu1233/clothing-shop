@@ -22,7 +22,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import BarComponent from './BarComponent';
 import { ListItem } from '@mui/material';
 import Admin from './Admin';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes, useNavigate, Link } from 'react-router-dom';
 import AdminUsers from './Users/AdminUsers';
 import AdminProducts from './Products/AdminProducts';
 import AdminOrders from './Orders/AdminOrders';
@@ -100,7 +100,7 @@ const Dashboard = () => {
               </Typography>
               <IconButton>
                 <Badge>
-                  <a href='/'><ArrowBackIcon sx={{color: 'white'}}/></a>
+                  <Link to={'/'}><ArrowBackIcon sx={{color: 'white'}}/></Link>
                 </Badge>
               </IconButton>
             </Toolbar>

@@ -51,7 +51,7 @@ const HighRated = () => {
             {rated.map((rating)=>(
                 <div style={{cursor: 'pointer'}} onClick={() => {navigate('/details/'+rating[0].id)}} className='p-2'  key={rating[0].id}>
                     <div className="position-relative">
-                        <img alt="Product with high rate" src={require("../../img/product/product-5.jpg")} className="w-100"/>
+                        <img style={{width: '413px', height: '413px'}}  alt="Product with high rate" src={require(`../../img/product/${rating[0].image}`)} className="w-100"/>
                         <div className="position-absolute top-0 left-0 d-flex justify-content-center align-items-end w-100 h-100 text-white fs-5" style={{backgroundColor: 'rgba(0, 0, 0, 0.5)'}}>
                         <Rating 
                             value={rating[1]}

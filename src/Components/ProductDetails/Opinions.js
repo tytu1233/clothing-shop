@@ -22,7 +22,7 @@ const Opinions = ({productId}) => {
     const addOpinion = async () => {
         const opinion = { "rating": rating, "comment": comment };
         await OpinionsService.addOpinion(user.user_id, productId, opinion)
-        loadOpinions(productId)
+        loadOpinions.current(productId)
     }
 
     const loadOpinions = useRef(() => {});
