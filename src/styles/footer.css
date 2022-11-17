@@ -70,11 +70,11 @@
 	color: #b7b7b7;
 }
 
-.footer__widget .footer__newslatter form {
+.footer__widget .footer__newslatter div {
 	position: relative;
 }
 
-.footer__widget .footer__newslatter form input {
+.footer__widget .footer__newslatter div input {
 	width: 100%;
 	font-size: 15px;
 	color: #3d3d3d;
@@ -84,27 +84,27 @@
 	border-bottom: 2px solid #ffffff;
 }
 
-.footer__widget .footer__newslatter form input::-webkit-input-placeholder {
+.footer__widget .footer__newslatter div input::-webkit-input-placeholder {
 	color: #3d3d3d;
 }
 
-.footer__widget .footer__newslatter form input::-moz-placeholder {
+.footer__widget .footer__newslatter div input::-moz-placeholder {
 	color: #3d3d3d;
 }
 
-.footer__widget .footer__newslatter form input:-ms-input-placeholder {
+.footer__widget .footer__newslatter div input:-ms-input-placeholder {
 	color: #3d3d3d;
 }
 
-.footer__widget .footer__newslatter form input::-ms-input-placeholder {
+.footer__widget .footer__newslatter div input::-ms-input-placeholder {
 	color: #3d3d3d;
 }
 
-.footer__widget .footer__newslatter form input::placeholder {
+.footer__widget .footer__newslatter div input::placeholder {
 	color: #3d3d3d;
 }
 
-.footer__widget .footer__newslatter form button {
+.footer__widget .footer__newslatter div button {
 	color: #b7b7b7;
 	font-size: 16px;
 	position: absolute;

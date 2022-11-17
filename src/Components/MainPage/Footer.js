@@ -1,10 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { AiOutlineMail } from "react-icons/ai";
 import '../../styles/footer.css'
 import { useLocation, Link } from 'react-router-dom';
+import MailService from '../../Services/MailService'
 
 const Footer = () => {
     let location = useLocation();
+    const [email, setEmail] = useState('')
+
+    const addToNewsletter = () => {
+        MailService.newsletter(email)
+        .then((res) => {
+            console.log(res.data)
+        })
+    }
     
     if(location.pathname.startsWith('/admin')) {
         return (
@@ -40,10 +49,10 @@ const Footer = () => {
                     <h6>Newsletter</h6>
                     <div className="footer__newslatter">
                         <p>Zapisz się, aby byc na bieżąco z promocjami oraz nowymi towarami!</p>
-                        <form action="src/Components/MainPage/Footer#">
-                            <input type="text" placeholder="Twój e-mail"/>
-                            <button type="submit"><AiOutlineMail/></button>
-                        </form>
+                        <div>
+                            <input type="text" onChange={(e) => setEmail(e.target.value)} placeholder="Twój e-mail"/>
+                            <button onClick={() => addToNewsletter()}><AiOutlineMail/></button>
+                        </div>
                     </div>
                 </div>
             </div>
