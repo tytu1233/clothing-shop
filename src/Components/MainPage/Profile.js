@@ -3,6 +3,16 @@ import { useParams } from 'react-router-dom';
 import UsersService from '../../Services/UsersService';
 import AuthenticationService from '../../Services/AuthenticationService';
 import { useNavigate } from "react-router-dom";
+import { useFormik } from 'formik';
+import { profileSchema } from '../schemas/profile';
+import Loader from '../Loader';
+
+
+const initialStatePassword = {
+    oldPassword: "",
+    password: "",
+    confirmPassword: "",
+};
 
 
 const Profile = () => {
@@ -10,25 +20,97 @@ const Profile = () => {
     const navigate = useNavigate();
     const {id} = useParams();
     const [user, setUser] = useState([])
+    const [loading, setLoading] = useState(false)
+    const [newPassword, setNewPassword] = useState(initialStatePassword);
+    const [error, setError] = useState(false)
+    const [errorOld, setErrorOld] = useState(false)
+
+    const handleOnChange = (e) => {
+        const { name, value } = e.target;
+    
+        setNewPassword({ ...newPassword, [name]: value });
+    
+        if (name === "confirmPassword") {
+          if(newPassword.password === value) {
+            setError(prev => prev = false)
+            console.log("false")
+          } else {
+          setError(true)
+          }
+        }
+      };
+
+    const onSubmit = async () => {
+        console.log(values)
+        UsersService.updateUserProfile(values)
+        .then((response) => {
+            console.log(response.data)
+        })
+    };
+
+    const deleteUser = () => {
+        UsersService.passwordMatches({login: user.login, password: newPassword.oldPassword})
+        .then((res) => {
+            console.log(res.data)
+        })
+    }
+
+
+    const changePassword = () => {
+        UsersService.passwordMatches({login: user.login, password: newPassword.oldPassword})
+        .then((res) => {
+            if(res.data === "ok") {
+
+                setErrorOld(prev=> prev = false)
+            } 
+        }).catch((err) => {
+            console.log(err)
+            setErrorOld(true)
+        })
+    }
 
     const checkAuthorization = useRef(() => {});
 
     checkAuthorization.current = async () => {
+        setLoading(true)
         const res = await AuthenticationService.checkAuthenticationUser(JSON.parse(localStorage.getItem('token')));
         if(!(res.data.status === "pass")) {
             navigate("/");
             //console.log("asd")
+            setLoading(false)
             return;
         }        
         const response = await UsersService.getUserById(id);
         setUser(response.data);
-        console.log(response.data)
+        setLoading(false)
+        //console.log(response.data)
     }
+
+
+
+    const { values, errors, handleBlur, touched, handleChange, handleSubmit } = useFormik({
+        initialValues: {
+            id_user: id,
+            name: user.name,
+            surname: user.surname,
+            city: user.city,
+            zipCode: user.zipCode,
+            street: user.street,
+        },
+        enableReinitialize: true,
+        validationSchema: profileSchema,
+        onSubmit
+    });
 
 
     useEffect(() => {
         checkAuthorization.current()
     }, [])
+
+    if(loading) {
+        return (<Loader/>)
+    }
+
 return (
     <div className="container mb-3">
         <div className="row">
@@ -39,10 +121,10 @@ return (
                         <hr/>
                     </div>
                     
-                    <form className="file-upload">
+                    <form onSubmit={handleSubmit}>
                         <div className="row mb-5 gx-5">
                                         <div className="gap-3 d-md-flex justify-content-md-end text-center">
-                                            <button type="button" className="btn btn-danger">Usuń konto</button>
+                                            <button type="button" onClick={() => {deleteUser()}} className="btn btn-danger">Usuń konto</button>
                                         </div>
                             <div className="col-xxl-12 mb-5 mb-xxl-0">
                                 <div className="bg-secondary-soft px-4 py-5 rounded">
@@ -51,36 +133,86 @@ return (
                                         
                                         <div className="col-md-6">
                                             <label className="form-label">Imię *</label>
-                                            <input type="text" className="form-control" placeholder="" aria-label="First name" defaultValue={user.name}/>
+                                            <input type="text"
+                                                className={`form-control ${errors.name && touched.name ? "invalid" : ""}`}
+                                                value={values.name || ''}
+                                                onChange={handleChange}
+                                                onBlur={handleBlur}
+                                                id="name"
+                                                name="name"
+                                            
+                                                />
+                                        {errors.name && touched.name &&
+                                                <small className="text-danger">{errors.name}</small>
+                                        }
                                         </div>
                                         
                                         <div className="col-md-6">
                                             <label className="form-label">Nazwisko *</label>
-                                            <input type="text" className="form-control" placeholder="" aria-label="Last name" defaultValue={user.surname}/>
+                                            <input type="text"
+                                                className={`form-control ${errors.surname && touched.surname ? "invalid" : ""}`}
+                                                value={values.surname || ''}
+                                                id="surname"
+                                                name="surname"
+                                                onChange={handleChange}
+                                                onBlur={handleBlur}
+                                                />
+                                        {errors.surname && touched.surname &&
+                                                <small className="text-danger">{errors.surname}</small>
+                                        }   
                                         </div>
                                         
                                         <div className="col-md-6">
                                             <label className="form-label">Miasto *</label>
-                                            <input type="text" className="form-control" placeholder="" aria-label="Phone number" defaultValue={user.city}/>
+                                            <input type="text"
+                                                className={`form-control ${errors.city && touched.city ? "invalid" : ""}`}
+                                                value={values.city || ''}
+                                                name="city"
+                                                id="city"
+                                                onChange={handleChange}
+                                                onBlur={handleBlur}
+                                                />
+                                        {errors.city && touched.city &&
+                                                <small className="text-danger">{errors.city}</small>
+                                        }  
                                         </div>
                                         
                                         <div className="col-md-6">
                                             <label className="form-label">Ulica</label>
-                                            <input type="text" className="form-control" placeholder="" aria-label="Phone number" defaultValue={user.street}/>
+                                            <input type="text"
+                                                className={`form-control ${errors.street && touched.street ? "invalid" : ""}`}
+                                                value={values.street || ''}
+                                                onChange={handleChange}
+                                                onBlur={handleBlur}
+                                                name="zipCode"
+                                                />
+                                        {errors.street && touched.street &&
+                                                <small className="text-danger">{errors.street}</small>
+                                        }  
                                         </div>
                                        
                                         <div className="col-md-6">
-                                            <label htmlFor="inputEmail4" className="form-label">Kod pocztowy *</label>
-                                            <input type="text" className="form-control" id="inputEmail4" defaultValue={user.zipCode}/>
+                                            <label htmlFor="zipCode" className="form-label">Kod pocztowy *</label>
+                                            <input type="text"
+                                            className={`form-control ${errors.zipCode && touched.zipCode ? "invalid" : ""}`}
+                                            value={values.zipCode || ''}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            id="zipCode"
+                                            name="zipCode"/>
+                                        {errors.zipCode && touched.zipCode &&
+                                                <small className="text-danger">{errors.zipCode}</small>
+                                        } 
                                         </div>
                                         <div className="gap-3 d-md-flex justify-content-md-start text-center">
-                                            <button type="button" className="btn btn-dark">Zaktualizuj dane</button>
+                                            <button type="submit" className="btn btn-dark">Zaktualizuj dane</button>
                                         </div>
                                     </div> 
                                 </div>
                             </div>
                         </div>
-
+                        </form> 
+                    <form>
                         <div className="row mb-5 gx-5">
                             <div className="col-xxl-12 mb-5 mb-xxl-0">
                                 <div className="bg-secondary-soft px-4 py-5 rounded">
@@ -89,27 +221,29 @@ return (
                                         
                                         <div className="col-md-6">
                                             <label htmlFor="exampleInputPassword1" className="form-label">Stare hasło *</label>
-                                            <input type="password" className="form-control" id="exampleInputPassword1"/>
+                                            <input required type="password" value={newPassword.oldPassword} onChange={handleOnChange} className="form-control" name="oldPassword" id="oldPassword"/>
                                         </div>
                                         
                                         <div className="col-md-6">
                                             <label htmlFor="exampleInputPassword2" className="form-label">Nowe hasło *</label>
-                                            <input type="password" className="form-control" id="exampleInputPassword2"/>
+                                            <input required type="password" value={newPassword.password} onChange={handleOnChange} className="form-control" name="password" id="password"/>
                                         </div>
                                         
                                         <div className="col-md-12">
                                             <label htmlFor="exampleInputPassword3" className="form-label">Potwierdź hasło *</label>
-                                            <input type="password" className="form-control" id="exampleInputPassword3"/>
+                                            <input required type="password" value={newPassword.confirmPassword} onChange={handleOnChange} className="form-control" name="confirmPassword" id="confirmPassword"/>
+                                            {error === true ? (<span style={{color: 'red'}}>Hasła muszą być takie same</span>) : (null)}
+                                            {errorOld === true ? (<span style={{color: 'red'}}>Hasło do konta jest niepoprawne</span>) : (null)}
                                         </div>
                                         <div className="gap-3 d-md-flex justify-content-md-start text-center">
-                                            <button type="button" className="btn btn-dark">Ustaw nowe hasło</button>
+                                            <button type="button" onClick={() => changePassword()} className="btn btn-dark">Ustaw nowe hasło</button>
                                         </div>
                                     </div>
                                     </div>
                                 </div>
                                 
                         </div>
-                    </form> 
+                    </form>
                 </div>
             </div>
     </div>

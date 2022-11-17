@@ -3,16 +3,25 @@ import { AiOutlineMail } from "react-icons/ai";
 import '../../styles/footer.css'
 import { useLocation, Link } from 'react-router-dom';
 import MailService from '../../Services/MailService'
+import CustomizedToast from '../Toast/CustomizedToast'
 
 const Footer = () => {
     let location = useLocation();
+    const [open, setOpen] = useState(false)
     const [email, setEmail] = useState('')
 
     const addToNewsletter = () => {
         MailService.newsletter(email)
         .then((res) => {
             console.log(res.data)
+            setOpen(true)
         })
+
+        const interval = setInterval(() => {
+            setOpen(false)
+        }, 2000)
+
+        return () => {clearInterval(interval);}
     }
     
     if(location.pathname.startsWith('/admin')) {
@@ -66,6 +75,7 @@ const Footer = () => {
             </div>
         </div>
     </div>
+    <CustomizedToast open={open} text={"Dodano do newslettera!"}/>
 </footer>
   )
 }

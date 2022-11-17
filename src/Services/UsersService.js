@@ -32,9 +32,17 @@ class UsersService {
         return axios.post(USERS_BASE_REST_API_URL + '/1', user);
     }
 
+    passwordMatches(user) {
+        return axios.post(USERS_BASE_REST_API_URL + '/credentials', user)
+    }
+
     updateUser(user) {
         console.log(user)
         return axios.put(USERS_BASE_REST_API_URL + '/' + user.id_user, user);
+    }
+
+    updateUserProfile(user) {
+        return axios.put(USERS_BASE_REST_API_URL + '/profile/' + user.id_user, user);
     }
 
     deleteUser(userId) {
