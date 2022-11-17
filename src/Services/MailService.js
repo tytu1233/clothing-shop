@@ -13,6 +13,11 @@ class MailService {
         console.log(email)
         return axios.get(CONTACT_BASE_REST_API_URL + 'sendNewsletter/' + email);
     }
+
+    newOrder(id) {
+        console.log(id)
+        return axios.get(CONTACT_BASE_REST_API_URL + 'order/' + id);
+    }
 }
 
 export default new MailService();

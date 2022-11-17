@@ -90,7 +90,7 @@ const Orders = () => {
                                                     <div  className='row p-2'>
                                                         <div className='col-3'>
                                                             <div className='row'>
-                                                                <img alt="product" src={require("../../img/product/product-1.jpg")}/>
+                                                                <img alt="product" src={require(`../../img/product/${product.products.image}`)}/>
                                                             </div>
                                                         </div>
                                                         <div className='col-3'>{product.products.name}</div>

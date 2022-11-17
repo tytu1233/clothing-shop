@@ -8,6 +8,7 @@ import { useFormik } from 'formik';
 import { checkoutSchema } from '../schemas/checkout';
 import CustomizedToast from '../Toast/CustomizedToast';
 import ServiceSizes from '../../Services/ServiceSizes';
+import MailService from '../../Services/MailService';
 import { useNavigate, Link } from "react-router-dom";
 
 const Checkout = () => {
@@ -28,25 +29,28 @@ const Checkout = () => {
       const onSubmit = async () => {
         setOpen(true)
         setLoading(true)
-        OrdersService.createOrder(user.user_id, values)
-        .then((response) => {
-            OrdersService.updateFinalPrice(response.data, location.state.finalPrice)
-            .then((response) => {
+        await OrdersService.createOrder(user.user_id, values)
+        .then(async (response) => {
+            await OrdersService.updateFinalPrice(response.data, location.state.finalPrice)
+            .then(async (response) => {
             for(let i = 0; i<items.length; i++) {
-                OrdersService.createOrdersProduct(response.data, items[i])
+                await OrdersService.createOrdersProduct(response.data, items[i])
                 .then((response) => {
                     console.log(response.data)
                 })
             }
+        await MailService.newOrder(response.data)
+            .then((res) => {
+                console.log(res.data)
+            })
         })
-        })
+    })
         setLoading(false)
         const interval = setInterval(() => {
             setOpen(false);
             emptyCart()
-            changeLocation("/")
         }, 2000);
-        return () => clearInterval(interval);
+        return () => {clearInterval(interval);changeLocation("/")}
   };
 
     const { values, errors, handleBlur, touched, handleChange, handleSubmit } = useFormik({
@@ -83,7 +87,7 @@ const Checkout = () => {
         }, [])
 
       if(loading) {
-        return (<div style={{opacity: '0.4'}}><Loader/></div>)
+        return (<div><Loader/></div>)
       }  
 
       if(error) {
