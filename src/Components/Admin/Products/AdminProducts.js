@@ -31,8 +31,8 @@ const AdminProducts = () => {
         ProductsService.getAll(page),
         CategoriesService.getAllCategories()
       ])
-      const pro = await productsResponse;
-      const cat = await categoriesResponse;
+      const pro = productsResponse;
+      const cat = categoriesResponse;
       return [pro, cat]
       /*
         try {
@@ -69,7 +69,7 @@ const AdminProducts = () => {
           description: "",
           price: "",
           image: "",
-          category: "",
+          category: "Marynarka",
       },
       validationSchema: productsSchema,
       onSubmit
@@ -229,12 +229,13 @@ const AdminProducts = () => {
                     onBlur={handleBlur}
                     id="category"
                     name="category"
+                    value={values.category || "Marynarka"}
                     className="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
                     {categories.map((category) => {
                         return (
                           <>
                             <option key={category.idCategory}
-                          value={category.categoryName}>{category.categoryName}</option>
+                          >{category.categoryName}</option>
                         </>
                         )
                         })}
