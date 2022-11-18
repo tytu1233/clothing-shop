@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useFormik } from 'formik';
 import { profileSchema } from '../schemas/profile';
 import Loader from '../Loader';
+import CustomizedToast from '../Toast/CustomizedToast';
 
 
 const initialStatePassword = {
@@ -24,6 +25,8 @@ const Profile = () => {
     const [newPassword, setNewPassword] = useState(initialStatePassword);
     const [error, setError] = useState(false)
     const [errorOld, setErrorOld] = useState(false)
+    const [open, setOpen] = useState(false)
+    const [text, setText] = useState('')
 
     const handleOnChange = (e) => {
         const { name, value } = e.target;
@@ -40,28 +43,52 @@ const Profile = () => {
         }
       };
 
+
+      const changeLocation = (placeToGo) => {
+        navigate(placeToGo, { replace: false });
+        window.location.reload();
+    }
+
     const onSubmit = async () => {
         console.log(values)
         UsersService.updateUserProfile(values)
         .then((response) => {
             console.log(response.data)
+            setOpen(true)
+            setText("Pomyślnie zaktualizowano dane!")
+            console.log(response.data)
+            const interval = setInterval(() => {
+                setOpen(false);
+            }, 2000);
+            return () => {clearInterval(interval);}
         })
     };
 
-    const deleteUser = () => {
-        UsersService.passwordMatches({login: user.login, password: newPassword.oldPassword})
-        .then((res) => {
-            console.log(res.data)
-        })
+    const deleteUser = async () => {
+        await UsersService.deleteUser(id)
+            .then((response) => {
+                console.log(response)
+                localStorage.removeItem("token");
+                changeLocation("/")
+            })
     }
 
 
-    const changePassword = () => {
-        UsersService.passwordMatches({login: user.login, password: newPassword.oldPassword})
-        .then((res) => {
+    const changePassword = async () => {
+       await UsersService.passwordMatches({login: user.login, password: newPassword.oldPassword})
+        .then(async (res) => {
             if(res.data === "ok") {
-
                 setErrorOld(prev=> prev = false)
+                await UsersService.changePassword(id, newPassword.password)
+                .then((response) => {
+                    setOpen(true)
+                    setText("Pomyślnie zmieniono hasło!")
+                    console.log(response.data)
+                    const interval = setInterval(() => {
+                        setOpen(false);
+                    }, 2000);
+                    return () => {clearInterval(interval);}
+                })
             } 
         }).catch((err) => {
             console.log(err)
@@ -124,7 +151,7 @@ return (
                     <form onSubmit={handleSubmit}>
                         <div className="row mb-5 gx-5">
                                         <div className="gap-3 d-md-flex justify-content-md-end text-center">
-                                            <button type="button" onClick={() => {deleteUser()}} className="btn btn-danger">Usuń konto</button>
+                                            <button type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop" className="btn btn-danger">Usuń konto</button>
                                         </div>
                             <div className="col-xxl-12 mb-5 mb-xxl-0">
                                 <div className="bg-secondary-soft px-4 py-5 rounded">
@@ -246,6 +273,24 @@ return (
                     </form>
                 </div>
             </div>
+                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Usunięcie konta</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Czy na pewno chcesz usunąć konto? Nie będziesz w stanie go odzyskać</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onClick={() => {deleteUser(id)}}>Potwierdź</button>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            <CustomizedToast open={open} text={text}/>
     </div>
         )
 }

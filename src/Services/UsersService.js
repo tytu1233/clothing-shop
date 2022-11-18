@@ -36,6 +36,12 @@ class UsersService {
         return axios.post(USERS_BASE_REST_API_URL + '/credentials', user)
     }
 
+    changePassword(id, password) {
+        console.log(id)
+        console.log(password)
+        return axios.post(USERS_BASE_REST_API_URL + '/password/' + password + '/' + id)
+    }
+
     updateUser(user) {
         console.log(user)
         return axios.put(USERS_BASE_REST_API_URL + '/' + user.id_user, user);
