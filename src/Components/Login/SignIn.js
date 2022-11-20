@@ -27,7 +27,7 @@ const SignIn = () => {
     
         setNewUser({ ...newUser, [name]: value });
 
-        console.log(newUser)
+        //console.log(newUser)
     }
 
     const changeLocation = (placeToGo) => {
@@ -37,7 +37,7 @@ const SignIn = () => {
 
     const authUser = () => {
         AuthenticationService.authenticateUser(newUser).then((response) => {
-            console.log(response.data)
+            //console.log(response.data)
             if(response.data.active === 0) {
                 setActive(true)
                 return;

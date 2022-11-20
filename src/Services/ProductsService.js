@@ -38,6 +38,10 @@ class ProductsService {
         return axios.get(PRODUCTS_BASE_REST_API_URL + '/recommended')
     }
 
+    countCategories() {
+        return axios.get(PRODUCTS_BASE_REST_API_URL + '/count')
+    }
+
     getFilteredData(brand, size, categories, min, max, page) {
         let arrayBrands = brand.toString()
         let arraySizes = size.toString()

@@ -10,17 +10,39 @@ import {
   BarSeries,
   Title,
   ArgumentAxis,
+  PieSeries,
   ValueAxis,
   Tooltip,
+  Legend,
 } from '@devexpress/dx-react-chart-material-ui';
-import { EventTracker } from '@devexpress/dx-react-chart';
+import { PieChart, Series, Label, Connector, Tooltip as Toltip } from 'devextreme-react/pie-chart';
+
+import { EventTracker, Animation } from '@devexpress/dx-react-chart';
 import Loader from '../Loader';
+import ProductsService from '../../Services/ProductsService';
 
 const Admin = () => {
 
   const [loading, setLoading] = useState(false)
   const [chartData, setChartData] = useState([])
+  const [pieChartData, setPieChartData] = useState([])
   const [targetItem, setTargetItem] = useState(undefined)
+  const [targetPieItem, setTargetPieItem] = useState(undefined)
+
+
+  const customizeText = (pointInfo) => {
+    return pointInfo.value;
+  }
+
+  const onPointClick = (e) => {
+    const point = e.target;
+    if (point.isSelected()) {
+      point.clearSelection();
+    } else {
+      point.select();
+    }
+  }
+  
 
   const loadChart = async () => {
     
@@ -30,7 +52,16 @@ const Admin = () => {
       value.month = value.month.toString()
       return value
    })])
-    console.log(res.data)
+   const response = await ProductsService.countCategories();
+    console.log(response.data.map((value)=> {
+      value.id = value.id.toString()
+      return value
+   }))
+   setPieChartData([...response.data.map((val)=> {
+    //value.id = value.id.toString()
+    val.categories = val.categories.categoryName
+    return val
+  })])
     setLoading(false)
   }
 
@@ -54,7 +85,33 @@ const Admin = () => {
             <Toolbar />
             <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
               <Grid container spacing={3}>
-
+              <Grid item xs={6}>
+                <Paper>
+                <PieChart
+                  dataSource={pieChartData}
+                  type="doughnut"
+                  title="Ilość produktów danej kategorii"
+                  onPointClick={onPointClick}
+                >
+                  <Series 
+                    valueField="id"
+                    argumentField="categories"
+                  >
+                    <Label 
+                      visible={true}
+                      position="columns"
+                      customizeText={customizeText}
+                    >
+                      <Connector visible={true}></Connector>
+                    </Label>
+                  </Series>
+                  <Toltip
+                    enabled={true}
+                  >
+                  </Toltip>
+                </PieChart>
+                </Paper>
+              </Grid>
                 {/* Recent Orders */}
                 <Grid item xs={12}>
                   <Paper>

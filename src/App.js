@@ -16,6 +16,7 @@ import Orders from './Components/MainPage/Orders';
 import Dashboard from './Components/Admin/Dashboard';
 import Checkout from './Components/CartPage/Checkout';
 import Contact from './Components/MainPage/Contact';
+import 'devextreme/dist/css/dx.light.css';
 
 
 
