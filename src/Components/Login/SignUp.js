@@ -4,7 +4,7 @@ import '../../styles/signup.css'
 import { useFormik } from 'formik';
 import { registerSchema } from '../schemas/register';
 import CustomizedToast from '../Toast/CustomizedToast';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const SignUp = () => {
     const [open, setOpen] = useState(false);
@@ -182,7 +182,7 @@ const SignUp = () => {
                             <div className='d-flex justify-content-center'>
                                 <input className="form-check-input me-2" onChange={handleChange} value={values.terms} onBlur={handleBlur} type="checkbox" id="terms" />
                                 <label className="form-check-label" htmlFor="form2Example3g">
-                                    Zapoznałem się z <a href="#!" className="text-body"><u>regulaminem serwisu</u></a>
+                                    Zapoznałem się z <Link to={'/statute'} className="text-body"><u>regulaminem serwisu</u></Link>
                                 </label>
                             </div>
                             <div className='d-flex justify-content-center'>

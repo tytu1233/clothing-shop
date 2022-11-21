@@ -48,7 +48,7 @@ const Footer = () => {
                     <div className='d-flex justify-content-center'>
                         <ul>
                             <Link className='footer__widget__link' to={'/contact'}><li>Kontakt</li></Link>
-                            <li><a href="src/Components/MainPage/Footer#">Regulamin sklepu</a></li>
+                            <Link className='footer__widget__link' to={'/statute'}><li>Regulamin sklepu</li></Link>
                         </ul>
                     </div>
                 </div>

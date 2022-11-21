@@ -17,6 +17,7 @@ import Dashboard from './Components/Admin/Dashboard';
 import Checkout from './Components/CartPage/Checkout';
 import Contact from './Components/MainPage/Contact';
 import 'devextreme/dist/css/dx.light.css';
+import Statute from './Components/Statute';
 
 
 
@@ -45,6 +46,7 @@ const App = () => {
                         <Route path='/admin/*' element = {<Dashboard/>}></Route>
                         <Route path='/profile/:id' element = {<Profile/>}></Route>
                         <Route path='/orders/:id' element={<Orders/>}></Route>
+                        <Route path='/statute' element={<Statute/>}></Route>
                         <Route path='/*' element={<Error404/>}></Route>
                     </Routes>
                 <Footer/>
